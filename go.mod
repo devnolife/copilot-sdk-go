@@ -1,4 +1,4 @@
-module studio-revisi/copilot-go
+module github.com/devnolife/copilot-sdk-go
 
 go 1.24
 

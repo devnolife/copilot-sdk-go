@@ -1,0 +1,7 @@
+# File yang tidak perlu masuk konteks build.
+.git
+.gitignore
+bin/
+*.md
+Dockerfile
+.dockerignore

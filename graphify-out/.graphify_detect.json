@@ -1,0 +1,34 @@
+{
+  "files": {
+    "code": [
+      "/home/devnolife/studio-revisi/copilot-go/main.go",
+      "/home/devnolife/studio-revisi/copilot-go/cmd/websearch/main.go",
+      "/home/devnolife/studio-revisi/copilot-go/cmd/copilot-cli/main.go",
+      "/home/devnolife/studio-revisi/copilot-go/cmd/copilot-cli/stream.go",
+      "/home/devnolife/studio-revisi/copilot-go/cmd/models/main.go",
+      "/home/devnolife/studio-revisi/copilot-go/cmd/copilotd/main.go",
+      "/home/devnolife/studio-revisi/copilot-go/internal/config/config.go",
+      "/home/devnolife/studio-revisi/copilot-go/internal/api/generate.go",
+      "/home/devnolife/studio-revisi/copilot-go/internal/api/agent.go",
+      "/home/devnolife/studio-revisi/copilot-go/internal/api/server.go",
+      "/home/devnolife/studio-revisi/copilot-go/internal/runtime/pool.go",
+      "/home/devnolife/studio-revisi/copilot-go/internal/runtime/tools.go",
+      "/home/devnolife/studio-revisi/copilot-go/internal/runtime/session.go"
+    ],
+    "document": [
+      "/home/devnolife/studio-revisi/copilot-go/README.md"
+    ],
+    "paper": [],
+    "image": [],
+    "video": []
+  },
+  "total_files": 14,
+  "total_words": 7533,
+  "needs_graph": false,
+  "warning": "Corpus is ~7,533 words - fits in a single context window. You may not need a graph.",
+  "skipped_sensitive": [
+    "/home/devnolife/studio-revisi/copilot-go/.env.example"
+  ],
+  "graphifyignore_patterns": 6,
+  "scan_root": "/home/devnolife/studio-revisi/copilot-go"
+}

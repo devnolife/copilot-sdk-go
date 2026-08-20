@@ -1,0 +1,3788 @@
+{
+  "nodes": [
+    {
+      "id": "main_go",
+      "label": "main.go",
+      "file_type": "code",
+      "source_file": "main.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "copilot_go_main_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "main.go",
+      "source_location": "L18"
+    },
+    {
+      "id": "copilot_go_main_run",
+      "label": "run()",
+      "file_type": "code",
+      "source_file": "main.go",
+      "source_location": "L61"
+    },
+    {
+      "id": "copilot_go_main_truncate",
+      "label": "truncate()",
+      "file_type": "code",
+      "source_file": "main.go",
+      "source_location": "L98"
+    },
+    {
+      "id": "cmd_websearch_main_go",
+      "label": "main.go",
+      "file_type": "code",
+      "source_file": "cmd/websearch/main.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "websearch_main_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "cmd/websearch/main.go",
+      "source_location": "L23"
+    },
+    {
+      "id": "cmd_copilot_cli_main_go",
+      "label": "main.go",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "copilot_cli_options",
+      "label": "options",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L62"
+    },
+    {
+      "id": "copilot_cli_main_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L71"
+    },
+    {
+      "id": "copilot_cli_main_resolvetoken",
+      "label": "resolveToken()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L126"
+    },
+    {
+      "id": "copilot_cli_main_resolveclipath",
+      "label": "resolveCLIPath()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L141"
+    },
+    {
+      "id": "copilot_cli_main_newclient",
+      "label": "newClient()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L155"
+    },
+    {
+      "id": "copilot_cli_main_runwhoami",
+      "label": "runWhoami()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L176"
+    },
+    {
+      "id": "copilot_cli_main_runmodels",
+      "label": "runModels()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L203"
+    },
+    {
+      "id": "copilot_cli_main_runask",
+      "label": "runAsk()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L229"
+    },
+    {
+      "id": "copilot_cli_main_runchat",
+      "label": "runChat()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L254"
+    },
+    {
+      "id": "copilot_cli_main_promptwithstdin",
+      "label": "promptWithStdin()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L298"
+    },
+    {
+      "id": "copilot_cli_main_newsession",
+      "label": "newSession()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L328"
+    },
+    {
+      "id": "cmd_copilot_cli_stream_go",
+      "label": "stream.go",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "copilot_cli_stream_streamturn",
+      "label": "streamTurn()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L18"
+    },
+    {
+      "id": "copilot_cli_stream_printjson",
+      "label": "printJSON()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L84"
+    },
+    {
+      "id": "copilot_cli_stream_runserve",
+      "label": "runServe()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L92"
+    },
+    {
+      "id": "cmd_models_main_go",
+      "label": "main.go",
+      "file_type": "code",
+      "source_file": "cmd/models/main.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "models_main_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "cmd/models/main.go",
+      "source_location": "L11"
+    },
+    {
+      "id": "cmd_copilotd_main_go",
+      "label": "main.go",
+      "file_type": "code",
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "copilotd_main_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L40"
+    },
+    {
+      "id": "internal_config_config_go",
+      "label": "config.go",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "config_config",
+      "label": "Config",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L15"
+    },
+    {
+      "id": "config_config_load",
+      "label": "Load()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L50"
+    },
+    {
+      "id": "config_config_tokens",
+      "label": ".Tokens()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L82"
+    },
+    {
+      "id": "config_config_modelfor",
+      "label": ".ModelFor()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L93"
+    },
+    {
+      "id": "config_config_isbyok",
+      "label": ".IsBYOK()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L112"
+    },
+    {
+      "id": "config_config_islocalprovider",
+      "label": ".IsLocalProvider()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L118"
+    },
+    {
+      "id": "config_config_env",
+      "label": "env()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L136"
+    },
+    {
+      "id": "config_config_envor",
+      "label": "envOr()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L138"
+    },
+    {
+      "id": "config_config_firstenv",
+      "label": "firstEnv()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L145"
+    },
+    {
+      "id": "config_config_envint",
+      "label": "envInt()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L154"
+    },
+    {
+      "id": "config_config_splitlist",
+      "label": "splitList()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L166"
+    },
+    {
+      "id": "internal_api_generate_go",
+      "label": "generate.go",
+      "file_type": "code",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "api_generaterequest",
+      "label": "generateRequest",
+      "file_type": "code",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L16"
+    },
+    {
+      "id": "api_generaterequest_toruntime",
+      "label": ".toRuntime()",
+      "file_type": "code",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L26"
+    },
+    {
+      "id": "api_server",
+      "label": "Server",
+      "file_type": "code",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L39"
+    },
+    {
+      "id": "api_server_handlegenerate",
+      "label": ".handleGenerate()",
+      "file_type": "code",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L39"
+    },
+    {
+      "id": "api_server_handlestream",
+      "label": ".handleStream()",
+      "file_type": "code",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L75"
+    },
+    {
+      "id": "api_generate_startndjson",
+      "label": "startNDJSON()",
+      "file_type": "code",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L102"
+    },
+    {
+      "id": "api_generate_contextwithtimeout",
+      "label": "contextWithTimeout()",
+      "file_type": "code",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L131"
+    },
+    {
+      "id": "internal_api_agent_go",
+      "label": "agent.go",
+      "file_type": "code",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "api_agentrequest",
+      "label": "agentRequest",
+      "file_type": "code",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L21"
+    },
+    {
+      "id": "api_toolcallbackrequest",
+      "label": "toolCallbackRequest",
+      "file_type": "code",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L36"
+    },
+    {
+      "id": "api_toolcallbackresponse",
+      "label": "toolCallbackResponse",
+      "file_type": "code",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L43"
+    },
+    {
+      "id": "api_server",
+      "label": "Server",
+      "file_type": "code",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L53"
+    },
+    {
+      "id": "api_server_handleagent",
+      "label": ".handleAgent()",
+      "file_type": "code",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L53"
+    },
+    {
+      "id": "api_server_toolexecutor",
+      "label": ".toolExecutor()",
+      "file_type": "code",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L91"
+    },
+    {
+      "id": "api_agent_firstnonempty",
+      "label": "firstNonEmpty()",
+      "file_type": "code",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L142"
+    },
+    {
+      "id": "internal_api_server_go",
+      "label": "server.go",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "api_server",
+      "label": "Server",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L16"
+    },
+    {
+      "id": "api_server_new",
+      "label": "New()",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L22"
+    },
+    {
+      "id": "api_server_handler",
+      "label": ".Handler()",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L27"
+    },
+    {
+      "id": "api_server_auth",
+      "label": ".auth()",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L47"
+    },
+    {
+      "id": "api_errorbody",
+      "label": "errorBody",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L57"
+    },
+    {
+      "id": "api_server_writejson",
+      "label": "writeJSON()",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L61"
+    },
+    {
+      "id": "api_server_decode",
+      "label": "decode()",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L67"
+    },
+    {
+      "id": "api_server_handlehealth",
+      "label": ".handleHealth()",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L72"
+    },
+    {
+      "id": "api_server_handlestatus",
+      "label": ".handleStatus()",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L77"
+    },
+    {
+      "id": "api_server_modelordefault",
+      "label": "modelOrDefault()",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L95"
+    },
+    {
+      "id": "api_server_handlemodels",
+      "label": ".handleModels()",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L102"
+    },
+    {
+      "id": "internal_runtime_pool_go",
+      "label": "pool.go",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "runtime_account",
+      "label": "account",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L28"
+    },
+    {
+      "id": "runtime_pool",
+      "label": "Pool",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L41"
+    },
+    {
+      "id": "runtime_pool_newpool",
+      "label": "NewPool()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L47"
+    },
+    {
+      "id": "runtime_pool_size",
+      "label": ".Size()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L61"
+    },
+    {
+      "id": "runtime_lease",
+      "label": "Lease",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L64"
+    },
+    {
+      "id": "runtime_lease_release",
+      "label": ".Release()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L73"
+    },
+    {
+      "id": "runtime_lease_failed",
+      "label": ".Failed()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L83"
+    },
+    {
+      "id": "runtime_pool_acquire",
+      "label": ".Acquire()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L97"
+    },
+    {
+      "id": "runtime_pool_pick",
+      "label": ".pick()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L112"
+    },
+    {
+      "id": "runtime_account_incooldown",
+      "label": ".inCooldown()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L154"
+    },
+    {
+      "id": "runtime_account_marklimited",
+      "label": ".markLimited()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L160"
+    },
+    {
+      "id": "runtime_account_reset",
+      "label": ".reset()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L167"
+    },
+    {
+      "id": "runtime_account_ensure",
+      "label": ".ensure()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L179"
+    },
+    {
+      "id": "runtime_pool_connection",
+      "label": "connection()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L212"
+    },
+    {
+      "id": "runtime_pool_shutdown",
+      "label": ".Shutdown()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L224"
+    },
+    {
+      "id": "runtime_pool_isratelimit",
+      "label": "isRateLimit()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L230"
+    },
+    {
+      "id": "runtime_pool_isconnectionerror",
+      "label": "isConnectionError()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L240"
+    },
+    {
+      "id": "internal_runtime_tools_go",
+      "label": "tools.go",
+      "file_type": "code",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "runtime_toolcall",
+      "label": "ToolCall",
+      "file_type": "code",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L14"
+    },
+    {
+      "id": "runtime_calllog",
+      "label": "callLog",
+      "file_type": "code",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L21"
+    },
+    {
+      "id": "runtime_calllog_add",
+      "label": ".add()",
+      "file_type": "code",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L26"
+    },
+    {
+      "id": "runtime_calllog_snapshot",
+      "label": ".snapshot()",
+      "file_type": "code",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L32"
+    },
+    {
+      "id": "runtime_tools_buildtools",
+      "label": "buildTools()",
+      "file_type": "code",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L45"
+    },
+    {
+      "id": "runtime_tools_decodeargs",
+      "label": "decodeArgs()",
+      "file_type": "code",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L96"
+    },
+    {
+      "id": "internal_runtime_session_go",
+      "label": "session.go",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "runtime_event",
+      "label": "Event",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L27"
+    },
+    {
+      "id": "runtime_request",
+      "label": "Request",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L40"
+    },
+    {
+      "id": "runtime_toolspec",
+      "label": "ToolSpec",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L51"
+    },
+    {
+      "id": "runtime_toolexecutor",
+      "label": "ToolExecutor",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L58"
+    },
+    {
+      "id": "runtime_service",
+      "label": "Service",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L61"
+    },
+    {
+      "id": "runtime_session_newservice",
+      "label": "NewService()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L67"
+    },
+    {
+      "id": "runtime_service_config",
+      "label": ".Config()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L72"
+    },
+    {
+      "id": "runtime_service_shutdown",
+      "label": ".Shutdown()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L75"
+    },
+    {
+      "id": "runtime_service_models",
+      "label": ".Models()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L78"
+    },
+    {
+      "id": "runtime_service_resolvemodel",
+      "label": ".resolveModel()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L94"
+    },
+    {
+      "id": "runtime_service_modelchain",
+      "label": ".modelChain()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L103"
+    },
+    {
+      "id": "runtime_service_timeout",
+      "label": ".timeout()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L117"
+    },
+    {
+      "id": "runtime_service_sessionconfig",
+      "label": ".sessionConfig()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L125"
+    },
+    {
+      "id": "runtime_session_approveall",
+      "label": "approveAll()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L172"
+    },
+    {
+      "id": "runtime_session_denyall",
+      "label": "denyAll()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L176"
+    },
+    {
+      "id": "runtime_service_stream",
+      "label": ".Stream()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L184"
+    },
+    {
+      "id": "runtime_service_runonce",
+      "label": ".runOnce()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L202"
+    },
+    {
+      "id": "runtime_session_modellabel",
+      "label": "modelLabel()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L325"
+    },
+    {
+      "id": "latency_benchmark_cli",
+      "label": "Latency Benchmark CLI",
+      "file_type": "code"
+    },
+    {
+      "id": "models_example_cli",
+      "label": "Models Example CLI",
+      "file_type": "code"
+    },
+    {
+      "id": "websearch_example_cli",
+      "label": "Web Search Example CLI",
+      "file_type": "code"
+    },
+    {
+      "id": "copilot_cli",
+      "label": "copilot-cli",
+      "file_type": "code"
+    },
+    {
+      "id": "cli_streaming_helper",
+      "label": "CLI Streaming Helper",
+      "file_type": "code"
+    },
+    {
+      "id": "copilotd_server",
+      "label": "copilotd HTTP Server",
+      "file_type": "code"
+    },
+    {
+      "id": "environment_config_loader",
+      "label": "Environment Config Loader",
+      "file_type": "code"
+    },
+    {
+      "id": "http_api_surface",
+      "label": "HTTP API Surface",
+      "file_type": "code"
+    },
+    {
+      "id": "generate_stream_handlers",
+      "label": "Generate and Stream Handlers",
+      "file_type": "code"
+    },
+    {
+      "id": "agent_session_handler",
+      "label": "Agent Session Handler",
+      "file_type": "code"
+    },
+    {
+      "id": "runtime_client_pool",
+      "label": "Runtime Client Pool",
+      "file_type": "code"
+    },
+    {
+      "id": "runtime_session_service",
+      "label": "Runtime Session Service",
+      "file_type": "code"
+    },
+    {
+      "id": "tool_callback_bridge",
+      "label": "Tool Callback Bridge",
+      "file_type": "code"
+    },
+    {
+      "id": "project_readme",
+      "label": "Project README",
+      "file_type": "document"
+    },
+    {
+      "id": "github_copilot_go_sdk",
+      "label": "GitHub Copilot Go SDK",
+      "file_type": "code"
+    },
+    {
+      "id": "copilot_cli_runtime",
+      "label": "Copilot CLI Runtime",
+      "file_type": "code"
+    },
+    {
+      "id": "built_in_web_tools",
+      "label": "Built-in Web Tools",
+      "file_type": "code"
+    },
+    {
+      "id": "caller_backend_python_service",
+      "label": "Caller Backend / Python Service",
+      "file_type": "code"
+    },
+    {
+      "id": "byok_model_provider",
+      "label": "BYOK Model Provider",
+      "file_type": "code"
+    },
+    {
+      "id": "github_auth_sources",
+      "label": "GitHub Auth Sources",
+      "file_type": "code"
+    }
+  ],
+  "edges": [
+    {
+      "source": "main_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "main.go",
+      "source_location": "L8",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "main_go",
+      "target": "go_pkg_fmt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "main.go",
+      "source_location": "L9",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "main_go",
+      "target": "go_pkg_log",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "main.go",
+      "source_location": "L10",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "main_go",
+      "target": "go_pkg_os",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "main.go",
+      "source_location": "L11",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "main_go",
+      "target": "go_pkg_strings",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "main.go",
+      "source_location": "L12",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "main_go",
+      "target": "go_pkg_time",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "main.go",
+      "source_location": "L13",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "main_go",
+      "target": "go_pkg_github_com_github_copilot_sdk_go",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "main.go",
+      "source_location": "L15",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "main_go",
+      "target": "copilot_go_main_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main.go",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "main_go",
+      "target": "copilot_go_main_run",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main.go",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "main_go",
+      "target": "copilot_go_main_truncate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main.go",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_go_main_main",
+      "target": "copilot_go_main_run",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "main.go",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_go_main_run",
+      "target": "copilot_go_main_truncate",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "main.go",
+      "source_location": "L94",
+      "weight": 1.0
+    },
+    {
+      "source": "cmd_websearch_main_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/websearch/main.go",
+      "source_location": "L13",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_websearch_main_go",
+      "target": "go_pkg_fmt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/websearch/main.go",
+      "source_location": "L14",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_websearch_main_go",
+      "target": "go_pkg_log",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/websearch/main.go",
+      "source_location": "L15",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_websearch_main_go",
+      "target": "go_pkg_os",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/websearch/main.go",
+      "source_location": "L16",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_websearch_main_go",
+      "target": "go_pkg_strings",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/websearch/main.go",
+      "source_location": "L17",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_websearch_main_go",
+      "target": "go_pkg_github_com_github_copilot_sdk_go",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/websearch/main.go",
+      "source_location": "L19",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_websearch_main_go",
+      "target": "go_pkg_github_com_github_copilot_sdk_go_rpc",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/websearch/main.go",
+      "source_location": "L20",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_websearch_main_go",
+      "target": "websearch_main_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/websearch/main.go",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "go_pkg_bufio",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L18",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L19",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "go_pkg_errors",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L20",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "go_pkg_flag",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L21",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "go_pkg_fmt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L22",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "go_pkg_io",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L23",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "go_pkg_os",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L24",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "go_pkg_os_exec",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L25",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "go_pkg_os_signal",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L26",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "go_pkg_sort",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L27",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "go_pkg_strings",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L28",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "go_pkg_syscall",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L29",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "go_pkg_github_com_github_copilot_sdk_go",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L31",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "go_pkg_github_com_github_copilot_sdk_go_rpc",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L32",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_main_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_main_resolvetoken",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L126",
+      "weight": 1.0
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_main_resolveclipath",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L141",
+      "weight": 1.0
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_main_newclient",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_main_runwhoami",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L176",
+      "weight": 1.0
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_main_runmodels",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L203",
+      "weight": 1.0
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_main_runask",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L229",
+      "weight": 1.0
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_main_runchat",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L254",
+      "weight": 1.0
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_main_promptwithstdin",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L298",
+      "weight": 1.0
+    },
+    {
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_main_newsession",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L328",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_cli_main_main",
+      "target": "copilot_cli_main_runwhoami",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_cli_main_main",
+      "target": "copilot_cli_main_runmodels",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L109",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_cli_main_main",
+      "target": "copilot_cli_main_runask",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L111",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_cli_main_main",
+      "target": "copilot_cli_main_runchat",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L113",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_cli_main_newclient",
+      "target": "copilot_cli_main_resolvetoken",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L157",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_cli_main_newclient",
+      "target": "copilot_cli_main_resolveclipath",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L162",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_cli_main_runwhoami",
+      "target": "copilot_cli_main_resolvetoken",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L178",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_cli_main_runwhoami",
+      "target": "copilot_cli_main_newclient",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L183",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_cli_main_runmodels",
+      "target": "copilot_cli_main_newclient",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L204",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_cli_main_runask",
+      "target": "copilot_cli_main_promptwithstdin",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L230",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_cli_main_runask",
+      "target": "copilot_cli_main_newclient",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L238",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_cli_main_runask",
+      "target": "copilot_cli_main_newsession",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L244",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_cli_main_runchat",
+      "target": "copilot_cli_main_newclient",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L255",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_cli_main_runchat",
+      "target": "copilot_cli_main_newsession",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L261",
+      "weight": 1.0
+    },
+    {
+      "source": "cmd_copilot_cli_stream_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_stream_go",
+      "target": "go_pkg_encoding_json",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_stream_go",
+      "target": "go_pkg_fmt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_stream_go",
+      "target": "go_pkg_os",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_stream_go",
+      "target": "go_pkg_os_exec",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L8",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_stream_go",
+      "target": "go_pkg_path_filepath",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L9",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_stream_go",
+      "target": "go_pkg_strings",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L10",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_stream_go",
+      "target": "go_pkg_sync",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L11",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_stream_go",
+      "target": "go_pkg_github_com_github_copilot_sdk_go",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L13",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilot_cli_stream_go",
+      "target": "copilot_cli_stream_streamturn",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "cmd_copilot_cli_stream_go",
+      "target": "copilot_cli_stream_printjson",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L84",
+      "weight": 1.0
+    },
+    {
+      "source": "cmd_copilot_cli_stream_go",
+      "target": "copilot_cli_stream_runserve",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "cmd_models_main_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/models/main.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_models_main_go",
+      "target": "go_pkg_fmt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/models/main.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_models_main_go",
+      "target": "go_pkg_log",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/models/main.go",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_models_main_go",
+      "target": "go_pkg_github_com_github_copilot_sdk_go",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/models/main.go",
+      "source_location": "L8",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_models_main_go",
+      "target": "models_main_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/models/main.go",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "cmd_copilotd_main_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L22",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilotd_main_go",
+      "target": "go_pkg_errors",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L23",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilotd_main_go",
+      "target": "go_pkg_flag",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L24",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilotd_main_go",
+      "target": "go_pkg_log",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L25",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilotd_main_go",
+      "target": "go_pkg_net_http",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L26",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilotd_main_go",
+      "target": "go_pkg_os",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L27",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilotd_main_go",
+      "target": "go_pkg_os_signal",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L28",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilotd_main_go",
+      "target": "go_pkg_syscall",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L29",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilotd_main_go",
+      "target": "go_pkg_time",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L30",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilotd_main_go",
+      "target": "go_pkg_github_com_devnolife_copilot_sdk_go_internal_api",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L32",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilotd_main_go",
+      "target": "go_pkg_github_com_devnolife_copilot_sdk_go_internal_config",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L33",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilotd_main_go",
+      "target": "go_pkg_github_com_devnolife_copilot_sdk_go_internal_runtime",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L34",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "cmd_copilotd_main_go",
+      "target": "copilotd_main_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_config_config_go",
+      "target": "go_pkg_os",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L8",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_config_config_go",
+      "target": "go_pkg_strconv",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L9",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_config_config_go",
+      "target": "go_pkg_strings",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L10",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_config_config_go",
+      "target": "go_pkg_time",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L11",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_config_config_go",
+      "target": "config_config",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_config_config_go",
+      "target": "config_config_load",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "config_config",
+      "target": "config_config_tokens",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "config_config",
+      "target": "config_config_modelfor",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L93",
+      "weight": 1.0
+    },
+    {
+      "source": "config_config",
+      "target": "config_config_isbyok",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L112",
+      "weight": 1.0
+    },
+    {
+      "source": "config_config",
+      "target": "config_config_islocalprovider",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L118",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_config_config_go",
+      "target": "config_config_env",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L136",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_config_config_go",
+      "target": "config_config_envor",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L138",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_config_config_go",
+      "target": "config_config_firstenv",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L145",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_config_config_go",
+      "target": "config_config_envint",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L154",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_config_config_go",
+      "target": "config_config_splitlist",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L166",
+      "weight": 1.0
+    },
+    {
+      "source": "config_config_load",
+      "target": "config_config_envor",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "config_config_load",
+      "target": "config_config_env",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L53",
+      "weight": 1.0
+    },
+    {
+      "source": "config_config_load",
+      "target": "config_config_firstenv",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "config_config_load",
+      "target": "config_config_envint",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L64",
+      "weight": 1.0
+    },
+    {
+      "source": "config_config_load",
+      "target": "config_config_splitlist",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "config_config_islocalprovider",
+      "target": "config_config_isbyok",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L119",
+      "weight": 1.0
+    },
+    {
+      "source": "config_config_envor",
+      "target": "config_config_env",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L139",
+      "weight": 1.0
+    },
+    {
+      "source": "config_config_firstenv",
+      "target": "config_config_env",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L147",
+      "weight": 1.0
+    },
+    {
+      "source": "config_config_envint",
+      "target": "config_config_env",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_api_generate_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_api_generate_go",
+      "target": "go_pkg_encoding_json",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_api_generate_go",
+      "target": "go_pkg_errors",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_api_generate_go",
+      "target": "go_pkg_net_http",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_api_generate_go",
+      "target": "go_pkg_strings",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L8",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_api_generate_go",
+      "target": "go_pkg_sync",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L9",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_api_generate_go",
+      "target": "go_pkg_time",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L10",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_api_generate_go",
+      "target": "go_pkg_github_com_devnolife_copilot_sdk_go_internal_runtime",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L12",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_api_generate_go",
+      "target": "api_generaterequest",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "api_generaterequest",
+      "target": "api_generaterequest_toruntime",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server",
+      "target": "api_server_handlegenerate",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server",
+      "target": "api_server_handlestream",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L75",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_api_generate_go",
+      "target": "api_generate_startndjson",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L102",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_api_generate_go",
+      "target": "api_generate_contextwithtimeout",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L131",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handlegenerate",
+      "target": "api_generaterequest_toruntime",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handlegenerate",
+      "target": "api_generate_contextwithtimeout",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handlestream",
+      "target": "api_generaterequest_toruntime",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L81",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handlestream",
+      "target": "api_generate_startndjson",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L87",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handlestream",
+      "target": "api_generate_contextwithtimeout",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L91",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_api_agent_go",
+      "target": "go_pkg_bytes",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_api_agent_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_api_agent_go",
+      "target": "go_pkg_encoding_json",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_api_agent_go",
+      "target": "go_pkg_fmt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_api_agent_go",
+      "target": "go_pkg_net_http",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L8",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_api_agent_go",
+      "target": "go_pkg_strings",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L9",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_api_agent_go",
+      "target": "go_pkg_time",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L10",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_api_agent_go",
+      "target": "go_pkg_github_com_devnolife_copilot_sdk_go_internal_runtime",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L12",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_api_agent_go",
+      "target": "api_agentrequest",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_api_agent_go",
+      "target": "api_toolcallbackrequest",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_api_agent_go",
+      "target": "api_toolcallbackresponse",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server",
+      "target": "api_server_handleagent",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L53",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server",
+      "target": "api_server_toolexecutor",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L91",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_api_agent_go",
+      "target": "api_agent_firstnonempty",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L142",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handleagent",
+      "target": "api_agent_firstnonempty",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handleagent",
+      "target": "api_server_toolexecutor",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_api_server_go",
+      "target": "go_pkg_encoding_json",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L8",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_api_server_go",
+      "target": "go_pkg_net_http",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L9",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_api_server_go",
+      "target": "go_pkg_time",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L10",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_api_server_go",
+      "target": "go_pkg_github_com_devnolife_copilot_sdk_go_internal_runtime",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L12",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_api_server_go",
+      "target": "api_server",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_api_server_go",
+      "target": "api_server_new",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server",
+      "target": "api_server_handler",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server",
+      "target": "api_server_auth",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_api_server_go",
+      "target": "api_errorbody",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_api_server_go",
+      "target": "api_server_writejson",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_api_server_go",
+      "target": "api_server_decode",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server",
+      "target": "api_server_handlehealth",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server",
+      "target": "api_server_handlestatus",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_api_server_go",
+      "target": "api_server_modelordefault",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L95",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server",
+      "target": "api_server_handlemodels",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L102",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handler",
+      "target": "api_server_auth",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_auth",
+      "target": "api_server_writejson",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handlehealth",
+      "target": "api_server_writejson",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L73",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handlestatus",
+      "target": "api_server_writejson",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handlestatus",
+      "target": "api_server_modelordefault",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handlemodels",
+      "target": "api_server_writejson",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L108",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_runtime_pool_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L9",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_pool_go",
+      "target": "go_pkg_errors",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L10",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_pool_go",
+      "target": "go_pkg_fmt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L11",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_pool_go",
+      "target": "go_pkg_log",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L12",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_pool_go",
+      "target": "go_pkg_strings",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L13",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_pool_go",
+      "target": "go_pkg_sync",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L14",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_pool_go",
+      "target": "go_pkg_time",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L15",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_pool_go",
+      "target": "go_pkg_github_com_github_copilot_sdk_go",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L17",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_pool_go",
+      "target": "go_pkg_github_com_devnolife_copilot_sdk_go_internal_config",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L19",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_pool_go",
+      "target": "runtime_account",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_runtime_pool_go",
+      "target": "runtime_pool",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_runtime_pool_go",
+      "target": "runtime_pool_newpool",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_pool",
+      "target": "runtime_pool_size",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_runtime_pool_go",
+      "target": "runtime_lease",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L64",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_lease",
+      "target": "runtime_lease_release",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L73",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_lease",
+      "target": "runtime_lease_failed",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_pool",
+      "target": "runtime_pool_acquire",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L97",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_pool",
+      "target": "runtime_pool_pick",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L112",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_account",
+      "target": "runtime_account_incooldown",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L154",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_account",
+      "target": "runtime_account_marklimited",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L160",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_account",
+      "target": "runtime_account_reset",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L167",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_account",
+      "target": "runtime_account_ensure",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L179",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_runtime_pool_go",
+      "target": "runtime_pool_connection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L212",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_pool",
+      "target": "runtime_pool_shutdown",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L224",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_runtime_pool_go",
+      "target": "runtime_pool_isratelimit",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L230",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_runtime_pool_go",
+      "target": "runtime_pool_isconnectionerror",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L240",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_lease_failed",
+      "target": "runtime_pool_isratelimit",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L87",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_lease_failed",
+      "target": "runtime_account_marklimited",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L88",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_lease_failed",
+      "target": "runtime_pool_isconnectionerror",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L91",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_lease_failed",
+      "target": "runtime_account_reset",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_pool_acquire",
+      "target": "runtime_pool_pick",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_pool_acquire",
+      "target": "runtime_account_ensure",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L102",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_pool_pick",
+      "target": "runtime_account_incooldown",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L116",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_account_ensure",
+      "target": "runtime_pool_connection",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L196",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_pool_shutdown",
+      "target": "runtime_account_reset",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L226",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_runtime_tools_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_tools_go",
+      "target": "go_pkg_encoding_json",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_tools_go",
+      "target": "go_pkg_fmt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_tools_go",
+      "target": "go_pkg_sync",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_tools_go",
+      "target": "go_pkg_github_com_github_copilot_sdk_go",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L9",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_tools_go",
+      "target": "runtime_toolcall",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_runtime_tools_go",
+      "target": "runtime_calllog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_calllog",
+      "target": "runtime_calllog_add",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_calllog",
+      "target": "runtime_calllog_snapshot",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_runtime_tools_go",
+      "target": "runtime_tools_buildtools",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_runtime_tools_go",
+      "target": "runtime_tools_decodeargs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L96",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_tools_buildtools",
+      "target": "runtime_tools_decodeargs",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_tools_buildtools",
+      "target": "runtime_calllog_add",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_runtime_session_go",
+      "target": "go_pkg_context",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L4",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_session_go",
+      "target": "go_pkg_errors",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_session_go",
+      "target": "go_pkg_fmt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L6",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_session_go",
+      "target": "go_pkg_sync",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_session_go",
+      "target": "go_pkg_time",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L8",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_session_go",
+      "target": "go_pkg_github_com_github_copilot_sdk_go",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L10",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_session_go",
+      "target": "go_pkg_github_com_github_copilot_sdk_go_rpc",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L11",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_session_go",
+      "target": "go_pkg_github_com_devnolife_copilot_sdk_go_internal_config",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L13",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "internal_runtime_session_go",
+      "target": "runtime_event",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_runtime_session_go",
+      "target": "runtime_request",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_runtime_session_go",
+      "target": "runtime_toolspec",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_runtime_session_go",
+      "target": "runtime_toolexecutor",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_runtime_session_go",
+      "target": "runtime_service",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_runtime_session_go",
+      "target": "runtime_session_newservice",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_service",
+      "target": "runtime_service_config",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_service",
+      "target": "runtime_service_shutdown",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L75",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_service",
+      "target": "runtime_service_models",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L78",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_service",
+      "target": "runtime_service_resolvemodel",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L94",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_service",
+      "target": "runtime_service_modelchain",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L103",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_service",
+      "target": "runtime_service_timeout",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L117",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_service",
+      "target": "runtime_service_sessionconfig",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L125",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_runtime_session_go",
+      "target": "runtime_session_approveall",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L172",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_runtime_session_go",
+      "target": "runtime_session_denyall",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L176",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_service",
+      "target": "runtime_service_stream",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L184",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_service",
+      "target": "runtime_service_runonce",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L202",
+      "weight": 1.0
+    },
+    {
+      "source": "internal_runtime_session_go",
+      "target": "runtime_session_modellabel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L325",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_service_modelchain",
+      "target": "runtime_service_resolvemodel",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L104",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_service_stream",
+      "target": "runtime_service_modelchain",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L186",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_service_stream",
+      "target": "runtime_service_runonce",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L187",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_service_runonce",
+      "target": "runtime_service_timeout",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L210",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_service_runonce",
+      "target": "runtime_service_sessionconfig",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L224",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_service_runonce",
+      "target": "runtime_session_modellabel",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L319",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_go_main_main",
+      "target": "copilot_cli_main_newclient",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "main.go",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "websearch_main_main",
+      "target": "copilot_cli_main_newclient",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/websearch/main.go",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_cli_main_main",
+      "target": "copilot_cli_stream_runserve",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L84",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_cli_main_runmodels",
+      "target": "copilot_cli_stream_printjson",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L217",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_cli_main_runask",
+      "target": "api_server_new",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L235",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_cli_main_runask",
+      "target": "copilot_cli_stream_streamturn",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L250",
+      "weight": 1.0
+    },
+    {
+      "source": "copilot_cli_main_runchat",
+      "target": "copilot_cli_stream_streamturn",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L290",
+      "weight": 1.0
+    },
+    {
+      "source": "models_main_main",
+      "target": "copilot_cli_main_newclient",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/models/main.go",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "copilotd_main_main",
+      "target": "config_config_load",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "copilotd_main_main",
+      "target": "runtime_session_newservice",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "copilotd_main_main",
+      "target": "api_server_new",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handlegenerate",
+      "target": "api_server_decode",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/api/generate.go",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handlegenerate",
+      "target": "api_server_writejson",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/api/generate.go",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handlestream",
+      "target": "api_server_decode",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/api/generate.go",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handlestream",
+      "target": "api_server_writejson",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/api/generate.go",
+      "source_location": "L78",
+      "weight": 1.0
+    },
+    {
+      "source": "api_generate_startndjson",
+      "target": "api_server_writejson",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/api/generate.go",
+      "source_location": "L105",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handleagent",
+      "target": "api_server_decode",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/api/agent.go",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handleagent",
+      "target": "api_server_writejson",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/api/agent.go",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handleagent",
+      "target": "api_generate_startndjson",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/api/agent.go",
+      "source_location": "L76",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handleagent",
+      "target": "api_generate_contextwithtimeout",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/api/agent.go",
+      "source_location": "L80",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handlemodels",
+      "target": "api_generate_contextwithtimeout",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/api/server.go",
+      "source_location": "L103",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_account_ensure",
+      "target": "copilot_cli_main_newclient",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L200",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_session_newservice",
+      "target": "runtime_pool_newpool",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_service_runonce",
+      "target": "runtime_tools_buildtools",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L223",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_service_runonce",
+      "target": "runtime_pool_isratelimit",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L233",
+      "weight": 1.0
+    },
+    {
+      "source": "runtime_service_runonce",
+      "target": "api_server_new",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L306",
+      "weight": 1.0
+    },
+    {
+      "source": "latency_benchmark_cli",
+      "target": "github_copilot_go_sdk",
+      "relation": "uses",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "latency_benchmark_cli",
+      "target": "copilot_cli_runtime",
+      "relation": "measures_latency_of",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "models_example_cli",
+      "target": "github_copilot_go_sdk",
+      "relation": "uses",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "websearch_example_cli",
+      "target": "github_copilot_go_sdk",
+      "relation": "uses",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "websearch_example_cli",
+      "target": "built_in_web_tools",
+      "relation": "demonstrates_use_of",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "copilot_cli",
+      "target": "github_copilot_go_sdk",
+      "relation": "uses",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "copilot_cli",
+      "target": "cli_streaming_helper",
+      "relation": "delegates_streaming_to",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "copilot_cli",
+      "target": "copilotd_server",
+      "relation": "launches",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "copilot_cli",
+      "target": "github_auth_sources",
+      "relation": "resolves_auth_from",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "copilot_cli",
+      "target": "copilot_cli_runtime",
+      "relation": "connects_to",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "copilot_cli",
+      "target": "built_in_web_tools",
+      "relation": "enables_only_when_web_flag_is_set",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "copilotd_server",
+      "target": "environment_config_loader",
+      "relation": "loads_configuration_from",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "copilotd_server",
+      "target": "http_api_surface",
+      "relation": "serves",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "copilotd_server",
+      "target": "runtime_session_service",
+      "relation": "delegates_requests_to",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "http_api_surface",
+      "target": "generate_stream_handlers",
+      "relation": "routes_requests_to",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "http_api_surface",
+      "target": "agent_session_handler",
+      "relation": "routes_requests_to",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "generate_stream_handlers",
+      "target": "runtime_session_service",
+      "relation": "invokes",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "generate_stream_handlers",
+      "target": "caller_backend_python_service",
+      "relation": "streams_responses_to",
+      "confidence": "INFERRED"
+    },
+    {
+      "source": "agent_session_handler",
+      "target": "runtime_session_service",
+      "relation": "invokes",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "agent_session_handler",
+      "target": "tool_callback_bridge",
+      "relation": "constructs",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "agent_session_handler",
+      "target": "caller_backend_python_service",
+      "relation": "calls_back_to",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "runtime_session_service",
+      "target": "runtime_client_pool",
+      "relation": "acquires_clients_from",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "runtime_session_service",
+      "target": "built_in_web_tools",
+      "relation": "exposes_when_web_mode_is_enabled",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "runtime_session_service",
+      "target": "tool_callback_bridge",
+      "relation": "uses_for_caller_defined_tools",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "runtime_session_service",
+      "target": "byok_model_provider",
+      "relation": "routes_sessions_to",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "runtime_session_service",
+      "target": "github_copilot_go_sdk",
+      "relation": "creates_sessions_with",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "runtime_client_pool",
+      "target": "environment_config_loader",
+      "relation": "uses_settings_from",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "runtime_client_pool",
+      "target": "copilot_cli_runtime",
+      "relation": "starts_and_reuses",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "runtime_client_pool",
+      "target": "github_auth_sources",
+      "relation": "pools_accounts_from",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "tool_callback_bridge",
+      "target": "caller_backend_python_service",
+      "relation": "executes_tools_via_http_callback",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "tool_callback_bridge",
+      "target": "runtime_session_service",
+      "relation": "returns_audit_trail_to",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "environment_config_loader",
+      "target": "github_auth_sources",
+      "relation": "loads",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "environment_config_loader",
+      "target": "byok_model_provider",
+      "relation": "configures",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "project_readme",
+      "target": "copilot_cli",
+      "relation": "documents",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "project_readme",
+      "target": "copilotd_server",
+      "relation": "documents",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "project_readme",
+      "target": "agent_session_handler",
+      "relation": "explains_callback_flow_for",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "project_readme",
+      "target": "built_in_web_tools",
+      "relation": "documents_usage_of",
+      "confidence": "EXTRACTED"
+    },
+    {
+      "source": "caller_backend_python_service",
+      "target": "copilotd_server",
+      "relation": "consumes_over_http",
+      "confidence": "EXTRACTED"
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

@@ -1,0 +1,3204 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "main.go",
+      "file_type": "code",
+      "source_file": "main.go",
+      "source_location": "L1",
+      "id": "main_go"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "main.go",
+      "source_location": "L18",
+      "id": "copilot_go_main_main"
+    },
+    {
+      "label": "run()",
+      "file_type": "code",
+      "source_file": "main.go",
+      "source_location": "L61",
+      "id": "copilot_go_main_run"
+    },
+    {
+      "label": "truncate()",
+      "file_type": "code",
+      "source_file": "main.go",
+      "source_location": "L98",
+      "id": "copilot_go_main_truncate"
+    },
+    {
+      "label": "main.go",
+      "file_type": "code",
+      "source_file": "cmd/websearch/main.go",
+      "source_location": "L1",
+      "id": "cmd_websearch_main_go"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "cmd/websearch/main.go",
+      "source_location": "L23",
+      "id": "websearch_main_main"
+    },
+    {
+      "label": "main.go",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L1",
+      "id": "cmd_copilot_cli_main_go"
+    },
+    {
+      "label": "options",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L62",
+      "id": "copilot_cli_options"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L71",
+      "id": "copilot_cli_main_main"
+    },
+    {
+      "label": "resolveToken()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L126",
+      "id": "copilot_cli_main_resolvetoken"
+    },
+    {
+      "label": "resolveCLIPath()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L141",
+      "id": "copilot_cli_main_resolveclipath"
+    },
+    {
+      "label": "newClient()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L155",
+      "id": "copilot_cli_main_newclient"
+    },
+    {
+      "label": "runWhoami()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L176",
+      "id": "copilot_cli_main_runwhoami"
+    },
+    {
+      "label": "runModels()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L203",
+      "id": "copilot_cli_main_runmodels"
+    },
+    {
+      "label": "runAsk()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L229",
+      "id": "copilot_cli_main_runask"
+    },
+    {
+      "label": "runChat()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L254",
+      "id": "copilot_cli_main_runchat"
+    },
+    {
+      "label": "promptWithStdin()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L298",
+      "id": "copilot_cli_main_promptwithstdin"
+    },
+    {
+      "label": "newSession()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L328",
+      "id": "copilot_cli_main_newsession"
+    },
+    {
+      "label": "stream.go",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L1",
+      "id": "cmd_copilot_cli_stream_go"
+    },
+    {
+      "label": "streamTurn()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L18",
+      "id": "copilot_cli_stream_streamturn"
+    },
+    {
+      "label": "printJSON()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L84",
+      "id": "copilot_cli_stream_printjson"
+    },
+    {
+      "label": "runServe()",
+      "file_type": "code",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L92",
+      "id": "copilot_cli_stream_runserve"
+    },
+    {
+      "label": "main.go",
+      "file_type": "code",
+      "source_file": "cmd/models/main.go",
+      "source_location": "L1",
+      "id": "cmd_models_main_go"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "cmd/models/main.go",
+      "source_location": "L11",
+      "id": "models_main_main"
+    },
+    {
+      "label": "main.go",
+      "file_type": "code",
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L1",
+      "id": "cmd_copilotd_main_go"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L40",
+      "id": "copilotd_main_main"
+    },
+    {
+      "label": "config.go",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L1",
+      "id": "internal_config_config_go"
+    },
+    {
+      "label": "Config",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L15",
+      "id": "config_config"
+    },
+    {
+      "label": "Load()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L50",
+      "id": "config_config_load"
+    },
+    {
+      "label": ".Tokens()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L82",
+      "id": "config_config_tokens"
+    },
+    {
+      "label": ".ModelFor()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L93",
+      "id": "config_config_modelfor"
+    },
+    {
+      "label": ".IsBYOK()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L112",
+      "id": "config_config_isbyok"
+    },
+    {
+      "label": ".IsLocalProvider()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L118",
+      "id": "config_config_islocalprovider"
+    },
+    {
+      "label": "env()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L136",
+      "id": "config_config_env"
+    },
+    {
+      "label": "envOr()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L138",
+      "id": "config_config_envor"
+    },
+    {
+      "label": "firstEnv()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L145",
+      "id": "config_config_firstenv"
+    },
+    {
+      "label": "envInt()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L154",
+      "id": "config_config_envint"
+    },
+    {
+      "label": "splitList()",
+      "file_type": "code",
+      "source_file": "internal/config/config.go",
+      "source_location": "L166",
+      "id": "config_config_splitlist"
+    },
+    {
+      "label": "generate.go",
+      "file_type": "code",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L1",
+      "id": "internal_api_generate_go"
+    },
+    {
+      "label": "generateRequest",
+      "file_type": "code",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L16",
+      "id": "api_generaterequest"
+    },
+    {
+      "label": ".toRuntime()",
+      "file_type": "code",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L26",
+      "id": "api_generaterequest_toruntime"
+    },
+    {
+      "label": "Server",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L16",
+      "id": "api_server"
+    },
+    {
+      "label": ".handleGenerate()",
+      "file_type": "code",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L39",
+      "id": "api_server_handlegenerate"
+    },
+    {
+      "label": ".handleStream()",
+      "file_type": "code",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L75",
+      "id": "api_server_handlestream"
+    },
+    {
+      "label": "startNDJSON()",
+      "file_type": "code",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L102",
+      "id": "api_generate_startndjson"
+    },
+    {
+      "label": "contextWithTimeout()",
+      "file_type": "code",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L131",
+      "id": "api_generate_contextwithtimeout"
+    },
+    {
+      "label": "agent.go",
+      "file_type": "code",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L1",
+      "id": "internal_api_agent_go"
+    },
+    {
+      "label": "agentRequest",
+      "file_type": "code",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L21",
+      "id": "api_agentrequest"
+    },
+    {
+      "label": "toolCallbackRequest",
+      "file_type": "code",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L36",
+      "id": "api_toolcallbackrequest"
+    },
+    {
+      "label": "toolCallbackResponse",
+      "file_type": "code",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L43",
+      "id": "api_toolcallbackresponse"
+    },
+    {
+      "label": ".handleAgent()",
+      "file_type": "code",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L53",
+      "id": "api_server_handleagent"
+    },
+    {
+      "label": ".toolExecutor()",
+      "file_type": "code",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L91",
+      "id": "api_server_toolexecutor"
+    },
+    {
+      "label": "firstNonEmpty()",
+      "file_type": "code",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L142",
+      "id": "api_agent_firstnonempty"
+    },
+    {
+      "label": "server.go",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L1",
+      "id": "internal_api_server_go"
+    },
+    {
+      "label": "New()",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L22",
+      "id": "api_server_new"
+    },
+    {
+      "label": ".Handler()",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L27",
+      "id": "api_server_handler"
+    },
+    {
+      "label": ".auth()",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L47",
+      "id": "api_server_auth"
+    },
+    {
+      "label": "errorBody",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L57",
+      "id": "api_errorbody"
+    },
+    {
+      "label": "writeJSON()",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L61",
+      "id": "api_server_writejson"
+    },
+    {
+      "label": "decode()",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L67",
+      "id": "api_server_decode"
+    },
+    {
+      "label": ".handleHealth()",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L72",
+      "id": "api_server_handlehealth"
+    },
+    {
+      "label": ".handleStatus()",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L77",
+      "id": "api_server_handlestatus"
+    },
+    {
+      "label": "modelOrDefault()",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L95",
+      "id": "api_server_modelordefault"
+    },
+    {
+      "label": ".handleModels()",
+      "file_type": "code",
+      "source_file": "internal/api/server.go",
+      "source_location": "L102",
+      "id": "api_server_handlemodels"
+    },
+    {
+      "label": "pool.go",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L1",
+      "id": "internal_runtime_pool_go"
+    },
+    {
+      "label": "account",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L28",
+      "id": "runtime_account"
+    },
+    {
+      "label": "Pool",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L41",
+      "id": "runtime_pool"
+    },
+    {
+      "label": "NewPool()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L47",
+      "id": "runtime_pool_newpool"
+    },
+    {
+      "label": ".Size()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L61",
+      "id": "runtime_pool_size"
+    },
+    {
+      "label": "Lease",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L64",
+      "id": "runtime_lease"
+    },
+    {
+      "label": ".Release()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L73",
+      "id": "runtime_lease_release"
+    },
+    {
+      "label": ".Failed()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L83",
+      "id": "runtime_lease_failed"
+    },
+    {
+      "label": ".Acquire()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L97",
+      "id": "runtime_pool_acquire"
+    },
+    {
+      "label": ".pick()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L112",
+      "id": "runtime_pool_pick"
+    },
+    {
+      "label": ".inCooldown()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L154",
+      "id": "runtime_account_incooldown"
+    },
+    {
+      "label": ".markLimited()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L160",
+      "id": "runtime_account_marklimited"
+    },
+    {
+      "label": ".reset()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L167",
+      "id": "runtime_account_reset"
+    },
+    {
+      "label": ".ensure()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L179",
+      "id": "runtime_account_ensure"
+    },
+    {
+      "label": "connection()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L212",
+      "id": "runtime_pool_connection"
+    },
+    {
+      "label": ".Shutdown()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L224",
+      "id": "runtime_pool_shutdown"
+    },
+    {
+      "label": "isRateLimit()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L230",
+      "id": "runtime_pool_isratelimit"
+    },
+    {
+      "label": "isConnectionError()",
+      "file_type": "code",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L240",
+      "id": "runtime_pool_isconnectionerror"
+    },
+    {
+      "label": "tools.go",
+      "file_type": "code",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L1",
+      "id": "internal_runtime_tools_go"
+    },
+    {
+      "label": "ToolCall",
+      "file_type": "code",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L14",
+      "id": "runtime_toolcall"
+    },
+    {
+      "label": "callLog",
+      "file_type": "code",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L21",
+      "id": "runtime_calllog"
+    },
+    {
+      "label": ".add()",
+      "file_type": "code",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L26",
+      "id": "runtime_calllog_add"
+    },
+    {
+      "label": ".snapshot()",
+      "file_type": "code",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L32",
+      "id": "runtime_calllog_snapshot"
+    },
+    {
+      "label": "buildTools()",
+      "file_type": "code",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L45",
+      "id": "runtime_tools_buildtools"
+    },
+    {
+      "label": "decodeArgs()",
+      "file_type": "code",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L96",
+      "id": "runtime_tools_decodeargs"
+    },
+    {
+      "label": "session.go",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L1",
+      "id": "internal_runtime_session_go"
+    },
+    {
+      "label": "Event",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L27",
+      "id": "runtime_event"
+    },
+    {
+      "label": "Request",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L40",
+      "id": "runtime_request"
+    },
+    {
+      "label": "ToolSpec",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L51",
+      "id": "runtime_toolspec"
+    },
+    {
+      "label": "ToolExecutor",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L58",
+      "id": "runtime_toolexecutor"
+    },
+    {
+      "label": "Service",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L61",
+      "id": "runtime_service"
+    },
+    {
+      "label": "NewService()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L67",
+      "id": "runtime_session_newservice"
+    },
+    {
+      "label": ".Config()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L72",
+      "id": "runtime_service_config"
+    },
+    {
+      "label": ".Shutdown()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L75",
+      "id": "runtime_service_shutdown"
+    },
+    {
+      "label": ".Models()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L78",
+      "id": "runtime_service_models"
+    },
+    {
+      "label": ".resolveModel()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L94",
+      "id": "runtime_service_resolvemodel"
+    },
+    {
+      "label": ".modelChain()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L103",
+      "id": "runtime_service_modelchain"
+    },
+    {
+      "label": ".timeout()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L117",
+      "id": "runtime_service_timeout"
+    },
+    {
+      "label": ".sessionConfig()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L125",
+      "id": "runtime_service_sessionconfig"
+    },
+    {
+      "label": "approveAll()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L172",
+      "id": "runtime_session_approveall"
+    },
+    {
+      "label": "denyAll()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L176",
+      "id": "runtime_session_denyall"
+    },
+    {
+      "label": ".Stream()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L184",
+      "id": "runtime_service_stream"
+    },
+    {
+      "label": ".runOnce()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L202",
+      "id": "runtime_service_runonce"
+    },
+    {
+      "label": "modelLabel()",
+      "file_type": "code",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L325",
+      "id": "runtime_session_modellabel"
+    },
+    {
+      "label": "Latency Benchmark CLI",
+      "file_type": "code",
+      "id": "latency_benchmark_cli"
+    },
+    {
+      "label": "Models Example CLI",
+      "file_type": "code",
+      "id": "models_example_cli"
+    },
+    {
+      "label": "Web Search Example CLI",
+      "file_type": "code",
+      "id": "websearch_example_cli"
+    },
+    {
+      "label": "copilot-cli",
+      "file_type": "code",
+      "id": "copilot_cli"
+    },
+    {
+      "label": "CLI Streaming Helper",
+      "file_type": "code",
+      "id": "cli_streaming_helper"
+    },
+    {
+      "label": "copilotd HTTP Server",
+      "file_type": "code",
+      "id": "copilotd_server"
+    },
+    {
+      "label": "Environment Config Loader",
+      "file_type": "code",
+      "id": "environment_config_loader"
+    },
+    {
+      "label": "HTTP API Surface",
+      "file_type": "code",
+      "id": "http_api_surface"
+    },
+    {
+      "label": "Generate and Stream Handlers",
+      "file_type": "code",
+      "id": "generate_stream_handlers"
+    },
+    {
+      "label": "Agent Session Handler",
+      "file_type": "code",
+      "id": "agent_session_handler"
+    },
+    {
+      "label": "Runtime Client Pool",
+      "file_type": "code",
+      "id": "runtime_client_pool"
+    },
+    {
+      "label": "Runtime Session Service",
+      "file_type": "code",
+      "id": "runtime_session_service"
+    },
+    {
+      "label": "Tool Callback Bridge",
+      "file_type": "code",
+      "id": "tool_callback_bridge"
+    },
+    {
+      "label": "Project README",
+      "file_type": "document",
+      "id": "project_readme"
+    },
+    {
+      "label": "GitHub Copilot Go SDK",
+      "file_type": "code",
+      "id": "github_copilot_go_sdk"
+    },
+    {
+      "label": "Copilot CLI Runtime",
+      "file_type": "code",
+      "id": "copilot_cli_runtime"
+    },
+    {
+      "label": "Built-in Web Tools",
+      "file_type": "code",
+      "id": "built_in_web_tools"
+    },
+    {
+      "label": "Caller Backend / Python Service",
+      "file_type": "code",
+      "id": "caller_backend_python_service"
+    },
+    {
+      "label": "BYOK Model Provider",
+      "file_type": "code",
+      "id": "byok_model_provider"
+    },
+    {
+      "label": "GitHub Auth Sources",
+      "file_type": "code",
+      "id": "github_auth_sources"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main.go",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_src": "main_go",
+      "_tgt": "copilot_go_main_main",
+      "source": "main_go",
+      "target": "copilot_go_main_main"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main.go",
+      "source_location": "L61",
+      "weight": 1.0,
+      "_src": "main_go",
+      "_tgt": "copilot_go_main_run",
+      "source": "main_go",
+      "target": "copilot_go_main_run"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main.go",
+      "source_location": "L98",
+      "weight": 1.0,
+      "_src": "main_go",
+      "_tgt": "copilot_go_main_truncate",
+      "source": "main_go",
+      "target": "copilot_go_main_truncate"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "main.go",
+      "source_location": "L50",
+      "weight": 1.0,
+      "_src": "copilot_go_main_main",
+      "_tgt": "copilot_go_main_run",
+      "source": "copilot_go_main_main",
+      "target": "copilot_go_main_run"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "main.go",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_src": "copilot_go_main_main",
+      "_tgt": "copilot_cli_main_newclient",
+      "source": "copilot_go_main_main",
+      "target": "copilot_cli_main_newclient"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "main.go",
+      "source_location": "L94",
+      "weight": 1.0,
+      "_src": "copilot_go_main_run",
+      "_tgt": "copilot_go_main_truncate",
+      "source": "copilot_go_main_run",
+      "target": "copilot_go_main_truncate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/websearch/main.go",
+      "source_location": "L23",
+      "weight": 1.0,
+      "_src": "cmd_websearch_main_go",
+      "_tgt": "websearch_main_main",
+      "source": "cmd_websearch_main_go",
+      "target": "websearch_main_main"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/websearch/main.go",
+      "source_location": "L30",
+      "weight": 1.0,
+      "_src": "websearch_main_main",
+      "_tgt": "copilot_cli_main_newclient",
+      "source": "websearch_main_main",
+      "target": "copilot_cli_main_newclient"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L62",
+      "weight": 1.0,
+      "_src": "cmd_copilot_cli_main_go",
+      "_tgt": "copilot_cli_options",
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_options"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L71",
+      "weight": 1.0,
+      "_src": "cmd_copilot_cli_main_go",
+      "_tgt": "copilot_cli_main_main",
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_main_main"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L126",
+      "weight": 1.0,
+      "_src": "cmd_copilot_cli_main_go",
+      "_tgt": "copilot_cli_main_resolvetoken",
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_main_resolvetoken"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L141",
+      "weight": 1.0,
+      "_src": "cmd_copilot_cli_main_go",
+      "_tgt": "copilot_cli_main_resolveclipath",
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_main_resolveclipath"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L155",
+      "weight": 1.0,
+      "_src": "cmd_copilot_cli_main_go",
+      "_tgt": "copilot_cli_main_newclient",
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_main_newclient"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L176",
+      "weight": 1.0,
+      "_src": "cmd_copilot_cli_main_go",
+      "_tgt": "copilot_cli_main_runwhoami",
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_main_runwhoami"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L203",
+      "weight": 1.0,
+      "_src": "cmd_copilot_cli_main_go",
+      "_tgt": "copilot_cli_main_runmodels",
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_main_runmodels"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L229",
+      "weight": 1.0,
+      "_src": "cmd_copilot_cli_main_go",
+      "_tgt": "copilot_cli_main_runask",
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_main_runask"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L254",
+      "weight": 1.0,
+      "_src": "cmd_copilot_cli_main_go",
+      "_tgt": "copilot_cli_main_runchat",
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_main_runchat"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L298",
+      "weight": 1.0,
+      "_src": "cmd_copilot_cli_main_go",
+      "_tgt": "copilot_cli_main_promptwithstdin",
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_main_promptwithstdin"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L328",
+      "weight": 1.0,
+      "_src": "cmd_copilot_cli_main_go",
+      "_tgt": "copilot_cli_main_newsession",
+      "source": "cmd_copilot_cli_main_go",
+      "target": "copilot_cli_main_newsession"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L107",
+      "weight": 1.0,
+      "_src": "copilot_cli_main_main",
+      "_tgt": "copilot_cli_main_runwhoami",
+      "source": "copilot_cli_main_main",
+      "target": "copilot_cli_main_runwhoami"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L109",
+      "weight": 1.0,
+      "_src": "copilot_cli_main_main",
+      "_tgt": "copilot_cli_main_runmodels",
+      "source": "copilot_cli_main_main",
+      "target": "copilot_cli_main_runmodels"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L111",
+      "weight": 1.0,
+      "_src": "copilot_cli_main_main",
+      "_tgt": "copilot_cli_main_runask",
+      "source": "copilot_cli_main_main",
+      "target": "copilot_cli_main_runask"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L113",
+      "weight": 1.0,
+      "_src": "copilot_cli_main_main",
+      "_tgt": "copilot_cli_main_runchat",
+      "source": "copilot_cli_main_main",
+      "target": "copilot_cli_main_runchat"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L84",
+      "weight": 1.0,
+      "_src": "copilot_cli_main_main",
+      "_tgt": "copilot_cli_stream_runserve",
+      "source": "copilot_cli_main_main",
+      "target": "copilot_cli_stream_runserve"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L157",
+      "weight": 1.0,
+      "_src": "copilot_cli_main_newclient",
+      "_tgt": "copilot_cli_main_resolvetoken",
+      "source": "copilot_cli_main_resolvetoken",
+      "target": "copilot_cli_main_newclient"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L178",
+      "weight": 1.0,
+      "_src": "copilot_cli_main_runwhoami",
+      "_tgt": "copilot_cli_main_resolvetoken",
+      "source": "copilot_cli_main_resolvetoken",
+      "target": "copilot_cli_main_runwhoami"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L162",
+      "weight": 1.0,
+      "_src": "copilot_cli_main_newclient",
+      "_tgt": "copilot_cli_main_resolveclipath",
+      "source": "copilot_cli_main_resolveclipath",
+      "target": "copilot_cli_main_newclient"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L183",
+      "weight": 1.0,
+      "_src": "copilot_cli_main_runwhoami",
+      "_tgt": "copilot_cli_main_newclient",
+      "source": "copilot_cli_main_newclient",
+      "target": "copilot_cli_main_runwhoami"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L204",
+      "weight": 1.0,
+      "_src": "copilot_cli_main_runmodels",
+      "_tgt": "copilot_cli_main_newclient",
+      "source": "copilot_cli_main_newclient",
+      "target": "copilot_cli_main_runmodels"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L238",
+      "weight": 1.0,
+      "_src": "copilot_cli_main_runask",
+      "_tgt": "copilot_cli_main_newclient",
+      "source": "copilot_cli_main_newclient",
+      "target": "copilot_cli_main_runask"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L255",
+      "weight": 1.0,
+      "_src": "copilot_cli_main_runchat",
+      "_tgt": "copilot_cli_main_newclient",
+      "source": "copilot_cli_main_newclient",
+      "target": "copilot_cli_main_runchat"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/models/main.go",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_src": "models_main_main",
+      "_tgt": "copilot_cli_main_newclient",
+      "source": "copilot_cli_main_newclient",
+      "target": "models_main_main"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L200",
+      "weight": 1.0,
+      "_src": "runtime_account_ensure",
+      "_tgt": "copilot_cli_main_newclient",
+      "source": "copilot_cli_main_newclient",
+      "target": "runtime_account_ensure"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L217",
+      "weight": 1.0,
+      "_src": "copilot_cli_main_runmodels",
+      "_tgt": "copilot_cli_stream_printjson",
+      "source": "copilot_cli_main_runmodels",
+      "target": "copilot_cli_stream_printjson"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L230",
+      "weight": 1.0,
+      "_src": "copilot_cli_main_runask",
+      "_tgt": "copilot_cli_main_promptwithstdin",
+      "source": "copilot_cli_main_runask",
+      "target": "copilot_cli_main_promptwithstdin"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L244",
+      "weight": 1.0,
+      "_src": "copilot_cli_main_runask",
+      "_tgt": "copilot_cli_main_newsession",
+      "source": "copilot_cli_main_runask",
+      "target": "copilot_cli_main_newsession"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L235",
+      "weight": 1.0,
+      "_src": "copilot_cli_main_runask",
+      "_tgt": "api_server_new",
+      "source": "copilot_cli_main_runask",
+      "target": "api_server_new"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L250",
+      "weight": 1.0,
+      "_src": "copilot_cli_main_runask",
+      "_tgt": "copilot_cli_stream_streamturn",
+      "source": "copilot_cli_main_runask",
+      "target": "copilot_cli_stream_streamturn"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L261",
+      "weight": 1.0,
+      "_src": "copilot_cli_main_runchat",
+      "_tgt": "copilot_cli_main_newsession",
+      "source": "copilot_cli_main_runchat",
+      "target": "copilot_cli_main_newsession"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/copilot-cli/main.go",
+      "source_location": "L290",
+      "weight": 1.0,
+      "_src": "copilot_cli_main_runchat",
+      "_tgt": "copilot_cli_stream_streamturn",
+      "source": "copilot_cli_main_runchat",
+      "target": "copilot_cli_stream_streamturn"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_src": "cmd_copilot_cli_stream_go",
+      "_tgt": "copilot_cli_stream_streamturn",
+      "source": "cmd_copilot_cli_stream_go",
+      "target": "copilot_cli_stream_streamturn"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L84",
+      "weight": 1.0,
+      "_src": "cmd_copilot_cli_stream_go",
+      "_tgt": "copilot_cli_stream_printjson",
+      "source": "cmd_copilot_cli_stream_go",
+      "target": "copilot_cli_stream_printjson"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilot-cli/stream.go",
+      "source_location": "L92",
+      "weight": 1.0,
+      "_src": "cmd_copilot_cli_stream_go",
+      "_tgt": "copilot_cli_stream_runserve",
+      "source": "cmd_copilot_cli_stream_go",
+      "target": "copilot_cli_stream_runserve"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/models/main.go",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_src": "cmd_models_main_go",
+      "_tgt": "models_main_main",
+      "source": "cmd_models_main_go",
+      "target": "models_main_main"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L40",
+      "weight": 1.0,
+      "_src": "cmd_copilotd_main_go",
+      "_tgt": "copilotd_main_main",
+      "source": "cmd_copilotd_main_go",
+      "target": "copilotd_main_main"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L41",
+      "weight": 1.0,
+      "_src": "copilotd_main_main",
+      "_tgt": "config_config_load",
+      "source": "copilotd_main_main",
+      "target": "config_config_load"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L46",
+      "weight": 1.0,
+      "_src": "copilotd_main_main",
+      "_tgt": "runtime_session_newservice",
+      "source": "copilotd_main_main",
+      "target": "runtime_session_newservice"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "cmd/copilotd/main.go",
+      "source_location": "L51",
+      "weight": 1.0,
+      "_src": "copilotd_main_main",
+      "_tgt": "api_server_new",
+      "source": "copilotd_main_main",
+      "target": "api_server_new"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_src": "internal_config_config_go",
+      "_tgt": "config_config",
+      "source": "internal_config_config_go",
+      "target": "config_config"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L50",
+      "weight": 1.0,
+      "_src": "internal_config_config_go",
+      "_tgt": "config_config_load",
+      "source": "internal_config_config_go",
+      "target": "config_config_load"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L136",
+      "weight": 1.0,
+      "_src": "internal_config_config_go",
+      "_tgt": "config_config_env",
+      "source": "internal_config_config_go",
+      "target": "config_config_env"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L138",
+      "weight": 1.0,
+      "_src": "internal_config_config_go",
+      "_tgt": "config_config_envor",
+      "source": "internal_config_config_go",
+      "target": "config_config_envor"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L145",
+      "weight": 1.0,
+      "_src": "internal_config_config_go",
+      "_tgt": "config_config_firstenv",
+      "source": "internal_config_config_go",
+      "target": "config_config_firstenv"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L154",
+      "weight": 1.0,
+      "_src": "internal_config_config_go",
+      "_tgt": "config_config_envint",
+      "source": "internal_config_config_go",
+      "target": "config_config_envint"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L166",
+      "weight": 1.0,
+      "_src": "internal_config_config_go",
+      "_tgt": "config_config_splitlist",
+      "source": "internal_config_config_go",
+      "target": "config_config_splitlist"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L82",
+      "weight": 1.0,
+      "_src": "config_config",
+      "_tgt": "config_config_tokens",
+      "source": "config_config",
+      "target": "config_config_tokens"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L93",
+      "weight": 1.0,
+      "_src": "config_config",
+      "_tgt": "config_config_modelfor",
+      "source": "config_config",
+      "target": "config_config_modelfor"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L112",
+      "weight": 1.0,
+      "_src": "config_config",
+      "_tgt": "config_config_isbyok",
+      "source": "config_config",
+      "target": "config_config_isbyok"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L118",
+      "weight": 1.0,
+      "_src": "config_config",
+      "_tgt": "config_config_islocalprovider",
+      "source": "config_config",
+      "target": "config_config_islocalprovider"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L52",
+      "weight": 1.0,
+      "_src": "config_config_load",
+      "_tgt": "config_config_envor",
+      "source": "config_config_load",
+      "target": "config_config_envor"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L53",
+      "weight": 1.0,
+      "_src": "config_config_load",
+      "_tgt": "config_config_env",
+      "source": "config_config_load",
+      "target": "config_config_env"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L54",
+      "weight": 1.0,
+      "_src": "config_config_load",
+      "_tgt": "config_config_firstenv",
+      "source": "config_config_load",
+      "target": "config_config_firstenv"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L64",
+      "weight": 1.0,
+      "_src": "config_config_load",
+      "_tgt": "config_config_envint",
+      "source": "config_config_load",
+      "target": "config_config_envint"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L72",
+      "weight": 1.0,
+      "_src": "config_config_load",
+      "_tgt": "config_config_splitlist",
+      "source": "config_config_load",
+      "target": "config_config_splitlist"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L119",
+      "weight": 1.0,
+      "_src": "config_config_islocalprovider",
+      "_tgt": "config_config_isbyok",
+      "source": "config_config_isbyok",
+      "target": "config_config_islocalprovider"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L139",
+      "weight": 1.0,
+      "_src": "config_config_envor",
+      "_tgt": "config_config_env",
+      "source": "config_config_env",
+      "target": "config_config_envor"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L147",
+      "weight": 1.0,
+      "_src": "config_config_firstenv",
+      "_tgt": "config_config_env",
+      "source": "config_config_env",
+      "target": "config_config_firstenv"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/config/config.go",
+      "source_location": "L155",
+      "weight": 1.0,
+      "_src": "config_config_envint",
+      "_tgt": "config_config_env",
+      "source": "config_config_env",
+      "target": "config_config_envint"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_src": "internal_api_generate_go",
+      "_tgt": "api_generaterequest",
+      "source": "internal_api_generate_go",
+      "target": "api_generaterequest"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L102",
+      "weight": 1.0,
+      "_src": "internal_api_generate_go",
+      "_tgt": "api_generate_startndjson",
+      "source": "internal_api_generate_go",
+      "target": "api_generate_startndjson"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L131",
+      "weight": 1.0,
+      "_src": "internal_api_generate_go",
+      "_tgt": "api_generate_contextwithtimeout",
+      "source": "internal_api_generate_go",
+      "target": "api_generate_contextwithtimeout"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_src": "api_generaterequest",
+      "_tgt": "api_generaterequest_toruntime",
+      "source": "api_generaterequest",
+      "target": "api_generaterequest_toruntime"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L45",
+      "weight": 1.0,
+      "_src": "api_server_handlegenerate",
+      "_tgt": "api_generaterequest_toruntime",
+      "source": "api_generaterequest_toruntime",
+      "target": "api_server_handlegenerate"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L81",
+      "weight": 1.0,
+      "_src": "api_server_handlestream",
+      "_tgt": "api_generaterequest_toruntime",
+      "source": "api_generaterequest_toruntime",
+      "target": "api_server_handlestream"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L39",
+      "weight": 1.0,
+      "_src": "api_server",
+      "_tgt": "api_server_handlegenerate",
+      "source": "api_server",
+      "target": "api_server_handlegenerate"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L75",
+      "weight": 1.0,
+      "_src": "api_server",
+      "_tgt": "api_server_handlestream",
+      "source": "api_server",
+      "target": "api_server_handlestream"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L53",
+      "weight": 1.0,
+      "_src": "api_server",
+      "_tgt": "api_server_handleagent",
+      "source": "api_server",
+      "target": "api_server_handleagent"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L91",
+      "weight": 1.0,
+      "_src": "api_server",
+      "_tgt": "api_server_toolexecutor",
+      "source": "api_server",
+      "target": "api_server_toolexecutor"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_src": "internal_api_server_go",
+      "_tgt": "api_server",
+      "source": "api_server",
+      "target": "internal_api_server_go"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L27",
+      "weight": 1.0,
+      "_src": "api_server",
+      "_tgt": "api_server_handler",
+      "source": "api_server",
+      "target": "api_server_handler"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L47",
+      "weight": 1.0,
+      "_src": "api_server",
+      "_tgt": "api_server_auth",
+      "source": "api_server",
+      "target": "api_server_auth"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L72",
+      "weight": 1.0,
+      "_src": "api_server",
+      "_tgt": "api_server_handlehealth",
+      "source": "api_server",
+      "target": "api_server_handlehealth"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L77",
+      "weight": 1.0,
+      "_src": "api_server",
+      "_tgt": "api_server_handlestatus",
+      "source": "api_server",
+      "target": "api_server_handlestatus"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L102",
+      "weight": 1.0,
+      "_src": "api_server",
+      "_tgt": "api_server_handlemodels",
+      "source": "api_server",
+      "target": "api_server_handlemodels"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L51",
+      "weight": 1.0,
+      "_src": "api_server_handlegenerate",
+      "_tgt": "api_generate_contextwithtimeout",
+      "source": "api_server_handlegenerate",
+      "target": "api_generate_contextwithtimeout"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/api/generate.go",
+      "source_location": "L41",
+      "weight": 1.0,
+      "_src": "api_server_handlegenerate",
+      "_tgt": "api_server_decode",
+      "source": "api_server_handlegenerate",
+      "target": "api_server_decode"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/api/generate.go",
+      "source_location": "L42",
+      "weight": 1.0,
+      "_src": "api_server_handlegenerate",
+      "_tgt": "api_server_writejson",
+      "source": "api_server_handlegenerate",
+      "target": "api_server_writejson"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L87",
+      "weight": 1.0,
+      "_src": "api_server_handlestream",
+      "_tgt": "api_generate_startndjson",
+      "source": "api_server_handlestream",
+      "target": "api_generate_startndjson"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/generate.go",
+      "source_location": "L91",
+      "weight": 1.0,
+      "_src": "api_server_handlestream",
+      "_tgt": "api_generate_contextwithtimeout",
+      "source": "api_server_handlestream",
+      "target": "api_generate_contextwithtimeout"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/api/generate.go",
+      "source_location": "L77",
+      "weight": 1.0,
+      "_src": "api_server_handlestream",
+      "_tgt": "api_server_decode",
+      "source": "api_server_handlestream",
+      "target": "api_server_decode"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/api/generate.go",
+      "source_location": "L78",
+      "weight": 1.0,
+      "_src": "api_server_handlestream",
+      "_tgt": "api_server_writejson",
+      "source": "api_server_handlestream",
+      "target": "api_server_writejson"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/api/generate.go",
+      "source_location": "L105",
+      "weight": 1.0,
+      "_src": "api_generate_startndjson",
+      "_tgt": "api_server_writejson",
+      "source": "api_generate_startndjson",
+      "target": "api_server_writejson"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/api/agent.go",
+      "source_location": "L76",
+      "weight": 1.0,
+      "_src": "api_server_handleagent",
+      "_tgt": "api_generate_startndjson",
+      "source": "api_generate_startndjson",
+      "target": "api_server_handleagent"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/api/agent.go",
+      "source_location": "L80",
+      "weight": 1.0,
+      "_src": "api_server_handleagent",
+      "_tgt": "api_generate_contextwithtimeout",
+      "source": "api_generate_contextwithtimeout",
+      "target": "api_server_handleagent"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/api/server.go",
+      "source_location": "L103",
+      "weight": 1.0,
+      "_src": "api_server_handlemodels",
+      "_tgt": "api_generate_contextwithtimeout",
+      "source": "api_generate_contextwithtimeout",
+      "target": "api_server_handlemodels"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_src": "internal_api_agent_go",
+      "_tgt": "api_agentrequest",
+      "source": "internal_api_agent_go",
+      "target": "api_agentrequest"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L36",
+      "weight": 1.0,
+      "_src": "internal_api_agent_go",
+      "_tgt": "api_toolcallbackrequest",
+      "source": "internal_api_agent_go",
+      "target": "api_toolcallbackrequest"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L43",
+      "weight": 1.0,
+      "_src": "internal_api_agent_go",
+      "_tgt": "api_toolcallbackresponse",
+      "source": "internal_api_agent_go",
+      "target": "api_toolcallbackresponse"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L142",
+      "weight": 1.0,
+      "_src": "internal_api_agent_go",
+      "_tgt": "api_agent_firstnonempty",
+      "source": "internal_api_agent_go",
+      "target": "api_agent_firstnonempty"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L72",
+      "weight": 1.0,
+      "_src": "api_server_handleagent",
+      "_tgt": "api_agent_firstnonempty",
+      "source": "api_server_handleagent",
+      "target": "api_agent_firstnonempty"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/agent.go",
+      "source_location": "L83",
+      "weight": 1.0,
+      "_src": "api_server_handleagent",
+      "_tgt": "api_server_toolexecutor",
+      "source": "api_server_handleagent",
+      "target": "api_server_toolexecutor"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/api/agent.go",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_src": "api_server_handleagent",
+      "_tgt": "api_server_decode",
+      "source": "api_server_handleagent",
+      "target": "api_server_decode"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/api/agent.go",
+      "source_location": "L56",
+      "weight": 1.0,
+      "_src": "api_server_handleagent",
+      "_tgt": "api_server_writejson",
+      "source": "api_server_handleagent",
+      "target": "api_server_writejson"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L22",
+      "weight": 1.0,
+      "_src": "internal_api_server_go",
+      "_tgt": "api_server_new",
+      "source": "internal_api_server_go",
+      "target": "api_server_new"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L57",
+      "weight": 1.0,
+      "_src": "internal_api_server_go",
+      "_tgt": "api_errorbody",
+      "source": "internal_api_server_go",
+      "target": "api_errorbody"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L61",
+      "weight": 1.0,
+      "_src": "internal_api_server_go",
+      "_tgt": "api_server_writejson",
+      "source": "internal_api_server_go",
+      "target": "api_server_writejson"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L67",
+      "weight": 1.0,
+      "_src": "internal_api_server_go",
+      "_tgt": "api_server_decode",
+      "source": "internal_api_server_go",
+      "target": "api_server_decode"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L95",
+      "weight": 1.0,
+      "_src": "internal_api_server_go",
+      "_tgt": "api_server_modelordefault",
+      "source": "internal_api_server_go",
+      "target": "api_server_modelordefault"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L306",
+      "weight": 1.0,
+      "_src": "runtime_service_runonce",
+      "_tgt": "api_server_new",
+      "source": "api_server_new",
+      "target": "runtime_service_runonce"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L33",
+      "weight": 1.0,
+      "_src": "api_server_handler",
+      "_tgt": "api_server_auth",
+      "source": "api_server_handler",
+      "target": "api_server_auth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L50",
+      "weight": 1.0,
+      "_src": "api_server_auth",
+      "_tgt": "api_server_writejson",
+      "source": "api_server_auth",
+      "target": "api_server_writejson"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L73",
+      "weight": 1.0,
+      "_src": "api_server_handlehealth",
+      "_tgt": "api_server_writejson",
+      "source": "api_server_writejson",
+      "target": "api_server_handlehealth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L83",
+      "weight": 1.0,
+      "_src": "api_server_handlestatus",
+      "_tgt": "api_server_writejson",
+      "source": "api_server_writejson",
+      "target": "api_server_handlestatus"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L108",
+      "weight": 1.0,
+      "_src": "api_server_handlemodels",
+      "_tgt": "api_server_writejson",
+      "source": "api_server_writejson",
+      "target": "api_server_handlemodels"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/api/server.go",
+      "source_location": "L86",
+      "weight": 1.0,
+      "_src": "api_server_handlestatus",
+      "_tgt": "api_server_modelordefault",
+      "source": "api_server_handlestatus",
+      "target": "api_server_modelordefault"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_src": "internal_runtime_pool_go",
+      "_tgt": "runtime_account",
+      "source": "internal_runtime_pool_go",
+      "target": "runtime_account"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L41",
+      "weight": 1.0,
+      "_src": "internal_runtime_pool_go",
+      "_tgt": "runtime_pool",
+      "source": "internal_runtime_pool_go",
+      "target": "runtime_pool"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L47",
+      "weight": 1.0,
+      "_src": "internal_runtime_pool_go",
+      "_tgt": "runtime_pool_newpool",
+      "source": "internal_runtime_pool_go",
+      "target": "runtime_pool_newpool"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L64",
+      "weight": 1.0,
+      "_src": "internal_runtime_pool_go",
+      "_tgt": "runtime_lease",
+      "source": "internal_runtime_pool_go",
+      "target": "runtime_lease"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L212",
+      "weight": 1.0,
+      "_src": "internal_runtime_pool_go",
+      "_tgt": "runtime_pool_connection",
+      "source": "internal_runtime_pool_go",
+      "target": "runtime_pool_connection"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L230",
+      "weight": 1.0,
+      "_src": "internal_runtime_pool_go",
+      "_tgt": "runtime_pool_isratelimit",
+      "source": "internal_runtime_pool_go",
+      "target": "runtime_pool_isratelimit"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L240",
+      "weight": 1.0,
+      "_src": "internal_runtime_pool_go",
+      "_tgt": "runtime_pool_isconnectionerror",
+      "source": "internal_runtime_pool_go",
+      "target": "runtime_pool_isconnectionerror"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L154",
+      "weight": 1.0,
+      "_src": "runtime_account",
+      "_tgt": "runtime_account_incooldown",
+      "source": "runtime_account",
+      "target": "runtime_account_incooldown"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L160",
+      "weight": 1.0,
+      "_src": "runtime_account",
+      "_tgt": "runtime_account_marklimited",
+      "source": "runtime_account",
+      "target": "runtime_account_marklimited"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L167",
+      "weight": 1.0,
+      "_src": "runtime_account",
+      "_tgt": "runtime_account_reset",
+      "source": "runtime_account",
+      "target": "runtime_account_reset"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L179",
+      "weight": 1.0,
+      "_src": "runtime_account",
+      "_tgt": "runtime_account_ensure",
+      "source": "runtime_account",
+      "target": "runtime_account_ensure"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L61",
+      "weight": 1.0,
+      "_src": "runtime_pool",
+      "_tgt": "runtime_pool_size",
+      "source": "runtime_pool",
+      "target": "runtime_pool_size"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L97",
+      "weight": 1.0,
+      "_src": "runtime_pool",
+      "_tgt": "runtime_pool_acquire",
+      "source": "runtime_pool",
+      "target": "runtime_pool_acquire"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L112",
+      "weight": 1.0,
+      "_src": "runtime_pool",
+      "_tgt": "runtime_pool_pick",
+      "source": "runtime_pool",
+      "target": "runtime_pool_pick"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L224",
+      "weight": 1.0,
+      "_src": "runtime_pool",
+      "_tgt": "runtime_pool_shutdown",
+      "source": "runtime_pool",
+      "target": "runtime_pool_shutdown"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L68",
+      "weight": 1.0,
+      "_src": "runtime_session_newservice",
+      "_tgt": "runtime_pool_newpool",
+      "source": "runtime_pool_newpool",
+      "target": "runtime_session_newservice"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L73",
+      "weight": 1.0,
+      "_src": "runtime_lease",
+      "_tgt": "runtime_lease_release",
+      "source": "runtime_lease",
+      "target": "runtime_lease_release"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L83",
+      "weight": 1.0,
+      "_src": "runtime_lease",
+      "_tgt": "runtime_lease_failed",
+      "source": "runtime_lease",
+      "target": "runtime_lease_failed"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L87",
+      "weight": 1.0,
+      "_src": "runtime_lease_failed",
+      "_tgt": "runtime_pool_isratelimit",
+      "source": "runtime_lease_failed",
+      "target": "runtime_pool_isratelimit"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L88",
+      "weight": 1.0,
+      "_src": "runtime_lease_failed",
+      "_tgt": "runtime_account_marklimited",
+      "source": "runtime_lease_failed",
+      "target": "runtime_account_marklimited"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L91",
+      "weight": 1.0,
+      "_src": "runtime_lease_failed",
+      "_tgt": "runtime_pool_isconnectionerror",
+      "source": "runtime_lease_failed",
+      "target": "runtime_pool_isconnectionerror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L92",
+      "weight": 1.0,
+      "_src": "runtime_lease_failed",
+      "_tgt": "runtime_account_reset",
+      "source": "runtime_lease_failed",
+      "target": "runtime_account_reset"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L98",
+      "weight": 1.0,
+      "_src": "runtime_pool_acquire",
+      "_tgt": "runtime_pool_pick",
+      "source": "runtime_pool_acquire",
+      "target": "runtime_pool_pick"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L102",
+      "weight": 1.0,
+      "_src": "runtime_pool_acquire",
+      "_tgt": "runtime_account_ensure",
+      "source": "runtime_pool_acquire",
+      "target": "runtime_account_ensure"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L116",
+      "weight": 1.0,
+      "_src": "runtime_pool_pick",
+      "_tgt": "runtime_account_incooldown",
+      "source": "runtime_pool_pick",
+      "target": "runtime_account_incooldown"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L226",
+      "weight": 1.0,
+      "_src": "runtime_pool_shutdown",
+      "_tgt": "runtime_account_reset",
+      "source": "runtime_account_reset",
+      "target": "runtime_pool_shutdown"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/pool.go",
+      "source_location": "L196",
+      "weight": 1.0,
+      "_src": "runtime_account_ensure",
+      "_tgt": "runtime_pool_connection",
+      "source": "runtime_account_ensure",
+      "target": "runtime_pool_connection"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L233",
+      "weight": 1.0,
+      "_src": "runtime_service_runonce",
+      "_tgt": "runtime_pool_isratelimit",
+      "source": "runtime_pool_isratelimit",
+      "target": "runtime_service_runonce"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_src": "internal_runtime_tools_go",
+      "_tgt": "runtime_toolcall",
+      "source": "internal_runtime_tools_go",
+      "target": "runtime_toolcall"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_src": "internal_runtime_tools_go",
+      "_tgt": "runtime_calllog",
+      "source": "internal_runtime_tools_go",
+      "target": "runtime_calllog"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L45",
+      "weight": 1.0,
+      "_src": "internal_runtime_tools_go",
+      "_tgt": "runtime_tools_buildtools",
+      "source": "internal_runtime_tools_go",
+      "target": "runtime_tools_buildtools"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L96",
+      "weight": 1.0,
+      "_src": "internal_runtime_tools_go",
+      "_tgt": "runtime_tools_decodeargs",
+      "source": "internal_runtime_tools_go",
+      "target": "runtime_tools_decodeargs"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_src": "runtime_calllog",
+      "_tgt": "runtime_calllog_add",
+      "source": "runtime_calllog",
+      "target": "runtime_calllog_add"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L32",
+      "weight": 1.0,
+      "_src": "runtime_calllog",
+      "_tgt": "runtime_calllog_snapshot",
+      "source": "runtime_calllog",
+      "target": "runtime_calllog_snapshot"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L82",
+      "weight": 1.0,
+      "_src": "runtime_tools_buildtools",
+      "_tgt": "runtime_calllog_add",
+      "source": "runtime_calllog_add",
+      "target": "runtime_tools_buildtools"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/tools.go",
+      "source_location": "L66",
+      "weight": 1.0,
+      "_src": "runtime_tools_buildtools",
+      "_tgt": "runtime_tools_decodeargs",
+      "source": "runtime_tools_buildtools",
+      "target": "runtime_tools_decodeargs"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L223",
+      "weight": 1.0,
+      "_src": "runtime_service_runonce",
+      "_tgt": "runtime_tools_buildtools",
+      "source": "runtime_tools_buildtools",
+      "target": "runtime_service_runonce"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L27",
+      "weight": 1.0,
+      "_src": "internal_runtime_session_go",
+      "_tgt": "runtime_event",
+      "source": "internal_runtime_session_go",
+      "target": "runtime_event"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L40",
+      "weight": 1.0,
+      "_src": "internal_runtime_session_go",
+      "_tgt": "runtime_request",
+      "source": "internal_runtime_session_go",
+      "target": "runtime_request"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L51",
+      "weight": 1.0,
+      "_src": "internal_runtime_session_go",
+      "_tgt": "runtime_toolspec",
+      "source": "internal_runtime_session_go",
+      "target": "runtime_toolspec"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L58",
+      "weight": 1.0,
+      "_src": "internal_runtime_session_go",
+      "_tgt": "runtime_toolexecutor",
+      "source": "internal_runtime_session_go",
+      "target": "runtime_toolexecutor"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L61",
+      "weight": 1.0,
+      "_src": "internal_runtime_session_go",
+      "_tgt": "runtime_service",
+      "source": "internal_runtime_session_go",
+      "target": "runtime_service"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L67",
+      "weight": 1.0,
+      "_src": "internal_runtime_session_go",
+      "_tgt": "runtime_session_newservice",
+      "source": "internal_runtime_session_go",
+      "target": "runtime_session_newservice"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L172",
+      "weight": 1.0,
+      "_src": "internal_runtime_session_go",
+      "_tgt": "runtime_session_approveall",
+      "source": "internal_runtime_session_go",
+      "target": "runtime_session_approveall"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L176",
+      "weight": 1.0,
+      "_src": "internal_runtime_session_go",
+      "_tgt": "runtime_session_denyall",
+      "source": "internal_runtime_session_go",
+      "target": "runtime_session_denyall"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L325",
+      "weight": 1.0,
+      "_src": "internal_runtime_session_go",
+      "_tgt": "runtime_session_modellabel",
+      "source": "internal_runtime_session_go",
+      "target": "runtime_session_modellabel"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L72",
+      "weight": 1.0,
+      "_src": "runtime_service",
+      "_tgt": "runtime_service_config",
+      "source": "runtime_service",
+      "target": "runtime_service_config"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L75",
+      "weight": 1.0,
+      "_src": "runtime_service",
+      "_tgt": "runtime_service_shutdown",
+      "source": "runtime_service",
+      "target": "runtime_service_shutdown"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L78",
+      "weight": 1.0,
+      "_src": "runtime_service",
+      "_tgt": "runtime_service_models",
+      "source": "runtime_service",
+      "target": "runtime_service_models"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L94",
+      "weight": 1.0,
+      "_src": "runtime_service",
+      "_tgt": "runtime_service_resolvemodel",
+      "source": "runtime_service",
+      "target": "runtime_service_resolvemodel"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L103",
+      "weight": 1.0,
+      "_src": "runtime_service",
+      "_tgt": "runtime_service_modelchain",
+      "source": "runtime_service",
+      "target": "runtime_service_modelchain"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L117",
+      "weight": 1.0,
+      "_src": "runtime_service",
+      "_tgt": "runtime_service_timeout",
+      "source": "runtime_service",
+      "target": "runtime_service_timeout"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L125",
+      "weight": 1.0,
+      "_src": "runtime_service",
+      "_tgt": "runtime_service_sessionconfig",
+      "source": "runtime_service",
+      "target": "runtime_service_sessionconfig"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L184",
+      "weight": 1.0,
+      "_src": "runtime_service",
+      "_tgt": "runtime_service_stream",
+      "source": "runtime_service",
+      "target": "runtime_service_stream"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L202",
+      "weight": 1.0,
+      "_src": "runtime_service",
+      "_tgt": "runtime_service_runonce",
+      "source": "runtime_service",
+      "target": "runtime_service_runonce"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L104",
+      "weight": 1.0,
+      "_src": "runtime_service_modelchain",
+      "_tgt": "runtime_service_resolvemodel",
+      "source": "runtime_service_resolvemodel",
+      "target": "runtime_service_modelchain"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L186",
+      "weight": 1.0,
+      "_src": "runtime_service_stream",
+      "_tgt": "runtime_service_modelchain",
+      "source": "runtime_service_modelchain",
+      "target": "runtime_service_stream"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L210",
+      "weight": 1.0,
+      "_src": "runtime_service_runonce",
+      "_tgt": "runtime_service_timeout",
+      "source": "runtime_service_timeout",
+      "target": "runtime_service_runonce"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L224",
+      "weight": 1.0,
+      "_src": "runtime_service_runonce",
+      "_tgt": "runtime_service_sessionconfig",
+      "source": "runtime_service_sessionconfig",
+      "target": "runtime_service_runonce"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L187",
+      "weight": 1.0,
+      "_src": "runtime_service_stream",
+      "_tgt": "runtime_service_runonce",
+      "source": "runtime_service_stream",
+      "target": "runtime_service_runonce"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "internal/runtime/session.go",
+      "source_location": "L319",
+      "weight": 1.0,
+      "_src": "runtime_service_runonce",
+      "_tgt": "runtime_session_modellabel",
+      "source": "runtime_service_runonce",
+      "target": "runtime_session_modellabel"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "latency_benchmark_cli",
+      "_tgt": "github_copilot_go_sdk",
+      "source": "latency_benchmark_cli",
+      "target": "github_copilot_go_sdk"
+    },
+    {
+      "relation": "measures_latency_of",
+      "confidence": "EXTRACTED",
+      "_src": "latency_benchmark_cli",
+      "_tgt": "copilot_cli_runtime",
+      "source": "latency_benchmark_cli",
+      "target": "copilot_cli_runtime"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "models_example_cli",
+      "_tgt": "github_copilot_go_sdk",
+      "source": "models_example_cli",
+      "target": "github_copilot_go_sdk"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "websearch_example_cli",
+      "_tgt": "github_copilot_go_sdk",
+      "source": "websearch_example_cli",
+      "target": "github_copilot_go_sdk"
+    },
+    {
+      "relation": "demonstrates_use_of",
+      "confidence": "EXTRACTED",
+      "_src": "websearch_example_cli",
+      "_tgt": "built_in_web_tools",
+      "source": "websearch_example_cli",
+      "target": "built_in_web_tools"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "copilot_cli",
+      "_tgt": "github_copilot_go_sdk",
+      "source": "copilot_cli",
+      "target": "github_copilot_go_sdk"
+    },
+    {
+      "relation": "delegates_streaming_to",
+      "confidence": "EXTRACTED",
+      "_src": "copilot_cli",
+      "_tgt": "cli_streaming_helper",
+      "source": "copilot_cli",
+      "target": "cli_streaming_helper"
+    },
+    {
+      "relation": "launches",
+      "confidence": "EXTRACTED",
+      "_src": "copilot_cli",
+      "_tgt": "copilotd_server",
+      "source": "copilot_cli",
+      "target": "copilotd_server"
+    },
+    {
+      "relation": "resolves_auth_from",
+      "confidence": "EXTRACTED",
+      "_src": "copilot_cli",
+      "_tgt": "github_auth_sources",
+      "source": "copilot_cli",
+      "target": "github_auth_sources"
+    },
+    {
+      "relation": "connects_to",
+      "confidence": "EXTRACTED",
+      "_src": "copilot_cli",
+      "_tgt": "copilot_cli_runtime",
+      "source": "copilot_cli",
+      "target": "copilot_cli_runtime"
+    },
+    {
+      "relation": "enables_only_when_web_flag_is_set",
+      "confidence": "EXTRACTED",
+      "_src": "copilot_cli",
+      "_tgt": "built_in_web_tools",
+      "source": "copilot_cli",
+      "target": "built_in_web_tools"
+    },
+    {
+      "relation": "documents",
+      "confidence": "EXTRACTED",
+      "_src": "project_readme",
+      "_tgt": "copilot_cli",
+      "source": "copilot_cli",
+      "target": "project_readme"
+    },
+    {
+      "relation": "loads_configuration_from",
+      "confidence": "EXTRACTED",
+      "_src": "copilotd_server",
+      "_tgt": "environment_config_loader",
+      "source": "copilotd_server",
+      "target": "environment_config_loader"
+    },
+    {
+      "relation": "serves",
+      "confidence": "EXTRACTED",
+      "_src": "copilotd_server",
+      "_tgt": "http_api_surface",
+      "source": "copilotd_server",
+      "target": "http_api_surface"
+    },
+    {
+      "relation": "delegates_requests_to",
+      "confidence": "EXTRACTED",
+      "_src": "copilotd_server",
+      "_tgt": "runtime_session_service",
+      "source": "copilotd_server",
+      "target": "runtime_session_service"
+    },
+    {
+      "relation": "documents",
+      "confidence": "EXTRACTED",
+      "_src": "project_readme",
+      "_tgt": "copilotd_server",
+      "source": "copilotd_server",
+      "target": "project_readme"
+    },
+    {
+      "relation": "consumes_over_http",
+      "confidence": "EXTRACTED",
+      "_src": "caller_backend_python_service",
+      "_tgt": "copilotd_server",
+      "source": "copilotd_server",
+      "target": "caller_backend_python_service"
+    },
+    {
+      "relation": "uses_settings_from",
+      "confidence": "EXTRACTED",
+      "_src": "runtime_client_pool",
+      "_tgt": "environment_config_loader",
+      "source": "environment_config_loader",
+      "target": "runtime_client_pool"
+    },
+    {
+      "relation": "loads",
+      "confidence": "EXTRACTED",
+      "_src": "environment_config_loader",
+      "_tgt": "github_auth_sources",
+      "source": "environment_config_loader",
+      "target": "github_auth_sources"
+    },
+    {
+      "relation": "configures",
+      "confidence": "EXTRACTED",
+      "_src": "environment_config_loader",
+      "_tgt": "byok_model_provider",
+      "source": "environment_config_loader",
+      "target": "byok_model_provider"
+    },
+    {
+      "relation": "routes_requests_to",
+      "confidence": "EXTRACTED",
+      "_src": "http_api_surface",
+      "_tgt": "generate_stream_handlers",
+      "source": "http_api_surface",
+      "target": "generate_stream_handlers"
+    },
+    {
+      "relation": "routes_requests_to",
+      "confidence": "EXTRACTED",
+      "_src": "http_api_surface",
+      "_tgt": "agent_session_handler",
+      "source": "http_api_surface",
+      "target": "agent_session_handler"
+    },
+    {
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "_src": "generate_stream_handlers",
+      "_tgt": "runtime_session_service",
+      "source": "generate_stream_handlers",
+      "target": "runtime_session_service"
+    },
+    {
+      "relation": "streams_responses_to",
+      "confidence": "INFERRED",
+      "_src": "generate_stream_handlers",
+      "_tgt": "caller_backend_python_service",
+      "source": "generate_stream_handlers",
+      "target": "caller_backend_python_service"
+    },
+    {
+      "relation": "invokes",
+      "confidence": "EXTRACTED",
+      "_src": "agent_session_handler",
+      "_tgt": "runtime_session_service",
+      "source": "agent_session_handler",
+      "target": "runtime_session_service"
+    },
+    {
+      "relation": "constructs",
+      "confidence": "EXTRACTED",
+      "_src": "agent_session_handler",
+      "_tgt": "tool_callback_bridge",
+      "source": "agent_session_handler",
+      "target": "tool_callback_bridge"
+    },
+    {
+      "relation": "calls_back_to",
+      "confidence": "EXTRACTED",
+      "_src": "agent_session_handler",
+      "_tgt": "caller_backend_python_service",
+      "source": "agent_session_handler",
+      "target": "caller_backend_python_service"
+    },
+    {
+      "relation": "explains_callback_flow_for",
+      "confidence": "EXTRACTED",
+      "_src": "project_readme",
+      "_tgt": "agent_session_handler",
+      "source": "agent_session_handler",
+      "target": "project_readme"
+    },
+    {
+      "relation": "acquires_clients_from",
+      "confidence": "EXTRACTED",
+      "_src": "runtime_session_service",
+      "_tgt": "runtime_client_pool",
+      "source": "runtime_client_pool",
+      "target": "runtime_session_service"
+    },
+    {
+      "relation": "starts_and_reuses",
+      "confidence": "EXTRACTED",
+      "_src": "runtime_client_pool",
+      "_tgt": "copilot_cli_runtime",
+      "source": "runtime_client_pool",
+      "target": "copilot_cli_runtime"
+    },
+    {
+      "relation": "pools_accounts_from",
+      "confidence": "EXTRACTED",
+      "_src": "runtime_client_pool",
+      "_tgt": "github_auth_sources",
+      "source": "runtime_client_pool",
+      "target": "github_auth_sources"
+    },
+    {
+      "relation": "exposes_when_web_mode_is_enabled",
+      "confidence": "EXTRACTED",
+      "_src": "runtime_session_service",
+      "_tgt": "built_in_web_tools",
+      "source": "runtime_session_service",
+      "target": "built_in_web_tools"
+    },
+    {
+      "relation": "returns_audit_trail_to",
+      "confidence": "EXTRACTED",
+      "_src": "tool_callback_bridge",
+      "_tgt": "runtime_session_service",
+      "source": "runtime_session_service",
+      "target": "tool_callback_bridge"
+    },
+    {
+      "relation": "routes_sessions_to",
+      "confidence": "EXTRACTED",
+      "_src": "runtime_session_service",
+      "_tgt": "byok_model_provider",
+      "source": "runtime_session_service",
+      "target": "byok_model_provider"
+    },
+    {
+      "relation": "creates_sessions_with",
+      "confidence": "EXTRACTED",
+      "_src": "runtime_session_service",
+      "_tgt": "github_copilot_go_sdk",
+      "source": "runtime_session_service",
+      "target": "github_copilot_go_sdk"
+    },
+    {
+      "relation": "executes_tools_via_http_callback",
+      "confidence": "EXTRACTED",
+      "_src": "tool_callback_bridge",
+      "_tgt": "caller_backend_python_service",
+      "source": "tool_callback_bridge",
+      "target": "caller_backend_python_service"
+    },
+    {
+      "relation": "documents_usage_of",
+      "confidence": "EXTRACTED",
+      "_src": "project_readme",
+      "_tgt": "built_in_web_tools",
+      "source": "project_readme",
+      "target": "built_in_web_tools"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+/home/devnolife/studio-revisi/copilot-go/main.go
+/home/devnolife/studio-revisi/copilot-go/cmd/websearch/main.go
+/home/devnolife/studio-revisi/copilot-go/cmd/copilot-cli/main.go
+/home/devnolife/studio-revisi/copilot-go/cmd/copilot-cli/stream.go
+/home/devnolife/studio-revisi/copilot-go/cmd/models/main.go
+/home/devnolife/studio-revisi/copilot-go/cmd/copilotd/main.go
+/home/devnolife/studio-revisi/copilot-go/internal/config/config.go
+/home/devnolife/studio-revisi/copilot-go/internal/api/generate.go
+/home/devnolife/studio-revisi/copilot-go/internal/api/agent.go
+/home/devnolife/studio-revisi/copilot-go/internal/api/server.go
+/home/devnolife/studio-revisi/copilot-go/internal/runtime/pool.go
+/home/devnolife/studio-revisi/copilot-go/internal/runtime/tools.go
+/home/devnolife/studio-revisi/copilot-go/internal/runtime/session.go
+/home/devnolife/studio-revisi/copilot-go/README.md

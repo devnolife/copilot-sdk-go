@@ -1,0 +1,260 @@
+{
+  "communities": {
+    "0": [
+      "api_server_new",
+      "cmd_copilotd_main_go",
+      "copilotd_main_main",
+      "internal_runtime_session_go",
+      "runtime_event",
+      "runtime_pool_newpool",
+      "runtime_request",
+      "runtime_service",
+      "runtime_service_config",
+      "runtime_service_modelchain",
+      "runtime_service_models",
+      "runtime_service_resolvemodel",
+      "runtime_service_runonce",
+      "runtime_service_sessionconfig",
+      "runtime_service_shutdown",
+      "runtime_service_stream",
+      "runtime_service_timeout",
+      "runtime_session_approveall",
+      "runtime_session_denyall",
+      "runtime_session_modellabel",
+      "runtime_session_newservice",
+      "runtime_toolexecutor",
+      "runtime_toolspec"
+    ],
+    "1": [
+      "api_errorbody",
+      "api_generate_contextwithtimeout",
+      "api_generate_startndjson",
+      "api_generaterequest",
+      "api_generaterequest_toruntime",
+      "api_server",
+      "api_server_auth",
+      "api_server_decode",
+      "api_server_handleagent",
+      "api_server_handlegenerate",
+      "api_server_handlehealth",
+      "api_server_handlemodels",
+      "api_server_handler",
+      "api_server_handlestatus",
+      "api_server_handlestream",
+      "api_server_modelordefault",
+      "api_server_toolexecutor",
+      "api_server_writejson",
+      "internal_api_generate_go",
+      "internal_api_server_go"
+    ],
+    "2": [
+      "cmd_copilot_cli_main_go",
+      "cmd_copilot_cli_stream_go",
+      "cmd_models_main_go",
+      "cmd_websearch_main_go",
+      "copilot_cli_main_main",
+      "copilot_cli_main_newclient",
+      "copilot_cli_main_newsession",
+      "copilot_cli_main_promptwithstdin",
+      "copilot_cli_main_resolveclipath",
+      "copilot_cli_main_resolvetoken",
+      "copilot_cli_main_runask",
+      "copilot_cli_main_runchat",
+      "copilot_cli_main_runmodels",
+      "copilot_cli_main_runwhoami",
+      "copilot_cli_options",
+      "copilot_cli_stream_printjson",
+      "copilot_cli_stream_runserve",
+      "copilot_cli_stream_streamturn",
+      "models_main_main",
+      "websearch_main_main"
+    ],
+    "3": [
+      "agent_session_handler",
+      "built_in_web_tools",
+      "byok_model_provider",
+      "caller_backend_python_service",
+      "cli_streaming_helper",
+      "copilot_cli",
+      "copilot_cli_runtime",
+      "copilotd_server",
+      "environment_config_loader",
+      "generate_stream_handlers",
+      "github_auth_sources",
+      "github_copilot_go_sdk",
+      "http_api_surface",
+      "latency_benchmark_cli",
+      "models_example_cli",
+      "project_readme",
+      "runtime_client_pool",
+      "runtime_session_service",
+      "tool_callback_bridge",
+      "websearch_example_cli"
+    ],
+    "4": [
+      "internal_runtime_pool_go",
+      "runtime_account",
+      "runtime_account_ensure",
+      "runtime_account_incooldown",
+      "runtime_account_marklimited",
+      "runtime_account_reset",
+      "runtime_lease",
+      "runtime_lease_failed",
+      "runtime_lease_release",
+      "runtime_pool",
+      "runtime_pool_acquire",
+      "runtime_pool_connection",
+      "runtime_pool_isconnectionerror",
+      "runtime_pool_isratelimit",
+      "runtime_pool_pick",
+      "runtime_pool_shutdown",
+      "runtime_pool_size"
+    ],
+    "5": [
+      "config_config",
+      "config_config_env",
+      "config_config_envint",
+      "config_config_envor",
+      "config_config_firstenv",
+      "config_config_isbyok",
+      "config_config_islocalprovider",
+      "config_config_load",
+      "config_config_modelfor",
+      "config_config_splitlist",
+      "config_config_tokens",
+      "internal_config_config_go"
+    ],
+    "6": [
+      "internal_runtime_tools_go",
+      "runtime_calllog",
+      "runtime_calllog_add",
+      "runtime_calllog_snapshot",
+      "runtime_toolcall",
+      "runtime_tools_buildtools",
+      "runtime_tools_decodeargs"
+    ],
+    "7": [
+      "api_agent_firstnonempty",
+      "api_agentrequest",
+      "api_toolcallbackrequest",
+      "api_toolcallbackresponse",
+      "internal_api_agent_go"
+    ],
+    "8": [
+      "copilot_go_main_main",
+      "copilot_go_main_run",
+      "copilot_go_main_truncate",
+      "main_go"
+    ]
+  },
+  "cohesion": {},
+  "god_nodes": [
+    {
+      "id": "copilot_cli_main_newclient",
+      "label": "newClient()",
+      "degree": 11
+    },
+    {
+      "id": "api_server",
+      "label": "Server",
+      "degree": 10
+    },
+    {
+      "id": "runtime_service",
+      "label": "Service",
+      "degree": 10
+    },
+    {
+      "id": "api_server_writejson",
+      "label": "writeJSON()",
+      "degree": 9
+    },
+    {
+      "id": "copilot_cli_main_runask",
+      "label": "runAsk()",
+      "degree": 7
+    },
+    {
+      "id": "config_config_load",
+      "label": "Load()",
+      "degree": 7
+    },
+    {
+      "id": "copilot_cli_main_main",
+      "label": "main()",
+      "degree": 6
+    },
+    {
+      "id": "copilot_cli_main_runchat",
+      "label": "runChat()",
+      "degree": 5
+    },
+    {
+      "id": "config_config",
+      "label": "Config",
+      "degree": 5
+    },
+    {
+      "id": "config_config_env",
+      "label": "env()",
+      "degree": 5
+    }
+  ],
+  "surprises": [
+    {
+      "source": "main()",
+      "target": "newClient()",
+      "source_files": [
+        "main.go",
+        "cmd/copilot-cli/main.go"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "runAsk()",
+      "target": "New()",
+      "source_files": [
+        "cmd/copilot-cli/main.go",
+        "internal/api/server.go"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "main()",
+      "target": "Load()",
+      "source_files": [
+        "cmd/copilotd/main.go",
+        "internal/config/config.go"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "main()",
+      "target": "NewService()",
+      "source_files": [
+        "cmd/copilotd/main.go",
+        "internal/runtime/session.go"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories"
+    },
+    {
+      "source": "main()",
+      "target": "New()",
+      "source_files": [
+        "cmd/copilotd/main.go",
+        "internal/api/server.go"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories"
+    }
+  ]
+}

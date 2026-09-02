@@ -140,6 +140,19 @@ Container tidak punya sesi login interaktif, jadi pakai token — atau mount
   ini via JSON-RPC stdio.
 - Go 1.24+.
 
+## Pengembangan
+
+```bash
+go vet ./... && go test -race ./...   # suite unit: config, pool, session, tools, api
+go test -cover ./internal/...         # cakupan per paket
+```
+
+Suite berjalan tanpa Copilot CLI: pool dan service bersifat lazy, jadi test
+hanya menyentuh jalur validasi, pemilihan akun/cooldown, penyusunan config
+sesi, dan callback tool (lewat `httptest`). Jalur yang benar-benar men-spawn
+runtime (`Stream`, `Models`) sengaja tidak diuji di sini. CI (GitHub Actions)
+menjalankan gofmt, vet, build, dan test pada setiap push/PR.
+
 ## Cara membuat Copilot melakukan pencarian web
 
 Runtime Copilot CLI sudah punya tool web bawaan (`web_search` untuk mencari,

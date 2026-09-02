@@ -4,3 +4,6 @@
 .env
 .env.*
 !.env.example
+
+# Artefak analisis graf (hasil generator, bukan sumber)
+/graphify-out/

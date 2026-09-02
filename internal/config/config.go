@@ -119,18 +119,29 @@ func (c Config) IsLocalProvider() bool {
 	if !c.IsBYOK() {
 		return false
 	}
-	host := c.ProviderBaseURL
-	for _, prefix := range []string{"http://", "https://"} {
-		host = strings.TrimPrefix(host, prefix)
-	}
-	if idx := strings.IndexAny(host, ":/"); idx >= 0 {
-		host = host[:idx]
-	}
-	switch strings.ToLower(host) {
+	switch strings.ToLower(hostOf(c.ProviderBaseURL)) {
 	case "localhost", "127.0.0.1", "::1", "0.0.0.0", "host.docker.internal":
 		return true
 	}
 	return false
+}
+
+// hostOf mengambil nama host dari URL tanpa skema, port, dan path.
+// Literal IPv6 berkurung ("[::1]:11434") dikembalikan tanpa kurungnya.
+func hostOf(rawURL string) string {
+	host := rawURL
+	for _, prefix := range []string{"http://", "https://"} {
+		host = strings.TrimPrefix(host, prefix)
+	}
+	if strings.HasPrefix(host, "[") {
+		if end := strings.Index(host, "]"); end > 0 {
+			return host[1:end]
+		}
+	}
+	if idx := strings.IndexAny(host, ":/"); idx >= 0 {
+		host = host[:idx]
+	}
+	return host
 }
 
 func env(name string) string { return strings.TrimSpace(os.Getenv(name)) }

@@ -114,7 +114,8 @@ func (p *Pool) pick(ctx context.Context) (*account, error) {
 	var fallback *account
 	for _, acc := range p.accounts {
 		if acc.inCooldown(now) {
-			if fallback == nil {
+			// Kandidat cadangan: akun yang cooldown-nya paling cepat berakhir.
+			if fallback == nil || acc.cooldownUntil().Before(fallback.cooldownUntil()) {
 				fallback = acc
 			}
 			continue
@@ -155,6 +156,12 @@ func (a *account) inCooldown(now time.Time) bool {
 	a.mu.Lock()
 	defer a.mu.Unlock()
 	return now.Before(a.cooldownEnd)
+}
+
+func (a *account) cooldownUntil() time.Time {
+	a.mu.Lock()
+	defer a.mu.Unlock()
+	return a.cooldownEnd
 }
 
 func (a *account) markLimited() {

@@ -45,11 +45,13 @@ hanya `--web` yang membuka `web_search` + `web_fetch`.
 
 ## copilotd — Copilot sebagai backend HTTP
 
-`github-copilot-sdk` untuk Python mensyaratkan Python >= 3.11, sedangkan
-virtualenv backend riset masih 3.10 dan berisi torch/transformers ~6.7 GB.
-Alih-alih membangun ulang virtualenv itu, **seluruh akses Copilot dipusatkan di
-service Go ini**; backend FastAPI hanya berbicara HTTP ke sini
-(`app/services/copilot_sdk.py` sekarang murni klien HTTP).
+Awalnya lahir karena `github-copilot-sdk` untuk Python mensyaratkan Python >= 3.11
+sedangkan virtualenv backend riset waktu itu masih 3.10 (berisi torch/transformers
+~6.7 GB). Kini venv backend sudah 3.11, tetapi **seluruh akses Copilot tetap
+dipusatkan di service Go ini**: pool multi-akun, cooldown rate-limit, failover
+model, dan BYOK dikelola di satu proses, dan backend Python tidak perlu memasang
+SDK apa pun — backend FastAPI hanya berbicara HTTP ke sini
+(`app/services/copilot_sdk.py` murni klien HTTP).
 
 ```bash
 go build -o bin/copilotd ./cmd/copilotd

@@ -112,7 +112,7 @@ berkas `.env` bisa dipakai bersama.
 | `TURNITIN_COPILOT_MODEL_FALLBACKS` | — | Model cadangan saat kena rate limit |
 | `TURNITIN_COPILOT_MAX_CONCURRENCY` | `2` | Sesi paralel per akun |
 | `TURNITIN_COPILOT_TIMEOUT` | `180` | Detik, untuk generate/stream |
-| `TURNITIN_COPILOT_AGENT_TIMEOUT` | `300` | Detik, untuk sesi agentik |
+| `TURNITIN_COPILOT_AGENT_TIMEOUT` | `300` | Detik, untuk sesi agentik. Juga menentukan batas tulis server HTTP (`WriteTimeout` = nilai ini + 2 menit) yang memotong **setiap** respons, termasuk aliran dengan `timeout_sec` lebih panjang. Setel ≥ timeout klien terpanjang − 120, mis. `480` untuk generate IDE Tugas core (540 dtk) |
 | `TURNITIN_COPILOT_PROVIDER_*` | — | BYOK (mis. arahkan ke Ollama lokal) |
 
 Akun yang kena rate limit masuk cooldown 5 menit dan permintaan berikutnya

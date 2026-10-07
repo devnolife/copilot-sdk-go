@@ -14,13 +14,17 @@ import (
 
 // generateRequest adalah bentuk permintaan non-streaming.
 type generateRequest struct {
-	Prompt     string  `json:"prompt"`
-	System     string  `json:"system"`
-	Model      string  `json:"model"`
-	Tier       string  `json:"tier"`
-	JSONMode   bool    `json:"json_mode"`
-	Web        bool    `json:"web"`
-	TimeoutSec float64 `json:"timeout_sec"`
+	Prompt          string  `json:"prompt"`
+	System          string  `json:"system"`
+	Model           string  `json:"model"`
+	Tier            string  `json:"tier"`
+	JSONMode        bool    `json:"json_mode"`
+	Web             bool    `json:"web"`
+	TimeoutSec      float64 `json:"timeout_sec"`
+	Managed         bool    `json:"managed"`
+	MaxAiCredits    float64 `json:"max_ai_credits"`
+	MaxOutputTokens int64   `json:"max_output_tokens"`
+	MaxToolCalls    int     `json:"max_tool_calls"`
 }
 
 func (g generateRequest) toRuntime() runtime.Request {
@@ -32,6 +36,7 @@ func (g generateRequest) toRuntime() runtime.Request {
 		JSONMode: g.JSONMode,
 		Web:      g.Web,
 		Timeout:  time.Duration(g.TimeoutSec * float64(time.Second)),
+		Managed:  g.Managed, MaxAiCredits: g.MaxAiCredits, MaxOutputTokens: g.MaxOutputTokens, MaxToolCalls: g.MaxToolCalls,
 	}
 }
 

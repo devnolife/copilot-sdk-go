@@ -38,13 +38,17 @@ type Event struct {
 
 // Request adalah parameter umum satu pemanggilan.
 type Request struct {
-	Prompt   string
-	System   string
-	Model    string
-	Tier     string
-	JSONMode bool
-	Web      bool
-	Timeout  time.Duration
+	Prompt          string
+	System          string
+	Model           string
+	Tier            string
+	JSONMode        bool
+	Web             bool
+	Timeout         time.Duration
+	Managed         bool
+	MaxAiCredits    float64
+	MaxOutputTokens int64
+	MaxToolCalls    int
 }
 
 // ToolSpec adalah deklarasi tool yang dieksekusi di sisi pemanggil.
@@ -103,7 +107,7 @@ func (s *Service) resolveModel(req Request) string {
 func (s *Service) modelChain(req Request) []string {
 	primary := s.resolveModel(req)
 	chain := []string{primary}
-	if req.Model != "" {
+	if req.Model != "" || req.Managed {
 		return chain
 	}
 	for _, fb := range s.cfg.ModelFallbacks {
@@ -126,6 +130,30 @@ func (s *Service) sessionConfig(req Request, model string, tools []copilot.Tool)
 	cfg := &copilot.SessionConfig{
 		Model:     model,
 		Streaming: copilot.Bool(true),
+	}
+	if req.Managed {
+		cfg.SessionLimits = &rpc.SessionLimitsConfig{MaxAiCredits: &req.MaxAiCredits}
+		cfg.ModelCapabilities = &rpc.ModelCapabilitiesOverride{
+			Limits: &rpc.ModelCapabilitiesOverrideLimits{MaxOutputTokens: &req.MaxOutputTokens},
+		}
+		cfg.EnableFileHooks = copilot.Bool(false)
+		cfg.SkipCustomInstructions = copilot.Bool(true)
+		cfg.CustomAgentsLocalOnly = copilot.Bool(true)
+		cfg.CoauthorEnabled = copilot.Bool(false)
+		cfg.ManageScheduleEnabled = copilot.Bool(false)
+		var mu sync.Mutex
+		calls := 0
+		cfg.Hooks = &copilot.SessionHooks{
+			OnPreToolUse: func(_ copilot.PreToolUseHookInput, _ copilot.HookInvocation) (*copilot.PreToolUseHookOutput, error) {
+				mu.Lock()
+				defer mu.Unlock()
+				if calls >= req.MaxToolCalls {
+					return &copilot.PreToolUseHookOutput{PermissionDecision: "deny", PermissionDecisionReason: "generation_tool_budget_exceeded"}, nil
+				}
+				calls++
+				return &copilot.PreToolUseHookOutput{PermissionDecision: "allow"}, nil
+			},
+		}
 	}
 
 	switch {
@@ -182,6 +210,9 @@ func denyAll(copilot.PermissionRequest, copilot.PermissionInvocation) (rpc.Permi
 // Model dicoba berurutan sesuai modelChain; kalau yang pertama kena rate limit
 // dan belum ada teks yang terkirim, model berikutnya dicoba secara transparan.
 func (s *Service) Stream(ctx context.Context, req Request, tools []ToolSpec, exec ToolExecutor, emit func(Event)) error {
+	if req.Managed && (req.MaxAiCredits <= 0 || req.MaxOutputTokens <= 0 || req.MaxToolCalls < 0 || req.Timeout <= 0) {
+		return fmt.Errorf("managed generation requires explicit limits")
+	}
 	var lastErr error
 	for _, model := range s.modelChain(req) {
 		err := s.runOnce(ctx, req, model, tools, exec, emit)
@@ -294,6 +325,13 @@ func (s *Service) runOnce(
 	select {
 	case <-done:
 	case <-ctx.Done():
+		if req.Managed {
+			abortCtx, stop := context.WithTimeout(context.Background(), 5*time.Second)
+			defer stop()
+			if err := session.Abort(abortCtx); err != nil {
+				return fmt.Errorf("generation_result_unknown: abort could not be confirmed: %w", err)
+			}
+		}
 		return fmt.Errorf("Copilot tidak merespons dalam %s", deadline)
 	}
 

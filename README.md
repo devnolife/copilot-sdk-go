@@ -96,6 +96,23 @@ POST <callback_url>  {"token": "...", "tool": "cari_paper", "arguments": {…}}
 
 Event `done` membawa `calls[]` berisi jejak seluruh pemanggilan tool.
 
+### Managed generation
+
+Core admission dapat mengirim `managed: true` beserta `max_ai_credits`,
+`max_output_tokens`, `max_tool_calls` dan `timeout_sec` eksplisit.
+`GET /v1/status` mengiklankan `managed_generation_v1`.
+Mode ini menonaktifkan fallback model internal, custom instructions/file
+hooks serta tool penjadwal/coauthor ambient; setiap tool melewati hook
+batas pemakaian. Timeout mencoba `Session.Abort`; abort yang tidak dapat
+dikonfirmasi dilaporkan `generation_result_unknown`, bukan dianggap selesai.
+
+SDK dipin dan request meneruskan `SessionLimits.MaxAiCredits` serta
+capability output token yang didukung versi itu. Batas kredit/runtime
+tidak sama dengan billing token aktual atau bukti satu sesi = satu
+inferensi. Dukungan runtime/provider dan perilaku biaya tetap perlu
+diukur dalam benchmark yang disetujui; unit test tidak menjalankan model.
+Permintaan lama tanpa `managed` mempertahankan perilaku sebelumnya.
+
 ### Konfigurasi
 
 Membaca variabel `TURNITIN_COPILOT_*` yang sama dengan backend, jadi satu

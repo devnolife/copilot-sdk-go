@@ -19,14 +19,18 @@ import (
 // sanalah database, model ML, dan konteks pengguna berada. copilotd memanggil
 // balik lewat CallbackURL setiap kali model butuh sebuah tool.
 type agentRequest struct {
-	Prompt        string             `json:"prompt"`
-	System        string             `json:"system"`
-	Model         string             `json:"model"`
-	Tier          string             `json:"tier"`
-	TimeoutSec    float64            `json:"timeout_sec"`
-	Tools         []runtime.ToolSpec `json:"tools"`
-	CallbackURL   string             `json:"callback_url"`
-	CallbackToken string             `json:"callback_token"`
+	Prompt          string             `json:"prompt"`
+	System          string             `json:"system"`
+	Model           string             `json:"model"`
+	Tier            string             `json:"tier"`
+	TimeoutSec      float64            `json:"timeout_sec"`
+	Managed         bool               `json:"managed"`
+	MaxAiCredits    float64            `json:"max_ai_credits"`
+	MaxOutputTokens int64              `json:"max_output_tokens"`
+	MaxToolCalls    int                `json:"max_tool_calls"`
+	Tools           []runtime.ToolSpec `json:"tools"`
+	CallbackURL     string             `json:"callback_url"`
+	CallbackToken   string             `json:"callback_token"`
 	// CallbackHeaders diteruskan apa adanya ke setiap panggilan balik,
 	// misalnya X-API-Key milik backend pemanggil.
 	CallbackHeaders map[string]string `json:"callback_headers"`
@@ -71,6 +75,7 @@ func (s *Server) handleAgent(w http.ResponseWriter, r *http.Request) {
 		Model:   body.Model,
 		Tier:    firstNonEmpty(body.Tier, "agent"),
 		Timeout: time.Duration(body.TimeoutSec * float64(time.Second)),
+		Managed: body.Managed, MaxAiCredits: body.MaxAiCredits, MaxOutputTokens: body.MaxOutputTokens, MaxToolCalls: body.MaxToolCalls,
 	}
 
 	emit, flush, ok := startNDJSON(w)

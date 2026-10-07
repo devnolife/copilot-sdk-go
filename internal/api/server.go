@@ -81,14 +81,16 @@ func (s *Server) handleStatus(w http.ResponseWriter, _ *http.Request) {
 		auth = "byok"
 	}
 	writeJSON(w, http.StatusOK, map[string]any{
-		"ok":                true,
-		"accounts":          len(cfg.Tokens()),
-		"model":             modelOrDefault(cfg.Model),
-		"agent_model":       modelOrDefault(cfg.ModelFor("agent")),
-		"auth":              auth,
-		"provider_base_url": cfg.ProviderBaseURL,
-		"local_only":        cfg.IsLocalProvider(),
-		"max_concurrency":   cfg.MaxConcurrency,
+		"ok":                      true,
+		"accounts":                len(cfg.Tokens()),
+		"model":                   modelOrDefault(cfg.Model),
+		"agent_model":             modelOrDefault(cfg.ModelFor("agent")),
+		"auth":                    auth,
+		"provider_base_url":       cfg.ProviderBaseURL,
+		"local_only":              cfg.IsLocalProvider(),
+		"max_concurrency":         cfg.MaxConcurrency,
+		"managed_generation_v1":   true,
+		"session_ai_credit_limit": true,
 	})
 }
 

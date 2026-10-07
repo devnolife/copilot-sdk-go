@@ -54,10 +54,36 @@ func TestModelChain(t *testing.T) {
 	if got, want := svc.modelChain(Request{Model: "forced"}), []string{"forced"}; !reflect.DeepEqual(got, want) {
 		t.Errorf("modelChain model eksplisit = %v, ingin %v (tanpa fallback)", got, want)
 	}
+	if got, want := svc.modelChain(Request{Managed: true}), []string{"primary"}; !reflect.DeepEqual(got, want) {
+		t.Errorf("modelChain managed = %v, ingin %v (tanpa fallback tersembunyi)", got, want)
+	}
 
 	noFallback := newTestService(config.Config{Model: "only"})
 	if got, want := noFallback.modelChain(Request{}), []string{"only"}; !reflect.DeepEqual(got, want) {
 		t.Errorf("modelChain tanpa fallback = %v, ingin %v", got, want)
+	}
+
+}
+
+func TestManagedSessionLimitsAndToolGate(t *testing.T) {
+	svc := newTestService(config.Config{})
+	cfg := svc.sessionConfig(Request{Managed: true, MaxAiCredits: 0.75, MaxOutputTokens: 512, MaxToolCalls: 1}, "model", nil)
+	if cfg.SessionLimits == nil || *cfg.SessionLimits.MaxAiCredits != 0.75 {
+		t.Fatal("missing explicit session credit ceiling")
+	}
+	if cfg.ModelCapabilities == nil || *cfg.ModelCapabilities.Limits.MaxOutputTokens != 512 {
+		t.Fatal("missing output capability bound")
+	}
+	if cfg.SkipCustomInstructions == nil || !*cfg.SkipCustomInstructions || cfg.EnableFileHooks == nil || *cfg.EnableFileHooks {
+		t.Fatal("managed sessions must not load ambient instructions or hooks")
+	}
+	first, err := cfg.Hooks.OnPreToolUse(copilot.PreToolUseHookInput{}, copilot.HookInvocation{})
+	if err != nil || first.PermissionDecision != "allow" {
+		t.Fatal("first tool within budget was not allowed")
+	}
+	second, err := cfg.Hooks.OnPreToolUse(copilot.PreToolUseHookInput{}, copilot.HookInvocation{})
+	if err != nil || second.PermissionDecision != "deny" {
+		t.Fatal("tool budget can be exceeded")
 	}
 }
 

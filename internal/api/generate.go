@@ -25,6 +25,19 @@ type generateRequest struct {
 	MaxAiCredits    float64 `json:"max_ai_credits"`
 	MaxOutputTokens int64   `json:"max_output_tokens"`
 	MaxToolCalls    int     `json:"max_tool_calls"`
+	ReasoningEffort string  `json:"reasoning_effort"`
+	ContextTier     string  `json:"context_tier"`
+}
+
+// modelOptionsError: pesan galat bila tingkat penalaran/tier konteks tidak dikenal, kosong bila valid.
+func modelOptionsError(effort, tier string) string {
+	if !runtime.ValidReasoningEffort(effort) {
+		return "reasoning_effort tidak dikenal"
+	}
+	if !runtime.ValidContextTier(tier) {
+		return "context_tier tidak dikenal"
+	}
+	return ""
 }
 
 func (g generateRequest) toRuntime() runtime.Request {
@@ -37,6 +50,7 @@ func (g generateRequest) toRuntime() runtime.Request {
 		Web:      g.Web,
 		Timeout:  time.Duration(g.TimeoutSec * float64(time.Second)),
 		Managed:  g.Managed, MaxAiCredits: g.MaxAiCredits, MaxOutputTokens: g.MaxOutputTokens, MaxToolCalls: g.MaxToolCalls,
+		ReasoningEffort: g.ReasoningEffort, ContextTier: g.ContextTier,
 	}
 }
 
@@ -50,6 +64,10 @@ func (s *Server) handleGenerate(w http.ResponseWriter, r *http.Request) {
 	req := body.toRuntime()
 	if req.Prompt == "" {
 		writeJSON(w, http.StatusBadRequest, errorBody{Error: "prompt kosong"})
+		return
+	}
+	if msg := modelOptionsError(req.ReasoningEffort, req.ContextTier); msg != "" {
+		writeJSON(w, http.StatusBadRequest, errorBody{Error: msg})
 		return
 	}
 
@@ -86,6 +104,10 @@ func (s *Server) handleStream(w http.ResponseWriter, r *http.Request) {
 	req := body.toRuntime()
 	if req.Prompt == "" {
 		writeJSON(w, http.StatusBadRequest, errorBody{Error: "prompt kosong"})
+		return
+	}
+	if msg := modelOptionsError(req.ReasoningEffort, req.ContextTier); msg != "" {
+		writeJSON(w, http.StatusBadRequest, errorBody{Error: msg})
 		return
 	}
 

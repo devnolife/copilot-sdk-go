@@ -34,6 +34,8 @@ type agentRequest struct {
 	// CallbackHeaders diteruskan apa adanya ke setiap panggilan balik,
 	// misalnya X-API-Key milik backend pemanggil.
 	CallbackHeaders map[string]string `json:"callback_headers"`
+	ReasoningEffort string            `json:"reasoning_effort"`
+	ContextTier     string            `json:"context_tier"`
 }
 
 // toolCallbackRequest adalah payload yang dikirim ke pemanggil.
@@ -68,6 +70,10 @@ func (s *Server) handleAgent(w http.ResponseWriter, r *http.Request) {
 		writeJSON(w, http.StatusBadRequest, errorBody{Error: "callback_url wajib saat mengirim tools"})
 		return
 	}
+	if msg := modelOptionsError(body.ReasoningEffort, body.ContextTier); msg != "" {
+		writeJSON(w, http.StatusBadRequest, errorBody{Error: msg})
+		return
+	}
 
 	req := runtime.Request{
 		Prompt:  strings.TrimSpace(body.Prompt),
@@ -76,6 +82,7 @@ func (s *Server) handleAgent(w http.ResponseWriter, r *http.Request) {
 		Tier:    firstNonEmpty(body.Tier, "agent"),
 		Timeout: time.Duration(body.TimeoutSec * float64(time.Second)),
 		Managed: body.Managed, MaxAiCredits: body.MaxAiCredits, MaxOutputTokens: body.MaxOutputTokens, MaxToolCalls: body.MaxToolCalls,
+		ReasoningEffort: body.ReasoningEffort, ContextTier: body.ContextTier,
 	}
 
 	emit, flush, ok := startNDJSON(w)

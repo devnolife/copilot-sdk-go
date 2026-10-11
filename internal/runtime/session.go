@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"slices"
 	"sync"
 	"time"
 
@@ -49,6 +50,22 @@ type Request struct {
 	MaxAiCredits    float64
 	MaxOutputTokens int64
 	MaxToolCalls    int
+	// ReasoningEffort & ContextTier hanya berlaku untuk model yang diminta eksplisit (Model).
+	ReasoningEffort string
+	ContextTier     string
+}
+
+// ReasoningEfforts adalah tingkat penalaran yang dikenal SDK, dari ringan ke berat.
+var ReasoningEfforts = []string{"low", "medium", "high", "xhigh", "max"}
+
+// ValidReasoningEffort: kosong (bawaan model) atau salah satu ReasoningEfforts.
+func ValidReasoningEffort(v string) bool {
+	return v == "" || slices.Contains(ReasoningEfforts, v)
+}
+
+// ValidContextTier: kosong (perilaku normal), "default", atau "long_context".
+func ValidContextTier(v string) bool {
+	return v == "" || v == string(copilot.ContextTierDefault) || v == string(copilot.ContextTierLongContext)
 }
 
 // ToolSpec adalah deklarasi tool yang dieksekusi di sisi pemanggil.
@@ -130,6 +147,12 @@ func (s *Service) sessionConfig(req Request, model string, tools []copilot.Tool)
 	cfg := &copilot.SessionConfig{
 		Model:     model,
 		Streaming: copilot.Bool(true),
+	}
+	if req.Model != "" && model == req.Model {
+		cfg.ReasoningEffort = req.ReasoningEffort
+		if req.ContextTier != "" {
+			cfg.ContextTier = copilot.ContextTier(req.ContextTier)
+		}
 	}
 	if req.Managed {
 		cfg.SessionLimits = &rpc.SessionLimitsConfig{MaxAiCredits: &req.MaxAiCredits}

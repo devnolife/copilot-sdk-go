@@ -7,7 +7,10 @@ package api
 import (
 	"encoding/json"
 	"net/http"
+	"slices"
 	"time"
+
+	copilot "github.com/github/copilot-sdk/go"
 
 	"github.com/devnolife/copilot-sdk-go/internal/runtime"
 )
@@ -101,6 +104,21 @@ func modelOrDefault(model string) string {
 	return model
 }
 
+// promptTokens: anggaran token masukan tier bawaan (dari harga per tier; batas model bila tidak dilaporkan).
+func promptTokens(m copilot.ModelInfo) int64 {
+	if m.Billing != nil && m.Billing.TokenPrices != nil && m.Billing.TokenPrices.MaxPromptTokens != nil {
+		return *m.Billing.TokenPrices.MaxPromptTokens
+	}
+	limits := m.Capabilities.Limits
+	switch {
+	case limits.MaxPromptTokens != nil:
+		return int64(*limits.MaxPromptTokens)
+	case limits.MaxContextWindowTokens != nil:
+		return int64(*limits.MaxContextWindowTokens)
+	}
+	return 0
+}
+
 func (s *Server) handleModels(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := contextWithTimeout(r, 90*time.Second)
 	defer cancel()
@@ -112,9 +130,13 @@ func (s *Server) handleModels(w http.ResponseWriter, r *http.Request) {
 	}
 
 	type modelOut struct {
-		ID         string   `json:"id"`
-		Name       string   `json:"name"`
-		Multiplier *float64 `json:"multiplier,omitempty"`
+		ID                     string   `json:"id"`
+		Name                   string   `json:"name"`
+		Multiplier             *float64 `json:"multiplier,omitempty"`
+		ReasoningEfforts       []string `json:"reasoning_efforts,omitempty"`
+		DefaultReasoningEffort string   `json:"default_reasoning_effort,omitempty"`
+		ContextTokens          int64    `json:"context_tokens,omitempty"`
+		LongContextTokens      int64    `json:"long_context_tokens,omitempty"`
 	}
 	ids := make([]string, 0, len(models))
 	detail := make([]modelOut, 0, len(models))
@@ -123,9 +145,22 @@ func (s *Server) handleModels(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 		ids = append(ids, m.ID)
-		out := modelOut{ID: m.ID, Name: m.Name}
+		out := modelOut{ID: m.ID, Name: m.Name, ContextTokens: promptTokens(m)}
 		if m.Billing != nil {
 			out.Multiplier = m.Billing.Multiplier
+			if p := m.Billing.TokenPrices; p != nil && p.LongContext != nil && p.LongContext.MaxPromptTokens != nil {
+				out.LongContextTokens = *p.LongContext.MaxPromptTokens
+			}
+		}
+		if m.Capabilities.Supports.ReasoningEffort {
+			for _, e := range runtime.ReasoningEfforts {
+				if slices.Contains(m.SupportedReasoningEfforts, e) {
+					out.ReasoningEfforts = append(out.ReasoningEfforts, e)
+				}
+			}
+			if slices.Contains(out.ReasoningEfforts, m.DefaultReasoningEffort) {
+				out.DefaultReasoningEffort = m.DefaultReasoningEffort
+			}
 		}
 		detail = append(detail, out)
 	}

@@ -113,6 +113,46 @@ func decisionType(t *testing.T, fn func(copilot.PermissionRequest, copilot.Permi
 	return d
 }
 
+func TestSessionConfigModelOptionsOnlyForExplicitModel(t *testing.T) {
+	svc := newTestService(config.Config{})
+	req := Request{Model: "m", ReasoningEffort: "high", ContextTier: "long_context"}
+	cfg := svc.sessionConfig(req, "m", nil)
+	if cfg.ReasoningEffort != "high" || cfg.ContextTier != copilot.ContextTierLongContext {
+		t.Errorf("model eksplisit: effort=%q tier=%q", cfg.ReasoningEffort, cfg.ContextTier)
+	}
+	// Model lain (fallback) atau tanpa model eksplisit tidak ikut memakai opsi.
+	for _, c := range []struct {
+		req   Request
+		model string
+	}{{req, "lain"}, {Request{ReasoningEffort: "high", ContextTier: "long_context"}, "m"}} {
+		cfg := svc.sessionConfig(c.req, c.model, nil)
+		if cfg.ReasoningEffort != "" || cfg.ContextTier != "" {
+			t.Errorf("%+v/%s: effort=%q tier=%q, ingin kosong", c.req, c.model, cfg.ReasoningEffort, cfg.ContextTier)
+		}
+	}
+}
+
+func TestValidModelOptions(t *testing.T) {
+	for _, e := range append([]string{""}, ReasoningEfforts...) {
+		if !ValidReasoningEffort(e) {
+			t.Errorf("effort %q harus valid", e)
+		}
+	}
+	for _, e := range []string{"minimal", "HIGH", "tinggi"} {
+		if ValidReasoningEffort(e) {
+			t.Errorf("effort %q harus ditolak", e)
+		}
+	}
+	for _, tier := range []string{"", "default", "long_context"} {
+		if !ValidContextTier(tier) {
+			t.Errorf("tier %q harus valid", tier)
+		}
+	}
+	if ValidContextTier("1m") {
+		t.Error("tier tak dikenal harus ditolak")
+	}
+}
+
 func TestSessionConfigSandboxByDefault(t *testing.T) {
 	svc := newTestService(config.Config{})
 	cfg := svc.sessionConfig(Request{}, "m", nil)

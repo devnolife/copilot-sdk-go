@@ -140,6 +140,20 @@ func TestAgentValidation(t *testing.T) {
 	}
 }
 
+func TestModelOptionsValidated(t *testing.T) {
+	h := newTestHandler(config.Config{}, "")
+	for _, path := range []string{"/v1/generate", "/v1/stream", "/v1/agent"} {
+		rec := do(t, h, http.MethodPost, path, `{"prompt":"halo","reasoning_effort":"super"}`, nil)
+		if rec.Code != http.StatusBadRequest || decodeBody(t, rec)["error"] != "reasoning_effort tidak dikenal" {
+			t.Errorf("%s effort asing: status=%d body=%s", path, rec.Code, rec.Body.String())
+		}
+		rec = do(t, h, http.MethodPost, path, `{"prompt":"halo","context_tier":"1m"}`, nil)
+		if rec.Code != http.StatusBadRequest || decodeBody(t, rec)["error"] != "context_tier tidak dikenal" {
+			t.Errorf("%s tier asing: status=%d body=%s", path, rec.Code, rec.Body.String())
+		}
+	}
+}
+
 func TestUnknownRouteIs404(t *testing.T) {
 	h := newTestHandler(config.Config{}, "")
 	if rec := do(t, h, http.MethodGet, "/v1/tidak-ada", "", nil); rec.Code != http.StatusNotFound {
@@ -148,9 +162,9 @@ func TestUnknownRouteIs404(t *testing.T) {
 }
 
 func TestGenerateRequestToRuntime(t *testing.T) {
-	req := generateRequest{Prompt: "  halo  ", System: "s", Model: "m", Tier: "cheap", JSONMode: true, Web: true, TimeoutSec: 1.5}
+	req := generateRequest{Prompt: "  halo  ", System: "s", Model: "m", Tier: "cheap", JSONMode: true, Web: true, TimeoutSec: 1.5, ReasoningEffort: "low", ContextTier: "default"}
 	got := req.toRuntime()
-	if got.Prompt != "halo" || got.System != "s" || got.Model != "m" || got.Tier != "cheap" || !got.JSONMode || !got.Web {
+	if got.Prompt != "halo" || got.System != "s" || got.Model != "m" || got.Tier != "cheap" || !got.JSONMode || !got.Web || got.ReasoningEffort != "low" || got.ContextTier != "default" {
 		t.Errorf("toRuntime = %+v", got)
 	}
 	if got.Timeout != 1500*time.Millisecond {

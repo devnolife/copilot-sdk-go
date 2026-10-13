@@ -94,7 +94,10 @@ POST <callback_url>  {"token": "...", "tool": "cari_paper", "arguments": {…}}
 {"result": "..."}      // atau {"error": "..."}
 ```
 
-Event `done` membawa `calls[]` berisi jejak seluruh pemanggilan tool.
+Event `done` membawa `calls[]` berisi jejak seluruh pemanggilan tool, serta
+`usage[]` — satu entri per panggilan API model (token input/output/cache,
+reasoning, cost, nano AIU, durasi) dari event `assistant.usage` SDK.
+`POST /v1/generate` meneruskan `usage[]` yang sama di balasan JSON-nya.
 
 ### Managed generation
 

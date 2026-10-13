@@ -1,7 +1,9 @@
 package runtime
 
 import (
+	"encoding/json"
 	"reflect"
+	"strings"
 	"testing"
 	"time"
 
@@ -258,4 +260,42 @@ func TestServiceExposesConfig(t *testing.T) {
 		t.Errorf("Config() = %+v, ingin %+v", svc.Config(), cfg)
 	}
 	svc.Shutdown() // pool dingin — tidak boleh panic
+}
+
+func TestUsageCallFromEvent(t *testing.T) {
+	in, out, cacheRead, cacheWrite, reasoning, duration := int64(1200), int64(300), int64(800), int64(50), int64(20), int64(1500)
+	cost, initiator, effort := 0.33, "sub-agent", "high"
+	got := usageCall(&copilot.AssistantUsageData{
+		Model: "claude-haiku-4.5", InputTokens: &in, OutputTokens: &out,
+		CacheReadTokens: &cacheRead, CacheWriteTokens: &cacheWrite, ReasoningTokens: &reasoning,
+		Cost: &cost, Duration: &duration, Initiator: &initiator, ReasoningEffort: &effort,
+		CopilotUsage: &copilot.AssistantUsageCopilotUsage{TotalNanoAiu: 42000},
+	})
+	want := UsageCall{
+		Model: "claude-haiku-4.5", InputTokens: 1200, OutputTokens: 300, CacheReadTokens: 800, CacheWriteTokens: 50,
+		ReasoningTokens: 20, Cost: 0.33, NanoAiu: 42000, DurationMs: 1500, Initiator: "sub-agent", ReasoningEffort: "high",
+	}
+	if got != want {
+		t.Errorf("usageCall = %+v, ingin %+v", got, want)
+	}
+	if got := usageCall(&copilot.AssistantUsageData{Model: "gpt-5-mini"}); got != (UsageCall{Model: "gpt-5-mini"}) {
+		t.Errorf("usageCall tanpa angka = %+v, ingin nol", got)
+	}
+}
+
+func TestDoneEventUsageJSON(t *testing.T) {
+	plain, err := json.Marshal(Event{Type: "done", Content: "ok"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if strings.Contains(string(plain), "usage") {
+		t.Errorf("event tanpa pemakaian tidak boleh membawa usage: %s", plain)
+	}
+	withUsage, err := json.Marshal(Event{Type: "done", Usage: []UsageCall{{Model: "m", InputTokens: 3}}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(string(withUsage), `"usage":[{"model":"m","input_tokens":3,`) {
+		t.Errorf("JSON usage = %s", withUsage)
+	}
 }

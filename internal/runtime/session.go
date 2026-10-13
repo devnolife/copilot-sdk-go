@@ -35,6 +35,50 @@ type Event struct {
 	Arguments map[string]any `json:"arguments,omitempty"`
 	// Calls hanya diisi pada event "done" saat sesi memakai tool.
 	Calls []ToolCall `json:"calls,omitempty"`
+	// Usage hanya diisi pada event "done": satu entri per panggilan API model dalam sesi.
+	Usage []UsageCall `json:"usage,omitempty"`
+}
+
+// UsageCall adalah pemakaian satu panggilan API model menurut event assistant.usage.
+type UsageCall struct {
+	Model            string  `json:"model"`
+	InputTokens      int64   `json:"input_tokens"`
+	OutputTokens     int64   `json:"output_tokens"`
+	CacheReadTokens  int64   `json:"cache_read_tokens"`
+	CacheWriteTokens int64   `json:"cache_write_tokens"`
+	ReasoningTokens  int64   `json:"reasoning_tokens"`
+	Cost             float64 `json:"cost"`
+	NanoAiu          float64 `json:"nano_aiu"`
+	DurationMs       int64   `json:"duration_ms"`
+	Initiator        string  `json:"initiator,omitempty"`
+	ReasoningEffort  string  `json:"reasoning_effort,omitempty"`
+}
+
+func usageCall(d *copilot.AssistantUsageData) UsageCall {
+	call := UsageCall{
+		Model:            d.Model,
+		InputTokens:      deref(d.InputTokens),
+		OutputTokens:     deref(d.OutputTokens),
+		CacheReadTokens:  deref(d.CacheReadTokens),
+		CacheWriteTokens: deref(d.CacheWriteTokens),
+		ReasoningTokens:  deref(d.ReasoningTokens),
+		Cost:             deref(d.Cost),
+		DurationMs:       deref(d.Duration),
+		Initiator:        deref(d.Initiator),
+		ReasoningEffort:  deref(d.ReasoningEffort),
+	}
+	if d.CopilotUsage != nil {
+		call.NanoAiu = d.CopilotUsage.TotalNanoAiu
+	}
+	return call
+}
+
+func deref[T any](p *T) T {
+	var zero T
+	if p == nil {
+		return zero
+	}
+	return *p
 }
 
 // Request adalah parameter umum satu pemanggilan.
@@ -297,6 +341,7 @@ func (s *Service) runOnce(
 		failure  string
 		limited  bool
 		streamed bool
+		usage    []UsageCall
 		once     sync.Once
 	)
 	done := make(chan struct{})
@@ -327,6 +372,10 @@ func (s *Service) runOnce(
 		case *copilot.AssistantMessageData:
 			mu.Lock()
 			final = d.Content
+			mu.Unlock()
+		case *copilot.AssistantUsageData:
+			mu.Lock()
+			usage = append(usage, usageCall(d))
 			mu.Unlock()
 		case *copilot.SessionErrorData:
 			mu.Lock()
@@ -361,6 +410,7 @@ func (s *Service) runOnce(
 	mu.Lock()
 	text, hadStream, errMsg, wasLimited := final, streamed, failure, limited
 	toolCalls := calls.snapshot()
+	usageCalls := slices.Clone(usage)
 	mu.Unlock()
 
 	if errMsg != "" {
@@ -379,6 +429,7 @@ func (s *Service) runOnce(
 		Content: text,
 		Model:   "copilot:" + modelLabel(model),
 		Calls:   toolCalls,
+		Usage:   usageCalls,
 	})
 	return nil
 }

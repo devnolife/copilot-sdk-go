@@ -78,20 +78,21 @@ func (s *Server) handleGenerate(w http.ResponseWriter, r *http.Request) {
 		mu    sync.Mutex
 		text  string
 		model string
+		usage []runtime.UsageCall
 	)
 	err := s.svc.Stream(ctx, req, nil, nil, func(ev runtime.Event) {
 		if ev.Type != "done" {
 			return
 		}
 		mu.Lock()
-		text, model = ev.Content, ev.Model
+		text, model, usage = ev.Content, ev.Model, ev.Usage
 		mu.Unlock()
 	})
 	if err != nil {
 		writeJSON(w, http.StatusBadGateway, errorBody{Error: err.Error()})
 		return
 	}
-	writeJSON(w, http.StatusOK, map[string]any{"text": text, "model": model})
+	writeJSON(w, http.StatusOK, map[string]any{"text": text, "model": model, "usage": usage})
 }
 
 // handleStream mengalirkan jawaban sebagai NDJSON.

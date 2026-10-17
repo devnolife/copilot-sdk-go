@@ -136,6 +136,9 @@ func NewService(cfg config.Config) *Service {
 // Config mengembalikan konfigurasi aktif.
 func (s *Service) Config() config.Config { return s.cfg }
 
+// Accounts melaporkan keadaan pool akun (tanpa token, tanpa menyalakan runtime).
+func (s *Service) Accounts() []AccountStatus { return s.pool.Status() }
+
 // Shutdown mematikan seluruh runtime.
 func (s *Service) Shutdown() { s.pool.Shutdown() }
 
@@ -274,21 +277,35 @@ func denyAll(copilot.PermissionRequest, copilot.PermissionInvocation) (rpc.Permi
 
 // Stream menjalankan satu giliran percakapan dan mengalirkan event ke emit.
 //
-// Model dicoba berurutan sesuai modelChain; kalau yang pertama kena rate limit
-// dan belum ada teks yang terkirim, model berikutnya dicoba secara transparan.
+// Kalau akun kena rate limit atau kuotanya habis sebelum ada teks yang terkirim, model yang sama dicoba lagi di
+// akun lain (akun yang gagal sudah masuk cooldown). Model berikutnya di modelChain baru dicoba bila tidak ada akun
+// lain yang tersedia. Permintaan managed tidak diulang karena batas waktunya mencakup seluruh permintaan.
 func (s *Service) Stream(ctx context.Context, req Request, tools []ToolSpec, exec ToolExecutor, emit func(Event)) error {
 	if req.Managed && (req.MaxAiCredits <= 0 || req.MaxOutputTokens <= 0 || req.MaxToolCalls < 0 || req.Timeout <= 0) {
 		return fmt.Errorf("managed generation requires explicit limits")
 	}
+	return runChain(s.modelChain(req), !req.Managed, s.pool.Size(), s.pool.HasAvailable, func(model string) error {
+		return s.runOnce(ctx, req, model, tools, exec, emit)
+	})
+}
+
+// runChain mencoba tiap model; kegagalan yang layak diulang (errRetryable) dicoba lagi dengan model yang sama di
+// akun lain selama switchAccounts dan available(), paling banyak sekali per akun, baru pindah ke model berikutnya.
+func runChain(models []string, switchAccounts bool, accounts int, available func() bool, run func(model string) error) error {
 	var lastErr error
-	for _, model := range s.modelChain(req) {
-		err := s.runOnce(ctx, req, model, tools, exec, emit)
-		if err == nil {
-			return nil
-		}
-		lastErr = err
-		if !errors.Is(err, errRetryable) {
-			return err
+	for _, model := range models {
+		for attempt := 0; attempt < max(1, accounts); attempt++ {
+			err := run(model)
+			if err == nil {
+				return nil
+			}
+			lastErr = err
+			if !errors.Is(err, errRetryable) {
+				return err
+			}
+			if !switchAccounts || !available() {
+				break
+			}
 		}
 	}
 	return lastErr
@@ -339,7 +356,7 @@ func (s *Service) runOnce(
 		mu       sync.Mutex
 		final    string
 		failure  string
-		limited  bool
+		limited  string // jenis galat sesi: rate_limit | quota
 		streamed bool
 		usage    []UsageCall
 		once     sync.Once
@@ -380,7 +397,9 @@ func (s *Service) runOnce(
 		case *copilot.SessionErrorData:
 			mu.Lock()
 			failure = d.Message
-			limited = d.ErrorType == "rate_limit" || d.ErrorType == "quota"
+			if d.ErrorType == "rate_limit" || d.ErrorType == "quota" {
+				limited = d.ErrorType
+			}
 			mu.Unlock()
 			finish()
 		case *copilot.SessionIdleData:
@@ -414,8 +433,13 @@ func (s *Service) runOnce(
 	mu.Unlock()
 
 	if errMsg != "" {
-		lease.Failed(errors.New(errMsg))
-		if wasLimited && !hadStream {
+		if wasLimited != "" {
+			// Jenis galat ikut supaya pool membedakan kuota habis (cooldown panjang) dari rate limit.
+			lease.Failed(fmt.Errorf("%s: %s", wasLimited, errMsg))
+		} else {
+			lease.Failed(errors.New(errMsg))
+		}
+		if wasLimited != "" && !hadStream {
 			return fmt.Errorf("%w: %s", errRetryable, errMsg)
 		}
 		return errors.New(errMsg)

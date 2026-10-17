@@ -94,6 +94,17 @@ func TestStatusReportsConfigWithoutStartingRuntime(t *testing.T) {
 	if body["auth"] != "github" || body["local_only"] != false || body["max_concurrency"] != float64(3) {
 		t.Errorf("body = %v", body)
 	}
+	pool, ok := body["account_pool"].([]any)
+	if !ok || len(pool) != 2 {
+		t.Fatalf("account_pool = %v, ingin 2 akun", body["account_pool"])
+	}
+	first := pool[0].(map[string]any)
+	if first["index"] != float64(1) || first["state"] != "siap" || first["started"] != false || first["capacity"] != float64(3) {
+		t.Errorf("akun #1 = %v", first)
+	}
+	if raw, _ := json.Marshal(body); strings.Contains(string(raw), `"a"`) || strings.Contains(string(raw), `"b"`) {
+		t.Errorf("status tidak boleh memuat token: %s", raw)
+	}
 
 	byok := newTestHandler(config.Config{
 		Model:           "qwen",

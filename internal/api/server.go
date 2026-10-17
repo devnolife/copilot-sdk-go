@@ -86,6 +86,9 @@ func (s *Server) handleStatus(w http.ResponseWriter, _ *http.Request) {
 	writeJSON(w, http.StatusOK, map[string]any{
 		"ok":                      true,
 		"accounts":                len(cfg.Tokens()),
+		"account_pool":            s.svc.Accounts(),
+		"quota_min_percent":       cfg.QuotaMinPercent,
+		"quota_check_sec":         int(cfg.QuotaCheckInterval / time.Second),
 		"model":                   modelOrDefault(cfg.Model),
 		"agent_model":             modelOrDefault(cfg.ModelFor("agent")),
 		"auth":                    auth,

@@ -30,6 +30,7 @@ func clearEnv(t *testing.T) {
 		"TURNITIN_COPILOT_PROVIDER_BASE_URL", "COPILOT_PROVIDER_BASE_URL",
 		"TURNITIN_COPILOT_PROVIDER_API_KEY", "COPILOT_PROVIDER_API_KEY",
 		"TURNITIN_COPILOT_PROVIDER_WIRE_API",
+		"TURNITIN_COPILOT_QUOTA_MIN_PERCENT", "TURNITIN_COPILOT_QUOTA_CHECK_SEC",
 	} {
 		t.Setenv(name, "")
 	}
@@ -65,6 +66,38 @@ func TestLoadDefaults(t *testing.T) {
 	}
 	if got := cfg.Tokens(); !reflect.DeepEqual(got, []string{""}) {
 		t.Errorf("Tokens() tanpa token = %v, ingin [\"\"] (pakai login copilot/gh)", got)
+	}
+	if cfg.QuotaMinPercent != 5 || cfg.QuotaCheckInterval != 600*time.Second {
+		t.Errorf("kuota bawaan = %v%%/%s, ingin 5%%/10m", cfg.QuotaMinPercent, cfg.QuotaCheckInterval)
+	}
+}
+
+func TestLoadQuotaSettings(t *testing.T) {
+	for _, tc := range []struct {
+		percent, check string
+		wantPct        float64
+		wantCheck      time.Duration
+	}{
+		{"7,5", "120", 7.5, 2 * time.Minute},
+		{"0", "0", 0, 0},
+		{"-3", "", 5, 10 * time.Minute},
+		{"abc", "", 5, 10 * time.Minute},
+	} {
+		clearEnv(t)
+		t.Setenv("TURNITIN_COPILOT_QUOTA_MIN_PERCENT", tc.percent)
+		t.Setenv("TURNITIN_COPILOT_QUOTA_CHECK_SEC", tc.check)
+		cfg := Load()
+		if cfg.QuotaMinPercent != tc.wantPct || cfg.QuotaCheckInterval != tc.wantCheck {
+			t.Errorf("%q/%q -> %v/%s, ingin %v/%s", tc.percent, tc.check, cfg.QuotaMinPercent, cfg.QuotaCheckInterval,
+				tc.wantPct, tc.wantCheck)
+		}
+	}
+}
+
+func TestTokensLoginEntryKeepsStoredLoginAndDropsDuplicates(t *testing.T) {
+	cfg := Config{GitHubTokens: []string{"login", "github_pat_a", "LOGIN", "github_pat_a", "gho_b"}}
+	if got := cfg.Tokens(); !reflect.DeepEqual(got, []string{"", "github_pat_a", "gho_b"}) {
+		t.Errorf("Tokens() = %v, ingin [\"\" github_pat_a gho_b]", got)
 	}
 }
 

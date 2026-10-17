@@ -2,6 +2,8 @@ package runtime
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	"reflect"
 	"strings"
 	"testing"
@@ -297,5 +299,67 @@ func TestDoneEventUsageJSON(t *testing.T) {
 	}
 	if !strings.Contains(string(withUsage), `"usage":[{"model":"m","input_tokens":3,`) {
 		t.Errorf("JSON usage = %s", withUsage)
+	}
+}
+
+func TestRunChainRetriesSameModelOnAnotherAccountFirst(t *testing.T) {
+	var calls []string
+	run := func(model string) error {
+		calls = append(calls, model)
+		if len(calls) == 1 {
+			return fmt.Errorf("%w: rate limit", errRetryable)
+		}
+		return nil
+	}
+	if err := runChain([]string{"utama", "cadangan"}, true, 3, func() bool { return true }, run); err != nil {
+		t.Fatal(err)
+	}
+	if !reflect.DeepEqual(calls, []string{"utama", "utama"}) {
+		t.Fatalf("urutan = %v, ingin model utama diulang di akun lain", calls)
+	}
+}
+
+func TestRunChainFallsBackToNextModelWhenNoAccountLeft(t *testing.T) {
+	var calls []string
+	run := func(model string) error {
+		calls = append(calls, model)
+		return fmt.Errorf("%w: quota", errRetryable)
+	}
+	err := runChain([]string{"utama", "cadangan"}, true, 3, func() bool { return false }, run)
+	if !errors.Is(err, errRetryable) || !reflect.DeepEqual(calls, []string{"utama", "cadangan"}) {
+		t.Fatalf("err=%v urutan=%v", err, calls)
+	}
+}
+
+func TestRunChainBoundsAttemptsPerModelByPoolSize(t *testing.T) {
+	var calls []string
+	run := func(model string) error {
+		calls = append(calls, model)
+		return fmt.Errorf("%w: rate limit", errRetryable)
+	}
+	_ = runChain([]string{"utama"}, true, 2, func() bool { return true }, run)
+	if !reflect.DeepEqual(calls, []string{"utama", "utama"}) {
+		t.Fatalf("urutan = %v, ingin paling banyak satu percobaan per akun", calls)
+	}
+}
+
+func TestRunChainNoAccountSwitchForManagedAndStopsOnHardError(t *testing.T) {
+	var calls []string
+	run := func(model string) error {
+		calls = append(calls, model)
+		return fmt.Errorf("%w: rate limit", errRetryable)
+	}
+	_ = runChain([]string{"utama"}, false, 3, func() bool { return true }, run)
+	if !reflect.DeepEqual(calls, []string{"utama"}) {
+		t.Fatalf("managed: urutan = %v, ingin tanpa pengulangan", calls)
+	}
+	calls = nil
+	hard := errors.New("prompt ditolak")
+	err := runChain([]string{"utama", "cadangan"}, true, 3, func() bool { return true }, func(model string) error {
+		calls = append(calls, model)
+		return hard
+	})
+	if !errors.Is(err, hard) || len(calls) != 1 {
+		t.Fatalf("galat biasa harus langsung dikembalikan: err=%v urutan=%v", err, calls)
 	}
 }

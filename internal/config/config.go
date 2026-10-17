@@ -20,6 +20,11 @@ type Config struct {
 	GitHubToken  string
 	GitHubTokens []string
 
+	// Pool akun: akun dengan sisa kuota premium <= QuotaMinPercent hanya dipakai bila tidak ada akun lain
+	// (0 = mati). Kuota tiap akun yang runtime-nya hidup dicek ulang tiap QuotaCheckInterval (0 = tidak dicek).
+	QuotaMinPercent    float64
+	QuotaCheckInterval time.Duration
+
 	// Model
 	Model          string
 	CheapModel     string
@@ -68,6 +73,9 @@ func Load() Config {
 		ProviderBaseURL: firstEnv("TURNITIN_COPILOT_PROVIDER_BASE_URL", "COPILOT_PROVIDER_BASE_URL"),
 		ProviderAPIKey:  firstEnv("TURNITIN_COPILOT_PROVIDER_API_KEY", "COPILOT_PROVIDER_API_KEY"),
 		ProviderWireAPI: envOr("TURNITIN_COPILOT_PROVIDER_WIRE_API", "completions"),
+
+		QuotaMinPercent:    envFloat("TURNITIN_COPILOT_QUOTA_MIN_PERCENT", 5),
+		QuotaCheckInterval: time.Duration(envInt("TURNITIN_COPILOT_QUOTA_CHECK_SEC", 600)) * time.Second,
 	}
 	cfg.GitHubTokens = splitList(firstEnv("TURNITIN_COPILOT_GITHUB_TOKENS", "COPILOT_GITHUB_TOKENS"))
 	cfg.ModelFallbacks = splitList(firstEnv("TURNITIN_COPILOT_MODEL_FALLBACKS", "COPILOT_MODEL_FALLBACKS"))
@@ -77,11 +85,26 @@ func Load() Config {
 	return cfg
 }
 
+// LoginEntry di TURNITIN_COPILOT_GITHUB_TOKENS berarti "akun login tersimpan" (copilot/gh) di posisi itu, sehingga
+// akun yang sudah login tetap ikut pool bersama akun bertoken.
+const LoginEntry = "login"
+
 // Tokens mengembalikan daftar token untuk pool akun. Slice berisi satu string
 // kosong berarti "pakai kredensial copilot/gh yang sudah login".
 func (c Config) Tokens() []string {
 	if len(c.GitHubTokens) > 0 {
-		return c.GitHubTokens
+		out := make([]string, 0, len(c.GitHubTokens))
+		seen := map[string]bool{}
+		for _, t := range c.GitHubTokens {
+			if strings.EqualFold(t, LoginEntry) {
+				t = ""
+			}
+			if !seen[t] {
+				seen[t] = true
+				out = append(out, t)
+			}
+		}
+		return out
 	}
 	if c.GitHubToken != "" {
 		return []string{c.GitHubToken}
@@ -169,6 +192,18 @@ func envInt(name string, fallback int) int {
 	}
 	n, err := strconv.Atoi(v)
 	if err != nil {
+		return fallback
+	}
+	return n
+}
+
+func envFloat(name string, fallback float64) float64 {
+	v := env(name)
+	if v == "" {
+		return fallback
+	}
+	n, err := strconv.ParseFloat(strings.Replace(v, ",", ".", 1), 64)
+	if err != nil || n < 0 {
 		return fallback
 	}
 	return n

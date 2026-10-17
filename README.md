@@ -63,7 +63,7 @@ COPILOTD_ADDR=127.0.0.1:8791 ./bin/copilotd
 | Endpoint | Keterangan |
 | --- | --- |
 | `GET /health` | Cek hidup, tanpa auth (untuk probe/systemd) |
-| `GET /v1/status` | Status murah: jumlah akun, model, mode auth |
+| `GET /v1/status` | Status murah: model, mode auth, dan keadaan tiap akun di `account_pool` (siap/hampir habis/cooldown, sisa kuota; tanpa token, tanpa menyalakan runtime) |
 | `GET /v1/models` | `{"models":[...], "detail":[{id,name,multiplier}]}` |
 | `POST /v1/generate` | Satu giliran, balasan teks utuh (`json_mode` didukung) |
 | `POST /v1/stream` | Satu giliran, NDJSON `delta`/`reasoning`/`tool`/`done`/`error` |
@@ -126,18 +126,42 @@ berkas `.env` bisa dipakai bersama.
 | `COPILOTD_ADDR` | `127.0.0.1:8791` | Alamat listen |
 | `COPILOTD_API_KEY` | — | Bila diisi, wajib header `X-API-Key` |
 | `TURNITIN_COPILOT_GITHUB_TOKEN` | — | Token tunggal; kosong = pakai login `copilot`/`gh` |
-| `TURNITIN_COPILOT_GITHUB_TOKENS` | — | Pool multi-akun, dipisah koma |
+| `TURNITIN_COPILOT_GITHUB_TOKENS` | — | Pool multi-akun, dipisah koma; urutan = prioritas; entri `login` = akun login tersimpan |
+| `TURNITIN_COPILOT_QUOTA_MIN_PERCENT` | `5` | Akun dengan sisa kuota premium ≤ nilai ini hanya dipakai bila tidak ada akun lain; `0` = mati |
+| `TURNITIN_COPILOT_QUOTA_CHECK_SEC` | `600` | Interval baca ulang kuota akun yang runtime-nya hidup; `0` = tidak dibaca |
 | `TURNITIN_COPILOT_MODEL` | runtime default | Model utama |
 | `TURNITIN_COPILOT_CHEAP_MODEL` / `_HEAVY_MODEL` / `_AGENT_MODEL` | — | Model per tier |
-| `TURNITIN_COPILOT_MODEL_FALLBACKS` | — | Model cadangan saat kena rate limit |
+| `TURNITIN_COPILOT_MODEL_FALLBACKS` | — | Model cadangan bila semua akun sedang cooldown |
 | `TURNITIN_COPILOT_MAX_CONCURRENCY` | `2` | Sesi paralel per akun |
 | `TURNITIN_COPILOT_TIMEOUT` | `180` | Detik, untuk generate/stream |
 | `TURNITIN_COPILOT_AGENT_TIMEOUT` | `300` | Detik, untuk sesi agentik. Juga menentukan batas tulis server HTTP (`WriteTimeout` = nilai ini + 2 menit) yang memotong **setiap** respons, termasuk aliran dengan `timeout_sec` lebih panjang. Setel ≥ timeout klien terpanjang − 120, mis. `480` untuk generate IDE Tugas core (540 dtk) |
 | `TURNITIN_COPILOT_PROVIDER_*` | — | BYOK (mis. arahkan ke Ollama lokal) |
 
-Akun yang kena rate limit masuk cooldown 5 menit dan permintaan berikutnya
-dialihkan ke akun lain; kalau `MODEL_FALLBACKS` diisi, model cadangan dicoba
-sebelum menyerah.
+### Banyak akun dan pengalihan saat kuota hampir habis
+
+Satu copilotd bisa memakai beberapa akun GitHub Copilot sekaligus
+(`TURNITIN_COPILOT_GITHUB_TOKENS`, urutan = prioritas):
+
+- **Sebelum limit.** Kuota tiap akun dibaca lewat `Account.GetQuota` (API eksperimental SDK) saat runtime-nya
+  hidup dan tiap `QUOTA_CHECK_SEC`. Akun dengan sisa kuota premium ≤ `QUOTA_MIN_PERCENT` hanya dipakai bila tidak
+  ada akun lain. Ini penting untuk akun yang mengizinkan kelebihan pemakaian: setelah kuotanya habis, akun seperti
+  itu tetap jalan sebagai pemakaian berbayar tanpa galat, sehingga hanya ambang ini yang mencegahnya.
+- **Saat limit.**
+  - Rate limit membuat akun cooldown 5 menit; kuota habis membuatnya cooldown 1 jam.
+  - Permintaan yang gagal sebelum ada teks terkirim diulang dengan **model yang sama di akun lain**.
+  - `MODEL_FALLBACKS` baru dicoba bila semua akun sedang cooldown.
+  - Permintaan managed tidak diulang.
+
+Tambah akun:
+
+1. Buat token untuk akun itu. Pakai PAT berbutir (`github_pat_…`, github.com/settings/personal-access-tokens)
+   milik akun pribadi dengan izin akun **Copilot Requests**, atau token OAuth (`gho_…`) dari `gh auth login`.
+   PAT klasik (`ghp_…`) ditolak Copilot CLI. Tiap akun perlu lisensi Copilot sendiri; ikuti ketentuan GitHub.
+2. Jalankan `scripts/tambah-akun.sh`. Skrip meminta token tanpa menampilkannya, memeriksa login dan sisa kuotanya,
+   menolak akun yang sudah ada, menyimpan cadangan `.env` ke `~/backups/copilotd-env/`, lalu menambahkannya. Pada
+   penambahan pertama, akun login tersimpan dipertahankan sebagai `login` di urutan pertama.
+3. Restart copilotd: `systemctl --user restart revisi-copilotd`.
+4. Periksa hasilnya dengan `go run ./cmd/akun` (login dan sisa kuota tiap akun) atau `GET /v1/status`.
 
 ### Deploy
 
@@ -149,7 +173,7 @@ systemctl --user daemon-reload && systemctl --user enable --now revisi-copilotd
 # Docker
 docker build -t copilotd .
 docker run --rm -p 127.0.0.1:8791:8791 \
-  -e TURNITIN_COPILOT_GITHUB_TOKEN=ghp_xxx -e COPILOTD_API_KEY=rahasia copilotd
+  -e TURNITIN_COPILOT_GITHUB_TOKEN=github_pat_xxx -e COPILOTD_API_KEY=rahasia copilotd
 ```
 
 Container tidak punya sesi login interaktif, jadi pakai token — atau mount

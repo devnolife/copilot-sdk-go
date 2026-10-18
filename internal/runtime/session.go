@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 	"slices"
 	"sync"
 	"time"
@@ -126,11 +127,29 @@ type ToolExecutor func(ctx context.Context, name string, args map[string]any) (s
 type Service struct {
 	cfg  config.Config
 	pool *Pool
+
+	mu   sync.Mutex
+	stop chan struct{}
+}
+
+// Options mengganti bagian service untuk tes.
+type Options struct {
+	// Probe memeriksa token akun baru (bawaan ProbeAccount, yang menyalakan runtime sementara).
+	Probe func(ctx context.Context, cfg config.Config, token string) (AccountProbe, error)
 }
 
 // NewService menyiapkan service beserta pool akunnya.
 func NewService(cfg config.Config) *Service {
 	return &Service{cfg: cfg, pool: NewPool(cfg)}
+}
+
+// NewServiceWithOptions seperti NewService dengan kait pengganti.
+func NewServiceWithOptions(cfg config.Config, opts Options) *Service {
+	s := NewService(cfg)
+	if opts.Probe != nil {
+		s.pool.probe = opts.Probe
+	}
+	return s
 }
 
 // Config mengembalikan konfigurasi aktif.
@@ -139,8 +158,61 @@ func (s *Service) Config() config.Config { return s.cfg }
 // Accounts melaporkan keadaan pool akun (tanpa token, tanpa menyalakan runtime).
 func (s *Service) Accounts() []AccountStatus { return s.pool.Status() }
 
-// Shutdown mematikan seluruh runtime.
-func (s *Service) Shutdown() { s.pool.Shutdown() }
+// AccountCount, PoolStrategy, dan PoolSource meringkas pool untuk status dan log.
+func (s *Service) AccountCount() int    { return s.pool.Size() }
+func (s *Service) PoolStrategy() string { return s.pool.Strategy() }
+func (s *Service) PoolSource() string   { return s.pool.Source() }
+
+// Overview melaporkan akun, pemakaian, dan perkiraan kuota untuk admin.
+func (s *Service) Overview(days int) Overview { return s.pool.Overview(days) }
+
+// AddAccount menambahkan akun baru ke pool (berlaku tanpa restart).
+func (s *Service) AddAccount(ctx context.Context, in AddInput) (AccountStatus, error) {
+	return s.pool.Add(ctx, in)
+}
+
+// UpdateAccount mengubah peran/label akun.
+func (s *Service) UpdateAccount(id string, in UpdateInput) (AccountStatus, error) {
+	return s.pool.Update(id, in)
+}
+
+// RemoveAccount mengeluarkan akun dari pool.
+func (s *Service) RemoveAccount(id, actor string) error { return s.pool.Remove(id, actor) }
+
+// RefreshAccounts membaca ulang identitas dan kuota sekarang juga (id kosong = semua akun).
+func (s *Service) RefreshAccounts(ctx context.Context, id string) error {
+	return s.pool.Refresh(ctx, id)
+}
+
+// SetStrategy mengganti strategi pembagian permintaan.
+func (s *Service) SetStrategy(strategy, actor string) error {
+	return s.pool.SetStrategy(strategy, actor)
+}
+
+// Start menjalankan pekerjaan latar (catatan pemakaian, pembacaan kuota berkala). Aman dipanggil berkali-kali.
+func (s *Service) Start() {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if s.stop != nil {
+		return
+	}
+	s.stop = make(chan struct{})
+	go s.pool.run(s.stop)
+}
+
+// Shutdown menghentikan pekerjaan latar, menyimpan catatan pemakaian, lalu mematikan seluruh runtime.
+func (s *Service) Shutdown() {
+	s.mu.Lock()
+	if s.stop != nil {
+		close(s.stop)
+		s.stop = nil
+	}
+	s.mu.Unlock()
+	if err := s.pool.usage.flush(time.Now()); err != nil {
+		log.Printf("copilotd: menyimpan catatan pemakaian: %v", err)
+	}
+	s.pool.Shutdown()
+}
 
 // Models mengembalikan ID model yang bisa dipakai akun ini.
 func (s *Service) Models(ctx context.Context) ([]copilot.ModelInfo, error) {
@@ -321,7 +393,7 @@ func (s *Service) runOnce(
 	tools []ToolSpec,
 	exec ToolExecutor,
 	emit func(Event),
-) error {
+) (runErr error) {
 	deadline := s.timeout(req, s.cfg.Timeout)
 	if len(tools) > 0 {
 		deadline = s.timeout(req, s.cfg.AgentTimeout)
@@ -333,7 +405,18 @@ func (s *Service) runOnce(
 	if err != nil {
 		return err
 	}
-	defer lease.Release()
+	var (
+		mu    sync.Mutex
+		usage []UsageCall
+	)
+	defer func() {
+		mu.Lock()
+		calls := slices.Clone(usage)
+		mu.Unlock()
+		// Hasil (berhasil/gagal + pemakaian token) dicatat ke akun yang melayani, untuk laporan admin.
+		lease.Done(runErr, calls)
+		lease.Release()
+	}()
 
 	sdkTools, calls := buildTools(ctx, tools, exec, emit)
 	cfg := s.sessionConfig(req, model, sdkTools)
@@ -345,7 +428,7 @@ func (s *Service) runOnce(
 	session, err := lease.Client.CreateSession(ctx, cfg)
 	if err != nil {
 		lease.Failed(err)
-		if isRateLimit(err) {
+		if isRateLimit(err) || isAuthError(err) {
 			return fmt.Errorf("%w: %v", errRetryable, err)
 		}
 		return fmt.Errorf("gagal membuat sesi: %w", err)
@@ -353,12 +436,10 @@ func (s *Service) runOnce(
 	defer session.Disconnect()
 
 	var (
-		mu       sync.Mutex
 		final    string
 		failure  string
-		limited  string // jenis galat sesi: rate_limit | quota
+		limited  string // jenis galat sesi yang layak dicoba di akun lain: rate_limit | quota | authentication | authorization
 		streamed bool
-		usage    []UsageCall
 		once     sync.Once
 	)
 	done := make(chan struct{})
@@ -397,7 +478,8 @@ func (s *Service) runOnce(
 		case *copilot.SessionErrorData:
 			mu.Lock()
 			failure = d.Message
-			if d.ErrorType == "rate_limit" || d.ErrorType == "quota" {
+			switch d.ErrorType {
+			case "rate_limit", "quota", "authentication", "authorization":
 				limited = d.ErrorType
 			}
 			mu.Unlock()
@@ -434,13 +516,13 @@ func (s *Service) runOnce(
 
 	if errMsg != "" {
 		if wasLimited != "" {
-			// Jenis galat ikut supaya pool membedakan kuota habis (cooldown panjang) dari rate limit.
+			// Jenis galat ikut supaya pool membedakan kuota habis (cooldown panjang), rate limit, dan token ditolak.
 			lease.Failed(fmt.Errorf("%s: %s", wasLimited, errMsg))
 		} else {
 			lease.Failed(errors.New(errMsg))
 		}
 		if wasLimited != "" && !hadStream {
-			return fmt.Errorf("%w: %s", errRetryable, errMsg)
+			return fmt.Errorf("%w: %s: %s", errRetryable, wasLimited, errMsg)
 		}
 		return errors.New(errMsg)
 	}

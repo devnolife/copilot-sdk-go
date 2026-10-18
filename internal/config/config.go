@@ -6,6 +6,7 @@ package config
 
 import (
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -24,6 +25,13 @@ type Config struct {
 	// (0 = mati). Kuota tiap akun yang runtime-nya hidup dicek ulang tiap QuotaCheckInterval (0 = tidak dicek).
 	QuotaMinPercent    float64
 	QuotaCheckInterval time.Duration
+
+	// StateDir menyimpan akun.json (daftar akun, dikelola admin) dan pemakaian.json; kosong = tanpa berkas.
+	StateDir string
+	// PoolStrategy dipakai selama akun.json belum menyimpan strategi: proporsional | bergiliran | prioritas.
+	PoolStrategy string
+	// TimeZone menentukan batas hari pada catatan pemakaian harian.
+	TimeZone string
 
 	// Model
 	Model          string
@@ -76,6 +84,10 @@ func Load() Config {
 
 		QuotaMinPercent:    envFloat("TURNITIN_COPILOT_QUOTA_MIN_PERCENT", 5),
 		QuotaCheckInterval: time.Duration(envInt("TURNITIN_COPILOT_QUOTA_CHECK_SEC", 600)) * time.Second,
+
+		StateDir:     envOr("TURNITIN_COPILOT_STATE_DIR", defaultStateDir()),
+		PoolStrategy: strings.ToLower(envOr("TURNITIN_COPILOT_POOL_STRATEGY", "proporsional")),
+		TimeZone:     envOr("TURNITIN_COPILOT_TIMEZONE", "Asia/Makassar"),
 	}
 	cfg.GitHubTokens = splitList(firstEnv("TURNITIN_COPILOT_GITHUB_TOKENS", "COPILOT_GITHUB_TOKENS"))
 	cfg.ModelFallbacks = splitList(firstEnv("TURNITIN_COPILOT_MODEL_FALLBACKS", "COPILOT_MODEL_FALLBACKS"))
@@ -165,6 +177,18 @@ func hostOf(rawURL string) string {
 		host = host[:idx]
 	}
 	return host
+}
+
+// defaultStateDir: $XDG_STATE_HOME/copilotd, atau ~/.local/state/copilotd.
+func defaultStateDir() string {
+	if dir := env("XDG_STATE_HOME"); dir != "" {
+		return filepath.Join(dir, "copilotd")
+	}
+	home, err := os.UserHomeDir()
+	if err != nil || home == "" {
+		return ""
+	}
+	return filepath.Join(home, ".local", "state", "copilotd")
 }
 
 func env(name string) string { return strings.TrimSpace(os.Getenv(name)) }

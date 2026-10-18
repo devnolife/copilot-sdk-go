@@ -130,7 +130,7 @@ func TestLeaseFailedQuotaExhaustedUsesLongCooldown(t *testing.T) {
 func TestMaybeRefreshFetchesInBackgroundAndRespectsInterval(t *testing.T) {
 	p := quotaPool(5, "github_pat_rahasia")
 	var calls atomic.Int32
-	p.fetch = func(ctx context.Context, api *rpc.ServerRPC) (*QuotaInfo, error) {
+	p.fetch = func(ctx context.Context, api *rpc.ServerRPC, _ string) (*QuotaInfo, error) {
 		calls.Add(1)
 		return &QuotaInfo{Type: "premium_interactions", RemainingPercent: 4, Entitlement: 100, Used: 96}, nil
 	}
@@ -140,7 +140,7 @@ func TestMaybeRefreshFetchesInBackgroundAndRespectsInterval(t *testing.T) {
 		t.Fatal("runtime belum hidup: kuota tidak boleh dibaca")
 	}
 	acc.rpcAPI = &rpc.ServerRPC{}
-	acc.login = "akun-uji"
+	acc.identity.Login = "akun-uji"
 	waitFor := func(n int32) {
 		t.Helper()
 		deadline := time.Now().Add(2 * time.Second)
@@ -175,7 +175,7 @@ func TestMaybeRefreshFetchesInBackgroundAndRespectsInterval(t *testing.T) {
 		t.Fatalf("status memuat token: %s", raw)
 	}
 
-	p.fetch = func(ctx context.Context, api *rpc.ServerRPC) (*QuotaInfo, error) {
+	p.fetch = func(ctx context.Context, api *rpc.ServerRPC, _ string) (*QuotaInfo, error) {
 		calls.Add(1)
 		return nil, errors.New("experimental API tidak tersedia")
 	}

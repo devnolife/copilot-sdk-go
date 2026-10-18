@@ -39,6 +39,14 @@ func (s *Server) Handler() http.Handler {
 	mux.HandleFunc("POST /v1/stream", s.auth(s.handleStream))
 	mux.HandleFunc("POST /v1/agent", s.auth(s.handleAgent))
 
+	// Pool akun (admin revisi.studio lewat core).
+	mux.HandleFunc("GET /v1/accounts", s.auth(s.handleAccounts))
+	mux.HandleFunc("POST /v1/accounts", s.auth(s.handleAddAccount))
+	mux.HandleFunc("POST /v1/accounts/refresh", s.auth(s.handleRefreshAccounts))
+	mux.HandleFunc("PUT /v1/accounts/strategy", s.auth(s.handleSetStrategy))
+	mux.HandleFunc("PATCH /v1/accounts/{id}", s.auth(s.handleUpdateAccount))
+	mux.HandleFunc("DELETE /v1/accounts/{id}", s.auth(s.handleRemoveAccount))
+
 	// Alias tanpa versi (kompatibilitas klien lama).
 	mux.HandleFunc("GET /models", s.auth(s.handleModels))
 	mux.HandleFunc("POST /stream", s.auth(s.handleStream))
@@ -85,8 +93,9 @@ func (s *Server) handleStatus(w http.ResponseWriter, _ *http.Request) {
 	}
 	writeJSON(w, http.StatusOK, map[string]any{
 		"ok":                      true,
-		"accounts":                len(cfg.Tokens()),
+		"accounts":                s.svc.AccountCount(),
 		"account_pool":            s.svc.Accounts(),
+		"pool_strategy":           s.svc.PoolStrategy(),
 		"quota_min_percent":       cfg.QuotaMinPercent,
 		"quota_check_sec":         int(cfg.QuotaCheckInterval / time.Second),
 		"model":                   modelOrDefault(cfg.Model),

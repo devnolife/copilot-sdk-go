@@ -7,12 +7,18 @@
 //
 // Endpoint (semua di bawah /v1, dengan alias tanpa versi untuk klien lama):
 //
-//	GET  /health        Cek hidup (tanpa auth, untuk probe/systemd)
-//	GET  /v1/status     Status murah: akun, model, mode auth
-//	GET  /v1/models     Daftar model yang bisa dipakai akun ini
-//	POST /v1/generate   Satu giliran, balasan teks utuh (dukung json_mode)
-//	POST /v1/stream     Satu giliran, balasan NDJSON streaming
-//	POST /v1/agent      Sesi agentik; tool dieksekusi lewat callback HTTP
+//	GET    /health                  Cek hidup (tanpa auth, untuk probe/systemd)
+//	GET    /v1/status               Status murah: akun, model, mode auth
+//	GET    /v1/models               Daftar model yang bisa dipakai akun ini
+//	POST   /v1/generate             Satu giliran, balasan teks utuh (dukung json_mode)
+//	POST   /v1/stream               Satu giliran, balasan NDJSON streaming
+//	POST   /v1/agent                Sesi agentik; tool dieksekusi lewat callback HTTP
+//	GET    /v1/accounts             Pool akun: keadaan, pemakaian per hari, kuota, tanggal reset, perkiraan habis
+//	POST   /v1/accounts             Tambah akun (token diperiksa dulu di runtime sementara)
+//	PATCH  /v1/accounts/{id}        Ubah peran (utama/cadangan/nonaktif) atau label akun
+//	DELETE /v1/accounts/{id}        Keluarkan akun dari pool
+//	POST   /v1/accounts/refresh     Baca ulang identitas & kuota sekarang
+//	PUT    /v1/accounts/strategy    Ganti strategi pembagian (proporsional/bergiliran/prioritas)
 //
 // Service hanya bind ke loopback secara default dan mewajibkan header
 // X-API-Key bila COPILOTD_API_KEY di-set.
@@ -44,6 +50,7 @@ func main() {
 	cfg.Addr = *addr
 
 	svc := runtime.NewService(cfg)
+	svc.Start()
 	defer svc.Shutdown()
 
 	server := &http.Server{
@@ -66,14 +73,8 @@ func main() {
 		_ = server.Shutdown(shutdownCtx)
 	}()
 
-	auth := "login tersimpan"
-	if len(cfg.GitHubTokens) > 0 {
-		auth = "pool token"
-	} else if cfg.GitHubToken != "" {
-		auth = "token tunggal"
-	}
-	log.Printf("copilotd listening on %s (auth: %s, akun: %d, konkurensi/akun: %d)",
-		cfg.Addr, auth, len(cfg.Tokens()), cfg.MaxConcurrency)
+	log.Printf("copilotd listening on %s (akun: %d dari %s, strategi: %s, konkurensi/akun: %d)",
+		cfg.Addr, svc.AccountCount(), svc.PoolSource(), svc.PoolStrategy(), cfg.MaxConcurrency)
 
 	if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 		log.Fatal(err)

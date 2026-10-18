@@ -63,11 +63,15 @@ COPILOTD_ADDR=127.0.0.1:8791 ./bin/copilotd
 | Endpoint | Keterangan |
 | --- | --- |
 | `GET /health` | Cek hidup, tanpa auth (untuk probe/systemd) |
-| `GET /v1/status` | Status murah: model, mode auth, dan keadaan tiap akun di `account_pool` (siap/hampir habis/cooldown, sisa kuota; tanpa token, tanpa menyalakan runtime) |
+| `GET /v1/status` | Status murah: model, mode auth, strategi pool, dan keadaan tiap akun di `account_pool` (siap/sibuk/hampir habis/cooldown/nonaktif, sisa kuota; tanpa token, tanpa menyalakan runtime) |
 | `GET /v1/models` | `{"models":[...], "detail":[{id,name,multiplier}]}` |
 | `POST /v1/generate` | Satu giliran, balasan teks utuh (`json_mode` didukung) |
 | `POST /v1/stream` | Satu giliran, NDJSON `delta`/`reasoning`/`tool`/`done`/`error` |
 | `POST /v1/agent` | Sesi agentik; tool dieksekusi pemanggil lewat callback HTTP |
+| `GET /v1/accounts?days=30` | Pool akun untuk admin: peran, status, kuota, tanggal reset, perkiraan habis, pemakaian per hari |
+| `POST /v1/accounts` | Tambah akun `{token, role, label, actor}`; token diperiksa dulu di runtime sementara |
+| `PATCH /v1/accounts/{id}` · `DELETE /v1/accounts/{id}` | Ubah peran/label · keluarkan akun (akun aktif terakhir tidak bisa) |
+| `POST /v1/accounts/refresh` · `PUT /v1/accounts/strategy` | Baca ulang identitas & kuota sekarang · ganti strategi pembagian |
 
 `/models` dan `/stream` tanpa prefiks `/v1` tetap dilayani sebagai alias.
 
@@ -126,9 +130,12 @@ berkas `.env` bisa dipakai bersama.
 | `COPILOTD_ADDR` | `127.0.0.1:8791` | Alamat listen |
 | `COPILOTD_API_KEY` | — | Bila diisi, wajib header `X-API-Key` |
 | `TURNITIN_COPILOT_GITHUB_TOKEN` | — | Token tunggal; kosong = pakai login `copilot`/`gh` |
-| `TURNITIN_COPILOT_GITHUB_TOKENS` | — | Pool multi-akun, dipisah koma; urutan = prioritas; entri `login` = akun login tersimpan |
-| `TURNITIN_COPILOT_QUOTA_MIN_PERCENT` | `5` | Akun dengan sisa kuota premium ≤ nilai ini hanya dipakai bila tidak ada akun lain; `0` = mati |
-| `TURNITIN_COPILOT_QUOTA_CHECK_SEC` | `600` | Interval baca ulang kuota akun yang runtime-nya hidup; `0` = tidak dibaca |
+| `TURNITIN_COPILOT_GITHUB_TOKENS` | — | Pool multi-akun dari `.env` (dipisah koma; entri `login` = akun login tersimpan); diabaikan setelah `akun.json` ada |
+| `TURNITIN_COPILOT_STATE_DIR` | `~/.local/state/copilotd` | Tempat `akun.json` (daftar akun, 0600) dan `pemakaian.json`; kosong = tanpa berkas |
+| `TURNITIN_COPILOT_POOL_STRATEGY` | `proporsional` | Strategi awal (`proporsional`/`bergiliran`/`prioritas`) selama `akun.json` belum menyimpan strategi |
+| `TURNITIN_COPILOT_TIMEZONE` | `Asia/Makassar` | Batas hari catatan pemakaian harian |
+| `TURNITIN_COPILOT_QUOTA_MIN_PERCENT` | `5` | Akun dengan sisa kuota premium ≤ nilai ini hanya dipakai bila tidak ada akun sehat; `0` = mati |
+| `TURNITIN_COPILOT_QUOTA_CHECK_SEC` | `600` | Interval baca ulang kuota (tanpa menyalakan runtime baru); `0` = tidak dibaca |
 | `TURNITIN_COPILOT_MODEL` | runtime default | Model utama |
 | `TURNITIN_COPILOT_CHEAP_MODEL` / `_HEAVY_MODEL` / `_AGENT_MODEL` | — | Model per tier |
 | `TURNITIN_COPILOT_MODEL_FALLBACKS` | — | Model cadangan bila semua akun sedang cooldown |
@@ -137,31 +144,53 @@ berkas `.env` bisa dipakai bersama.
 | `TURNITIN_COPILOT_AGENT_TIMEOUT` | `300` | Detik, untuk sesi agentik. Juga menentukan batas tulis server HTTP (`WriteTimeout` = nilai ini + 2 menit) yang memotong **setiap** respons, termasuk aliran dengan `timeout_sec` lebih panjang. Setel ≥ timeout klien terpanjang − 120, mis. `480` untuk generate IDE Tugas core (540 dtk) |
 | `TURNITIN_COPILOT_PROVIDER_*` | — | BYOK (mis. arahkan ke Ollama lokal) |
 
-### Banyak akun dan pengalihan saat kuota hampir habis
+### Banyak akun: pembagian, pengalihan, dan admin
 
-Satu copilotd bisa memakai beberapa akun GitHub Copilot sekaligus
-(`TURNITIN_COPILOT_GITHUB_TOKENS`, urutan = prioritas):
+Satu copilotd memakai beberapa akun GitHub Copilot sekaligus. Daftar akun disimpan di
+`$TURNITIN_COPILOT_STATE_DIR/akun.json` (bawaan `~/.local/state/copilotd`, berkas 0600, cadangan tiap perubahan di
+`cadangan/`). Selama berkas itu belum ada, `TURNITIN_COPILOT_GITHUB_TOKENS` di `.env` yang dipakai.
 
-- **Sebelum limit.** Kuota tiap akun dibaca lewat `Account.GetQuota` (API eksperimental SDK) saat runtime-nya
-  hidup dan tiap `QUOTA_CHECK_SEC`. Akun dengan sisa kuota premium ≤ `QUOTA_MIN_PERCENT` hanya dipakai bila tidak
-  ada akun lain. Ini penting untuk akun yang mengizinkan kelebihan pemakaian: setelah kuotanya habis, akun seperti
+- **Pembagian.** Tiap akun punya peran `utama`, `cadangan`, atau `nonaktif`. Permintaan dibagi ke akun utama
+  dengan *smooth weighted round-robin* menurut strategi:
+  - `proporsional` (bawaan): bobot = sisa unit kuota, jadi akun yang sisanya besar melayani lebih banyak dan
+    semua akun habis kira-kira bersamaan;
+  - `bergiliran`: bobot sama;
+  - `prioritas`: urutan daftar.
+
+  Urutan kelas: utama sehat → cadangan sehat (bila utama penuh atau tidak tersedia) → akun hampir habis (sisa
+  terbesar dulu) → akun cooldown yang paling cepat pulih. Kapasitas paralel = jumlah akun × `MAX_CONCURRENCY`.
+- **Sebelum limit.** Kuota dibaca lewat `Account.GetQuota` (API eksperimental SDK): saat runtime akun start, tiap
+  `QUOTA_CHECK_SEC`, dan untuk akun bertoken yang runtime-nya belum hidup lewat runtime akun lain
+  (`GetQuota{GitHubToken}`). Akun dengan sisa kuota premium ≤ `QUOTA_MIN_PERCENT` hanya dipakai bila tidak ada
+  akun sehat. Ini penting untuk akun yang mengizinkan kelebihan pemakaian: setelah kuotanya habis, akun seperti
   itu tetap jalan sebagai pemakaian berbayar tanpa galat, sehingga hanya ambang ini yang mencegahnya.
+- **Tanggal reset.** Diambil dari `Account.GetCurrentAuth` (`quota_reset_date_utc`), bukan dari `resetDate`
+  snapshot GetQuota (isinya cap waktu snapshot).
 - **Saat limit.**
-  - Rate limit membuat akun cooldown 5 menit; kuota habis membuatnya cooldown 1 jam.
+  - Rate limit membuat akun cooldown 5 menit, kuota habis 1 jam, token ditolak (errorType
+    `authentication`/`authorization`) 15 menit.
   - Permintaan yang gagal sebelum ada teks terkirim diulang dengan **model yang sama di akun lain**.
   - `MODEL_FALLBACKS` baru dicoba bila semua akun sedang cooldown.
   - Permintaan managed tidak diulang.
+- **Pemakaian.** Tiap permintaan dicatat ke akun yang melayani: jumlah, berhasil/gagal, token, `cost`,
+  `nano_aiu`, dan durasi, per hari WITA. Data ini disimpan di `pemakaian.json` (90 hari, tanpa token), bersama
+  riwayat kuota (45 hari) untuk perkiraan kapan ambang dan kuota habis.
 
-Tambah akun:
+Kelola akun:
 
-1. Buat token untuk akun itu. Pakai PAT berbutir (`github_pat_…`, github.com/settings/personal-access-tokens)
-   milik akun pribadi dengan izin akun **Copilot Requests**, atau token OAuth (`gho_…`) dari `gh auth login`.
-   PAT klasik (`ghp_…`) ditolak Copilot CLI. Tiap akun perlu lisensi Copilot sendiri; ikuti ketentuan GitHub.
-2. Jalankan `scripts/tambah-akun.sh`. Skrip meminta token tanpa menampilkannya, memeriksa login dan sisa kuotanya,
-   menolak akun yang sudah ada, menyimpan cadangan `.env` ke `~/backups/copilotd-env/`, lalu menambahkannya. Pada
-   penambahan pertama, akun login tersimpan dipertahankan sebagai `login` di urutan pertama.
-3. Restart copilotd: `systemctl --user restart revisi-copilotd`.
-4. Periksa hasilnya dengan `go run ./cmd/akun` (login dan sisa kuota tiap akun) atau `GET /v1/status`.
+- **Admin revisi.studio → Akun Copilot.** Tambah akun dengan menempel token, ubah peran/label, hapus, ganti
+  strategi, dan segarkan kuota, semuanya tanpa restart. Core meneruskan aksi ini ke `/v1/accounts` dan mencatatnya
+  di log audit admin.
+- **Terminal:** `scripts/tambah-akun.sh [--peran cadangan] [--label teks]`. Token diminta tanpa tampil. Bila
+  copilotd jalan, akun langsung aktif lewat API; bila tidak, ditulis ke `akun.json`. `go run ./cmd/akun`
+  menampilkan peran, login, status, sisa kuota, reset, dan pemakaian 7 hari.
+- **Pindah dari `.env`:** `go run ./cmd/akun migrasi` membuat `akun.json` dari `.env`, menyimpan cadangan `.env`
+  ke `~/backups/copilotd-env/`, lalu mengganti baris token di `.env` dengan komentar. Setelah itu restart
+  copilotd.
+
+Token yang diterima: PAT berbutir (`github_pat_…`) milik akun pribadi dengan izin akun **Copilot Requests**, token
+OAuth (`gho_…`), atau token pengguna GitHub App (`ghu_…`). PAT klasik (`ghp_…`) ditolak Copilot CLI. Tiap akun
+perlu lisensi Copilot sendiri; ikuti ketentuan GitHub dan organisasi pemberi seat.
 
 ### Deploy
 

@@ -173,6 +173,9 @@ tidak tertimpa.
   - Rate limit membuat akun cooldown 5 menit, kuota habis 1 jam, token ditolak (errorType
     `authentication`/`authorization`) 15 menit.
   - Permintaan yang gagal sebelum ada teks terkirim diulang dengan **model yang sama di akun lain**.
+  - Daftar model bisa berbeda antar-akun (seat dari organisasi berbeda). Akun yang menolak sebuah model
+    (`Model "x" is not available`) dilewati untuk model itu selama 1 jam (`models_unavailable` di
+    `/v1/accounts`), dan permintaannya langsung diulang di akun lain.
   - `MODEL_FALLBACKS` baru dicoba bila semua akun sedang cooldown.
   - Permintaan managed tidak diulang.
 - **Pemakaian.** Tiap permintaan dicatat ke akun yang melayani: jumlah, berhasil/gagal, token, `cost`,

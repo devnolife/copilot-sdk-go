@@ -37,11 +37,11 @@ func TestPickSpreadsAcrossAccounts(t *testing.T) {
 	p := newTestPool("a", "b")
 	ctx := context.Background()
 
-	first, err := p.pick(ctx)
+	first, err := p.pick(ctx, "")
 	if err != nil {
 		t.Fatal(err)
 	}
-	second, err := p.pick(ctx)
+	second, err := p.pick(ctx, "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -52,7 +52,7 @@ func TestPickSpreadsAcrossAccounts(t *testing.T) {
 	// Semua slot terpakai: pick harus menunggu sampai context selesai.
 	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Millisecond)
 	defer cancel()
-	if _, err := p.pick(ctx); !errors.Is(err, context.DeadlineExceeded) {
+	if _, err := p.pick(ctx, ""); !errors.Is(err, context.DeadlineExceeded) {
 		t.Fatalf("pick saat semua penuh = %v, ingin context.DeadlineExceeded", err)
 	}
 }
@@ -61,7 +61,7 @@ func TestPickSkipsAccountInCooldown(t *testing.T) {
 	p := newTestPool("a", "b")
 	p.accounts[0].markLimited()
 
-	acc, err := p.pick(context.Background())
+	acc, err := p.pick(context.Background(), "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -77,7 +77,7 @@ func TestPickAllInCooldownPrefersEarliestRecovery(t *testing.T) {
 	p.accounts[1].cooldownEnd = now.Add(1 * time.Minute)
 	p.accounts[2].cooldownEnd = now.Add(5 * time.Minute)
 
-	acc, err := p.pick(context.Background())
+	acc, err := p.pick(context.Background(), "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -93,7 +93,7 @@ func TestPickAllInCooldownAndFullHonoursContext(t *testing.T) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Millisecond)
 	defer cancel()
-	if _, err := p.pick(ctx); !errors.Is(err, context.DeadlineExceeded) {
+	if _, err := p.pick(ctx, ""); !errors.Is(err, context.DeadlineExceeded) {
 		t.Fatalf("pick = %v, ingin context.DeadlineExceeded", err)
 	}
 }

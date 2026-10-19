@@ -188,7 +188,7 @@ func TestRemoveStopsRuntimeOnlyAfterLastLease(t *testing.T) {
 		t.Fatal("akun harus ditandai terhapus")
 	}
 	for i := 0; i < 5; i++ {
-		got, err := p.pick(context.Background())
+		got, err := p.pick(context.Background(), "")
 		if err != nil || got == acc {
 			t.Fatalf("akun terhapus masih dipilih: %v", err)
 		}
@@ -210,7 +210,7 @@ func TestUpdateWithoutStateDirStaysInMemory(t *testing.T) {
 
 func TestFailStartWithCancelledContextDoesNotBlameAccount(t *testing.T) {
 	p := strategyPool(akun.StrategyProporsional, "github_pat_a", "github_pat_b")
-	acc, err := p.pick(context.Background())
+	acc, err := p.pick(context.Background(), "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -223,7 +223,7 @@ func TestFailStartWithCancelledContextDoesNotBlameAccount(t *testing.T) {
 	if acc.inCooldown(time.Now()) || len(acc.slots) != 0 || acc.lastErr != "" {
 		t.Fatal("ctx batal tidak boleh menaruh akun dalam cooldown, menahan slot, atau mencatat galat")
 	}
-	if _, err := p.pick(ctx); !errors.Is(err, context.Canceled) {
+	if _, err := p.pick(ctx, ""); !errors.Is(err, context.Canceled) {
 		t.Fatalf("pick dengan ctx batal = %v, ingin context.Canceled tanpa mengambil slot", err)
 	}
 	for _, a := range p.accounts {
@@ -232,7 +232,7 @@ func TestFailStartWithCancelledContextDoesNotBlameAccount(t *testing.T) {
 		}
 	}
 
-	acc, _ = p.pick(context.Background())
+	acc, _ = p.pick(context.Background(), "")
 	got = p.failStart(context.Background(), acc, errors.New("runtime Copilot gagal start: exec: not found"))
 	if !errors.Is(got, errRetryable) || !acc.inCooldown(time.Now()) || acc.limitKind != "start" {
 		t.Fatalf("galat start sungguhan: %v, cooldown %q", got, acc.limitKind)

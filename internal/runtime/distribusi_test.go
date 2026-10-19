@@ -27,7 +27,7 @@ func pickCounts(t *testing.T, p *Pool, n int) map[*account]int {
 	t.Helper()
 	counts := map[*account]int{}
 	for i := 0; i < n; i++ {
-		acc, err := p.pick(context.Background())
+		acc, err := p.pick(context.Background(), "")
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -53,11 +53,11 @@ func TestProportionalSpreadsWhenPreferredAccountBusy(t *testing.T) {
 	p := strategyPool(akun.StrategyProporsional, "a", "b")
 	setUnits(p.accounts[0], 10, 500000)
 	setUnits(p.accounts[1], 100, 500000)
-	busy, err := p.pick(context.Background())
+	busy, err := p.pick(context.Background(), "")
 	if err != nil || busy != p.accounts[1] {
 		t.Fatalf("pick pertama = %v (%v), ingin #2 yang sisa kuotanya terbesar", busy, err)
 	}
-	next, err := p.pick(context.Background())
+	next, err := p.pick(context.Background(), "")
 	if err != nil || next != p.accounts[0] {
 		t.Fatalf("saat #2 penuh, permintaan berikutnya harus ke #1, dapat %v (%v)", next, err)
 	}
@@ -80,7 +80,7 @@ func TestRoundRobinAlternates(t *testing.T) {
 	setUnits(p.accounts[1], 100, 500000)
 	var order []*account
 	for i := 0; i < 6; i++ {
-		acc, err := p.pick(context.Background())
+		acc, err := p.pick(context.Background(), "")
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -111,14 +111,14 @@ func TestReserveUsedOnlyWhenMainBusyOrUnavailable(t *testing.T) {
 	if counts := pickCounts(t, p, 10); counts[p.accounts[0]] != 10 {
 		t.Fatalf("cadangan tidak boleh dipakai selama akun utama longgar: %v", counts)
 	}
-	first, _ := p.pick(context.Background())
-	second, err := p.pick(context.Background())
+	first, _ := p.pick(context.Background(), "")
+	second, err := p.pick(context.Background(), "")
 	if first != p.accounts[0] || second != p.accounts[1] || err != nil {
 		t.Fatalf("akun utama penuh: cadangan harus dipakai, dapat %v/%v (%v)", first, second, err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Millisecond)
 	defer cancel()
-	if _, err := p.pick(ctx); !errors.Is(err, context.DeadlineExceeded) {
+	if _, err := p.pick(ctx, ""); !errors.Is(err, context.DeadlineExceeded) {
 		t.Fatalf("semua penuh: pick = %v, ingin menunggu", err)
 	}
 	p.releaseSlot(first)
@@ -126,7 +126,7 @@ func TestReserveUsedOnlyWhenMainBusyOrUnavailable(t *testing.T) {
 
 	// Akun utama hampir habis: cadangan sehat didahulukan.
 	setUnits(p.accounts[0], 3, 100)
-	if acc, _ := p.pick(context.Background()); acc != p.accounts[1] {
+	if acc, _ := p.pick(context.Background(), ""); acc != p.accounts[1] {
 		t.Fatalf("akun utama hampir habis: ingin cadangan, dapat #%d", acc.index)
 	}
 }
@@ -138,7 +138,7 @@ func TestDisabledAccountsNeverPicked(t *testing.T) {
 		t.Fatalf("akun nonaktif terpakai: %v", counts)
 	}
 	p.accounts[1].role = akun.RoleNonaktif
-	if _, err := p.pick(context.Background()); !errors.Is(err, ErrNoAccount) {
+	if _, err := p.pick(context.Background(), ""); !errors.Is(err, ErrNoAccount) {
 		t.Fatalf("semua nonaktif: pick = %v, ingin ErrNoAccount", err)
 	}
 	if p.HasAvailable() {
@@ -148,7 +148,7 @@ func TestDisabledAccountsNeverPicked(t *testing.T) {
 
 func TestPickWakesWhenSlotReleased(t *testing.T) {
 	p := strategyPool(akun.StrategyProporsional, "a")
-	held, err := p.pick(context.Background())
+	held, err := p.pick(context.Background(), "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -156,7 +156,7 @@ func TestPickWakesWhenSlotReleased(t *testing.T) {
 	go func() {
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
-		acc, _ := p.pick(ctx)
+		acc, _ := p.pick(ctx, "")
 		got <- acc
 	}()
 	time.Sleep(30 * time.Millisecond)
@@ -219,7 +219,60 @@ func TestLeaseFailedAuthUsesMediumCooldown(t *testing.T) {
 	if acc.limitKind != "auth" || !acc.inCooldown(time.Now()) {
 		t.Fatalf("token ditolak harus cooldown jenis auth, dapat %q", acc.limitKind)
 	}
-	if acc2, _ := p.pick(context.Background()); acc2 != p.accounts[1] {
+	if acc2, _ := p.pick(context.Background(), ""); acc2 != p.accounts[1] {
 		t.Fatal("akun yang tokennya ditolak harus dilewati")
+	}
+}
+
+func TestAccountRejectingModelIsSkippedForThatModelOnly(t *testing.T) {
+	p := strategyPool(akun.StrategyBergiliran, "github_pat_a", "github_pat_b")
+	a, b := p.accounts[0], p.accounts[1]
+	lease := &Lease{pool: p, acc: a, model: "claude-x"}
+	if !lease.ModelUnavailable() {
+		t.Fatal("pool dua akun: model ditolak harus bisa dicoba di akun lain")
+	}
+	for i := 0; i < 4; i++ {
+		acc, err := p.pick(context.Background(), "claude-x")
+		if err != nil || acc != b {
+			t.Fatalf("model ditolak #1: pick = %v (%v), ingin #2", acc, err)
+		}
+		p.releaseSlot(acc)
+	}
+	seen := map[*account]bool{}
+	for i := 0; i < 4; i++ {
+		acc, _ := p.pick(context.Background(), "gpt-lain")
+		seen[acc] = true
+		p.releaseSlot(acc)
+	}
+	if !seen[a] || !seen[b] {
+		t.Fatal("model lain tetap dibagi ke kedua akun")
+	}
+	if st := p.Status()[0]; len(st.ModelsUnavailable) != 1 || st.ModelsUnavailable[0] != "claude-x" {
+		t.Fatalf("status harus menyebut model yang ditolak: %+v", st.ModelsUnavailable)
+	}
+
+	// Semua akun menolak model itu: tetap ada akun yang dicoba (cadangan terakhir), bukan galat pool.
+	(&Lease{pool: p, acc: b, model: "claude-x"}).ModelUnavailable()
+	if acc, err := p.pick(context.Background(), "claude-x"); err != nil || acc == nil {
+		t.Fatalf("semua akun menolak model: pick = %v (%v)", acc, err)
+	}
+	if (&Lease{pool: strategyPool(akun.StrategyBergiliran, "github_pat_c"), acc: a, model: "m"}).ModelUnavailable() {
+		t.Fatal("pool satu akun: tidak ada akun lain untuk dicoba")
+	}
+}
+
+func TestIsModelUnavailable(t *testing.T) {
+	for _, msg := range []string{
+		`failed to create session: JSON-RPC Error -32603: Request session.create failed with message: Model "claude-sonnet-4.6" is not available.`,
+		"model gpt-x not supported for this account",
+	} {
+		if !isModelUnavailable(errors.New(msg)) {
+			t.Errorf("isModelUnavailable(%q) = false", msg)
+		}
+	}
+	for _, msg := range []string{"rate_limit: slow down", "service is not available", "authentication: bad credentials"} {
+		if isModelUnavailable(errors.New(msg)) {
+			t.Errorf("isModelUnavailable(%q) = true", msg)
+		}
 	}
 }

@@ -66,7 +66,7 @@ func TestTokenKindNeverRevealsToken(t *testing.T) {
 func TestPickPrefersHealthyOverLowQuota(t *testing.T) {
 	p := quotaPool(5, "a", "b")
 	setQuota(p.accounts[0], 3)
-	acc, err := p.pick(context.Background())
+	acc, err := p.pick(context.Background(), "")
 	if err != nil || acc != p.accounts[1] {
 		t.Fatalf("pick = #%v (%v), ingin #2 karena #1 hampir habis", acc.index, err)
 	}
@@ -78,7 +78,7 @@ func TestPickWaitsForBusyHealthyInsteadOfUsingLowQuota(t *testing.T) {
 	setQuota(p.accounts[1], 2)        // #2 hampir habis dan longgar
 	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Millisecond)
 	defer cancel()
-	if acc, err := p.pick(ctx); !errors.Is(err, context.DeadlineExceeded) {
+	if acc, err := p.pick(ctx, ""); !errors.Is(err, context.DeadlineExceeded) {
 		t.Fatalf("pick = %v/%v, ingin menunggu akun sehat (DeadlineExceeded)", acc, err)
 	}
 }
@@ -88,7 +88,7 @@ func TestPickUsesLowQuotaWhenNoHealthyAccountLeft(t *testing.T) {
 	p.accounts[0].markLimited()
 	setQuota(p.accounts[1], 2)
 	setQuota(p.accounts[2], 4)
-	acc, err := p.pick(context.Background())
+	acc, err := p.pick(context.Background(), "")
 	if err != nil || acc != p.accounts[2] {
 		t.Fatalf("pick = #%v (%v), ingin #3 (sisa kuota terbesar di antara yang hampir habis)", acc.index, err)
 	}
@@ -105,7 +105,7 @@ func TestPickUsesLowQuotaWhenNoHealthyAccountLeft(t *testing.T) {
 func TestPickWithThresholdOffIgnoresQuota(t *testing.T) {
 	p := quotaPool(0, "a", "b")
 	setQuota(p.accounts[0], 0)
-	if acc, _ := p.pick(context.Background()); acc != p.accounts[0] {
+	if acc, _ := p.pick(context.Background(), ""); acc != p.accounts[0] {
 		t.Fatalf("ambang 0 harus mematikan pengalihan proaktif, dapat #%d", acc.index)
 	}
 }

@@ -56,6 +56,9 @@ const cooldownAfterAuth = 15 * time.Minute
 // cooldownAfterStart: runtime akun gagal dinyalakan.
 const cooldownAfterStart = time.Minute
 
+// modelUnavailableFor: lama sebuah akun dilewati untuk model yang ditolaknya.
+const modelUnavailableFor = time.Hour
+
 // quotaTimeout membatasi satu pembacaan kuota; identityTimeout satu pembacaan identitas akun.
 const (
 	quotaTimeout    = 20 * time.Second
@@ -101,6 +104,9 @@ type account struct {
 	lastUsed   time.Time
 	lastErr    string
 	lastErrAt  time.Time
+	// noModel: model yang ditolak akun ini ("Model X is not available") sampai waktu tertentu; daftar model bisa
+	// berbeda antar-akun (seat dari organisasi berbeda).
+	noModel map[string]time.Time
 
 	// swrr adalah bobot berjalan smooth weighted round-robin; dijaga Pool.mu.
 	swrr float64
@@ -252,6 +258,7 @@ type Lease struct {
 	pool     *Pool
 	acc      *account
 	started  time.Time
+	model    string
 	done     bool
 	recorded bool
 }
@@ -301,6 +308,23 @@ func (l *Lease) Failed(err error) {
 	}
 }
 
+// ModelUnavailable menandai bahwa akun lease ini menolak model-nya; akun itu dilewati untuk model tersebut selama
+// modelUnavailableFor. Mengembalikan true bila masih ada akun lain yang bisa dicoba.
+func (l *Lease) ModelUnavailable() bool {
+	if l == nil || l.acc == nil || l.model == "" {
+		return false
+	}
+	a := l.acc
+	a.mu.Lock()
+	if a.noModel == nil {
+		a.noModel = map[string]time.Time{}
+	}
+	a.noModel[l.model] = time.Now().Add(modelUnavailableFor)
+	a.mu.Unlock()
+	log.Printf("copilotd: akun %s tidak menyediakan model %s; dilewati untuk model ini selama %s", a.logName(), l.model, modelUnavailableFor)
+	return l.pool != nil && l.pool.Size() > 1
+}
+
 // Done mencatat hasil satu permintaan generasi untuk statistik pemakaian per akun (sekali per lease).
 func (l *Lease) Done(err error, calls []UsageCall) {
 	if l == nil || l.recorded || l.pool == nil || l.acc == nil {
@@ -313,7 +337,12 @@ func (l *Lease) Done(err error, calls []UsageCall) {
 // Acquire memilih akun yang tersedia lalu memastikan runtime-nya hidup. Bila runtime gagal dinyalakan dan masih
 // ada akun lain, galatnya ditandai layak diulang di akun lain.
 func (p *Pool) Acquire(ctx context.Context) (*Lease, error) {
-	acc, err := p.pick(ctx)
+	return p.AcquireModel(ctx, "")
+}
+
+// AcquireModel seperti Acquire, tetapi melewati akun yang baru saja menolak model itu selama masih ada akun lain.
+func (p *Pool) AcquireModel(ctx context.Context, model string) (*Lease, error) {
+	acc, err := p.pick(ctx, model)
 	if err != nil {
 		return nil, err
 	}
@@ -325,7 +354,7 @@ func (p *Pool) Acquire(ctx context.Context) (*Lease, error) {
 		p.refreshIdentity(acc)
 	}
 	p.maybeRefresh(acc, started)
-	return &Lease{Client: client, pool: p, acc: acc, started: p.now()}, nil
+	return &Lease{Client: client, pool: p, acc: acc, started: p.now(), model: model}, nil
 }
 
 // failStart melepas slot akun yang runtime-nya gagal start. Bila penyebabnya context pemanggil (dibatalkan atau
@@ -374,7 +403,7 @@ func (p *Pool) HasAvailable() bool {
 
 // pick mengambil satu slot menurut kelas dan strategi (lihat dokumentasi paket). Kalau akun yang pantas dipakai
 // sedang penuh semua, tunggu slot lepas (maks busyWait) daripada beralih ke akun yang kuotanya hampir habis.
-func (p *Pool) pick(ctx context.Context) (*account, error) {
+func (p *Pool) pick(ctx context.Context, model string) (*account, error) {
 	timer := time.NewTimer(busyWait)
 	defer timer.Stop()
 	for {
@@ -382,7 +411,7 @@ func (p *Pool) pick(ctx context.Context) (*account, error) {
 			return nil, err
 		}
 		wait := p.waitChan()
-		acc, err := p.tryPick()
+		acc, err := p.tryPick(model)
 		if acc != nil || err != nil {
 			return acc, err
 		}
@@ -396,8 +425,9 @@ func (p *Pool) pick(ctx context.Context) (*account, error) {
 	}
 }
 
-// tryPick mengambil slot tanpa menunggu; (nil, nil) berarti ada kandidat tetapi semuanya penuh.
-func (p *Pool) tryPick() (*account, error) {
+// tryPick mengambil slot tanpa menunggu; (nil, nil) berarti ada kandidat tetapi semuanya penuh. Akun yang baru
+// menolak model diperlakukan seperti akun cooldown untuk model itu: hanya dipakai bila tidak ada akun lain.
+func (p *Pool) tryPick(model string) (*account, error) {
 	p.mu.Lock()
 	defer p.mu.Unlock()
 	now := p.now()
@@ -407,6 +437,9 @@ func (p *Pool) tryPick() (*account, error) {
 	for _, a := range p.accounts {
 		a.mu.Lock()
 		role, until := a.role, a.cooldownEnd
+		if noUntil, ok := a.noModel[model]; ok && model != "" && now.Before(noUntil) && noUntil.After(until) {
+			until = noUntil
+		}
 		isLow := lowQuota(a.quota, p.cfg.QuotaMinPercent)
 		a.mu.Unlock()
 		switch {
@@ -889,6 +922,8 @@ type AccountStatus struct {
 	LastUsedAt        *time.Time `json:"last_used_at,omitempty"`
 	LastError         string     `json:"last_error,omitempty"`
 	LastErrorAt       *time.Time `json:"last_error_at,omitempty"`
+	// ModelsUnavailable: model yang baru ditolak akun ini, sehingga permintaan model itu diarahkan ke akun lain.
+	ModelsUnavailable []string   `json:"models_unavailable,omitempty"`
 	AddedAt           *time.Time `json:"added_at,omitempty"`
 	AddedBy           string     `json:"added_by,omitempty"`
 }
@@ -934,6 +969,12 @@ func (p *Pool) statusOf(a *account, now time.Time) AccountStatus {
 		q := *a.quota
 		st.Quota = &q
 	}
+	for model, until := range a.noModel {
+		if now.Before(until) {
+			st.ModelsUnavailable = append(st.ModelsUnavailable, model)
+		}
+	}
+	sort.Strings(st.ModelsUnavailable)
 	switch {
 	case a.role == akun.RoleNonaktif:
 		st.State = "nonaktif"
@@ -1335,6 +1376,12 @@ func isAuthError(err error) bool {
 		}
 	}
 	return false
+}
+
+// isModelUnavailable: akun ini tidak menyediakan model yang diminta (mis. `Model "x" is not available.`).
+func isModelUnavailable(err error) bool {
+	msg := strings.ToLower(err.Error())
+	return strings.Contains(msg, "model") && (strings.Contains(msg, "is not available") || strings.Contains(msg, "not supported"))
 }
 
 func isConnectionError(err error) bool {

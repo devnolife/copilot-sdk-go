@@ -401,7 +401,7 @@ func (s *Service) runOnce(
 	ctx, cancel := context.WithTimeout(ctx, deadline)
 	defer cancel()
 
-	lease, err := s.pool.Acquire(ctx)
+	lease, err := s.pool.AcquireModel(ctx, model)
 	if err != nil {
 		return err
 	}
@@ -427,6 +427,13 @@ func (s *Service) runOnce(
 
 	session, err := lease.Client.CreateSession(ctx, cfg)
 	if err != nil {
+		if isModelUnavailable(err) {
+			// Daftar model bisa berbeda antar-akun: coba model yang sama di akun lain.
+			if lease.ModelUnavailable() {
+				return fmt.Errorf("%w: %v", errRetryable, err)
+			}
+			return fmt.Errorf("gagal membuat sesi: %w", err)
+		}
 		lease.Failed(err)
 		if isRateLimit(err) || isAuthError(err) {
 			return fmt.Errorf("%w: %v", errRetryable, err)

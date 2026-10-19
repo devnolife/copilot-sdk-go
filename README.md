@@ -136,9 +136,11 @@ berkas `.env` bisa dipakai bersama.
 | `TURNITIN_COPILOT_TIMEZONE` | `Asia/Makassar` | Batas hari catatan pemakaian harian |
 | `TURNITIN_COPILOT_QUOTA_MIN_PERCENT` | `5` | Akun dengan sisa kuota premium ≤ nilai ini hanya dipakai bila tidak ada akun sehat; `0` = mati |
 | `TURNITIN_COPILOT_QUOTA_CHECK_SEC` | `600` | Interval baca ulang kuota (tanpa menyalakan runtime baru); `0` = tidak dibaca |
-| `TURNITIN_COPILOT_MODEL` | runtime default | Model utama |
-| `TURNITIN_COPILOT_CHEAP_MODEL` / `_HEAVY_MODEL` / `_AGENT_MODEL` | — | Model per tier |
-| `TURNITIN_COPILOT_MODEL_FALLBACKS` | — | Model cadangan bila semua akun sedang cooldown |
+| `TURNITIN_COPILOT_MODEL` | runtime default | Model utama: dipakai permintaan tanpa nama model, termasuk tier utama mode Otomatis core. Alias Intelligent di core diatur terpisah (`COPILOT_MODEL` core) |
+| `TURNITIN_COPILOT_CHEAP_MODEL` | model utama | Tier `cheap` tanpa nama model. Core mengirim nama model hemat sendiri (`COPILOT_CHEAP_MODEL` core); samakan nilainya |
+| `TURNITIN_COPILOT_HEAVY_MODEL` | model utama | Tier `heavy` tanpa nama model: langkah menulis berkas IDE Tugas core |
+| `TURNITIN_COPILOT_AGENT_MODEL` | model utama | Sesi `/v1/agent` (agen bertool) tanpa nama model; kosong = ikut model utama |
+| `TURNITIN_COPILOT_MODEL_FALLBACKS` | — | Model cadangan, dicoba berurutan bila model tier gagal dengan galat yang layak diulang di semua akun. Hanya untuk permintaan tanpa nama model |
 | `TURNITIN_COPILOT_MAX_CONCURRENCY` | `2` | Sesi paralel per akun |
 | `TURNITIN_COPILOT_TIMEOUT` | `180` | Detik, untuk generate/stream |
 | `TURNITIN_COPILOT_AGENT_TIMEOUT` | `300` | Detik, untuk sesi agentik. Juga menentukan batas tulis server HTTP (`WriteTimeout` = nilai ini + 2 menit) yang memotong **setiap** respons, termasuk aliran dengan `timeout_sec` lebih panjang. Setel ≥ timeout klien terpanjang − 120, mis. `480` untuk generate IDE Tugas core (540 dtk) |

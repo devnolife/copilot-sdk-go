@@ -207,3 +207,76 @@ func TestUpdateWithoutStateDirStaysInMemory(t *testing.T) {
 		t.Fatalf("tanpa StateDir perubahan hanya di memori: %+v", p.Status()[1])
 	}
 }
+
+func TestFailStartWithCancelledContextDoesNotBlameAccount(t *testing.T) {
+	p := strategyPool(akun.StrategyProporsional, "github_pat_a", "github_pat_b")
+	acc, err := p.pick(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel()
+	got := p.failStart(ctx, acc, errors.New("runtime Copilot gagal start: context canceled"))
+	if !errors.Is(got, context.Canceled) || errors.Is(got, errRetryable) {
+		t.Fatalf("ctx batal: galat = %v, ingin context.Canceled tanpa pengulangan", got)
+	}
+	if acc.inCooldown(time.Now()) || len(acc.slots) != 0 || acc.lastErr != "" {
+		t.Fatal("ctx batal tidak boleh menaruh akun dalam cooldown, menahan slot, atau mencatat galat")
+	}
+	if _, err := p.pick(ctx); !errors.Is(err, context.Canceled) {
+		t.Fatalf("pick dengan ctx batal = %v, ingin context.Canceled tanpa mengambil slot", err)
+	}
+	for _, a := range p.accounts {
+		if len(a.slots) != 0 {
+			t.Fatal("pick dengan ctx batal mengambil slot")
+		}
+	}
+
+	acc, _ = p.pick(context.Background())
+	got = p.failStart(context.Background(), acc, errors.New("runtime Copilot gagal start: exec: not found"))
+	if !errors.Is(got, errRetryable) || !acc.inCooldown(time.Now()) || acc.limitKind != "start" {
+		t.Fatalf("galat start sungguhan: %v, cooldown %q", got, acc.limitKind)
+	}
+}
+
+func TestAttachRejectsRuntimeOfRemovedAccount(t *testing.T) {
+	p := strategyPool(akun.StrategyProporsional, "github_pat_a", "github_pat_b")
+	acc := p.accounts[1]
+	acc.mu.Lock()
+	acc.removed = true
+	acc.mu.Unlock()
+	if err := acc.attach(nil, nil); !errors.Is(err, errAccountRemoved) {
+		t.Fatalf("attach akun terhapus = %v", err)
+	}
+	acc.slots <- struct{}{}
+	if err := p.failStart(context.Background(), acc, errAccountRemoved); !errors.Is(err, errAccountRemoved) ||
+		acc.inCooldown(time.Now()) || len(acc.slots) != 0 {
+		t.Fatalf("akun terhapus bukan galat start: %v", err)
+	}
+	if err := p.accounts[0].attach(nil, nil); err != nil {
+		t.Fatalf("akun aktif: %v", err)
+	}
+}
+
+func TestCorruptAccountFileIsNeverOverwritten(t *testing.T) {
+	dir := t.TempDir()
+	path := akun.PathIn(dir)
+	if err := os.WriteFile(path, []byte(`{"accounts":[`), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	prober := &fakeProber{login: "mutia"}
+	p := NewPool(config.Config{StateDir: dir, GitHubTokens: []string{"login"}, MaxConcurrency: 1})
+	p.probe = prober.probe
+	if p.Size() != 1 || p.Overview(1).StoreError == "" {
+		t.Fatalf("berkas rusak: size=%d storeErr=%q", p.Size(), p.Overview(1).StoreError)
+	}
+	if err := p.SetStrategy(akun.StrategyBergiliran, "admin:x"); !errors.Is(err, ErrStoreUnavailable) || p.Strategy() != akun.StrategyProporsional {
+		t.Fatalf("ganti strategi saat berkas rusak = %v (strategi %s)", err, p.Strategy())
+	}
+	if _, err := p.Add(context.Background(), AddInput{Token: newToken}); !errors.Is(err, ErrStoreUnavailable) || p.Size() != 1 {
+		t.Fatalf("tambah akun saat berkas rusak = %v (size %d)", err, p.Size())
+	}
+	if raw, _ := os.ReadFile(path); string(raw) != `{"accounts":[` {
+		t.Fatalf("akun.json rusak tertimpa: %q", raw)
+	}
+}

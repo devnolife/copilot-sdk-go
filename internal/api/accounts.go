@@ -75,7 +75,8 @@ func writeAccountError(w http.ResponseWriter, err error) {
 		status = http.StatusBadRequest
 	case errors.Is(err, runtime.ErrAccountNotFound):
 		status = http.StatusNotFound
-	case errors.Is(err, runtime.ErrAccountDuplicate), errors.Is(err, runtime.ErrLastActive):
+	case errors.Is(err, runtime.ErrAccountDuplicate), errors.Is(err, runtime.ErrLastActive),
+		errors.Is(err, runtime.ErrStoreUnavailable):
 		status = http.StatusConflict
 	case errors.Is(err, runtime.ErrAccountRejected):
 		status = http.StatusUnprocessableEntity

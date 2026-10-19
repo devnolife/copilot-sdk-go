@@ -148,7 +148,10 @@ berkas `.env` bisa dipakai bersama.
 
 Satu copilotd memakai beberapa akun GitHub Copilot sekaligus. Daftar akun disimpan di
 `$TURNITIN_COPILOT_STATE_DIR/akun.json` (bawaan `~/.local/state/copilotd`, berkas 0600, cadangan tiap perubahan di
-`cadangan/`). Selama berkas itu belum ada, `TURNITIN_COPILOT_GITHUB_TOKENS` di `.env` yang dipakai.
+`cadangan/`). Selama berkas itu belum ada, `TURNITIN_COPILOT_GITHUB_TOKENS` di `.env` yang dipakai. Bila berkas ada
+tetapi rusak, copilotd tetap jalan dengan akun `.env` dan menolak semua perubahan akun (409, `store_error` di
+`/v1/accounts`) sampai berkas diperbaiki atau dipulihkan dari `cadangan/`, supaya akun yang hanya ada di berkas itu
+tidak tertimpa.
 
 - **Pembagian.** Tiap akun punya peran `utama`, `cadangan`, atau `nonaktif`. Permintaan dibagi ke akun utama
   dengan *smooth weighted round-robin* menurut strategi:

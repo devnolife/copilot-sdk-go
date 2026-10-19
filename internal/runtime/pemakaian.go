@@ -200,8 +200,18 @@ func (b *usageBook) record(id, login, label string, at time.Time, c UsageCounts)
 	d.add(c)
 	t := at.UTC()
 	acc.LastUsed = &t
-	acc.RemovedAt = nil
 	b.dirty = true
+}
+
+// restore menghapus tanda terhapus (token yang sama ditambahkan lagi). Permintaan yang selesai sesudah akun dihapus
+// tidak menghapus tanda itu.
+func (b *usageBook) restore(id string) {
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	if acc := b.data.Accounts[id]; acc != nil && acc.RemovedAt != nil {
+		acc.RemovedAt = nil
+		b.dirty = true
+	}
 }
 
 // noteQuota menyimpan titik kuota untuk perkiraan habis: titik berjarak >= 30 menit, ditambah satu titik terbaru

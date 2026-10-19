@@ -220,3 +220,17 @@ func TestApplyIdentityPersistsOnlyWhenChanged(t *testing.T) {
 		t.Fatal("identitas yang sama tidak boleh menulis ulang akun.json")
 	}
 }
+
+func TestRemovedMarkSurvivesLateRequestsUntilReAdded(t *testing.T) {
+	b := newUsageBook("", "Asia/Makassar")
+	b.record("x", "mutia", "", fixedNow, UsageCounts{Requests: 1})
+	b.markRemoved("x", "mutia", "", fixedNow)
+	b.record("x", "mutia", "", fixedNow.Add(time.Second), UsageCounts{Requests: 1}) // permintaan yang masih berjalan
+	if b.data.Accounts["x"].RemovedAt == nil {
+		t.Fatal("permintaan yang selesai sesudah hapus tidak boleh menghapus tanda terhapus")
+	}
+	b.restore("x")
+	if b.data.Accounts["x"].RemovedAt != nil {
+		t.Fatal("akun yang ditambahkan lagi harus kehilangan tanda terhapus")
+	}
+}

@@ -41,6 +41,7 @@ var (
 	ErrAccountNotFound  = errors.New("akun tidak ditemukan")
 	ErrLastActive       = errors.New("minimal satu akun harus tetap aktif")
 	ErrAccountRejected  = errors.New("token ditolak Copilot")
+	ErrStoreUnavailable = errors.New("daftar akun tidak bisa diubah")
 )
 
 // cooldownAfterLimit adalah jeda sebelum akun yang kena rate limit dicoba lagi.
@@ -116,6 +117,9 @@ type Pool struct {
 	strategy  string
 	storePath string // "" = perubahan daftar akun hanya di memori
 	managed   bool   // daftar akun dibaca dari / ditulis ke akun.json
+	// storeErr: akun.json ada tetapi tidak terbaca. Perubahan ditolak sampai berkas diperbaiki, supaya akun yang
+	// hanya ada di berkas itu tidak tertimpa daftar dari .env.
+	storeErr string
 
 	wakeMu sync.Mutex
 	wake   chan struct{} // ditutup lalu diganti setiap ada slot yang lepas
@@ -141,7 +145,8 @@ func NewPool(cfg config.Config) *Pool {
 		f, exists, err := akun.Load(p.storePath)
 		switch {
 		case err != nil:
-			log.Printf("copilotd: %v; memakai akun dari .env sampai berkas diperbaiki", err)
+			p.storeErr = err.Error()
+			log.Printf("copilotd: %v; memakai akun dari .env, perubahan akun ditolak sampai berkas diperbaiki", err)
 		case exists && len(f.Accounts) == 0:
 			log.Printf("copilotd: %s tidak berisi akun; memakai akun dari .env", p.storePath)
 		case exists:
@@ -314,19 +319,32 @@ func (p *Pool) Acquire(ctx context.Context) (*Lease, error) {
 	}
 	client, started, err := acc.ensure(ctx, p.cfg)
 	if err != nil {
-		acc.noteError(err.Error(), p.now())
-		acc.markCooldown("start", cooldownAfterStart)
-		p.releaseSlot(acc)
-		if p.Size() > 1 {
-			return nil, fmt.Errorf("%w: %v", errRetryable, err)
-		}
-		return nil, err
+		return nil, p.failStart(ctx, acc, err)
 	}
 	if started {
 		p.refreshIdentity(acc)
 	}
 	p.maybeRefresh(acc, started)
 	return &Lease{Client: client, pool: p, acc: acc, started: p.now()}, nil
+}
+
+// failStart melepas slot akun yang runtime-nya gagal start. Bila penyebabnya context pemanggil (dibatalkan atau
+// lewat tenggat), akun tidak disalahkan: tanpa cooldown dan tanpa pengulangan ke akun lain, supaya satu klien yang
+// putus tidak menaruh semua akun dalam cooldown satu per satu.
+func (p *Pool) failStart(ctx context.Context, acc *account, err error) error {
+	p.releaseSlot(acc)
+	if ctxErr := ctx.Err(); ctxErr != nil {
+		return ctxErr
+	}
+	if errors.Is(err, errAccountRemoved) {
+		return err
+	}
+	acc.noteError(err.Error(), p.now())
+	acc.markCooldown("start", cooldownAfterStart)
+	if p.Size() > 1 {
+		return fmt.Errorf("%w: %v", errRetryable, err)
+	}
+	return err
 }
 
 func (p *Pool) releaseSlot(a *account) {
@@ -360,6 +378,9 @@ func (p *Pool) pick(ctx context.Context) (*account, error) {
 	timer := time.NewTimer(busyWait)
 	defer timer.Stop()
 	for {
+		if err := ctx.Err(); err != nil {
+			return nil, err
+		}
 		wait := p.waitChan()
 		acc, err := p.tryPick()
 		if acc != nil || err != nil {
@@ -794,8 +815,11 @@ func (p *Pool) Refresh(ctx context.Context, id string) error {
 			return ctx.Err()
 		}
 		a.mu.Lock()
-		disabled := a.role == akun.RoleNonaktif
+		disabled, removed := a.role == akun.RoleNonaktif, a.removed
 		a.mu.Unlock()
+		if removed {
+			continue
+		}
 		if disabled && id == "" {
 			if a.token != "" {
 				if reader := p.anyRuntime(); reader != nil {
@@ -1009,6 +1033,7 @@ func (p *Pool) Add(ctx context.Context, in AddInput) (AccountStatus, error) {
 	if probe.Quota != nil {
 		p.usage.noteQuota(id, now, probe.Quota)
 	}
+	p.usage.restore(id)
 	p.usage.setNames(id, probe.Login, label)
 	log.Printf("copilotd: akun %s ditambahkan sebagai %s (id %s, %s) oleh %s", acc.logName(), role, id, TokenKind(token), actorOrDash(actor))
 	p.notify()
@@ -1145,6 +1170,10 @@ func (p *Pool) saveLocked(backup bool) error {
 	if p.storePath == "" {
 		return nil
 	}
+	if p.storeErr != "" {
+		return fmt.Errorf("%w: %s tidak terbaca (%s); perbaiki atau pulihkan dari folder cadangan lalu restart copilotd",
+			ErrStoreUnavailable, akun.FileName, p.storeErr)
+	}
 	records := make([]akun.Record, 0, len(p.accounts))
 	for _, a := range p.accounts {
 		a.mu.Lock()
@@ -1230,11 +1259,26 @@ func (a *account) ensure(ctx context.Context, cfg config.Config) (*copilot.Clien
 	if err := client.Start(ctx); err != nil {
 		return nil, false, fmt.Errorf("runtime Copilot gagal start: %s", redact(err.Error(), a.token))
 	}
-	a.mu.Lock()
-	a.client = client
-	a.rpcAPI = client.RPC
-	a.mu.Unlock()
+	if err := a.attach(client, client.RPC); err != nil {
+		_ = client.Stop()
+		return nil, false, err
+	}
 	return client, true, nil
+}
+
+// errAccountRemoved: akun dikeluarkan dari pool selagi runtime-nya dinyalakan.
+var errAccountRemoved = errors.New("akun sudah dikeluarkan dari pool")
+
+// attach memasang runtime yang baru start, kecuali akun sudah dihapus: Remove hanya mematikan runtime yang ada saat
+// itu, jadi runtime yang selesai start sesudahnya harus ditolak di sini (token akun terhapus tidak boleh dipakai).
+func (a *account) attach(client *copilot.Client, api *rpc.ServerRPC) error {
+	a.mu.Lock()
+	defer a.mu.Unlock()
+	if a.removed {
+		return errAccountRemoved
+	}
+	a.client, a.rpcAPI = client, api
+	return nil
 }
 
 // connection memilih transport ke runtime: server yang sudah jalan, binary

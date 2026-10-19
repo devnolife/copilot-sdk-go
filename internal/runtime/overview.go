@@ -13,8 +13,9 @@ type Overview struct {
 	Strategy        string           `json:"strategy"`
 	Strategies      []string         `json:"strategies"`
 	Roles           []string         `json:"roles"`
-	Source          string           `json:"source"`     // "akun.json" | ".env"
-	Persistent      bool             `json:"persistent"` // perubahan admin tersimpan ke berkas
+	Source          string           `json:"source"`                // "akun.json" | ".env"
+	Persistent      bool             `json:"persistent"`            // perubahan admin tersimpan ke berkas
+	StoreError      string           `json:"store_error,omitempty"` // akun.json tidak terbaca: perubahan ditolak
 	QuotaMinPercent float64          `json:"quota_min_percent"`
 	QuotaCheckSec   int              `json:"quota_check_sec"`
 	MaxConcurrency  int              `json:"max_concurrency"`
@@ -56,7 +57,7 @@ func (p *Pool) Overview(days int) Overview {
 	now := p.now()
 	statuses := p.Status()
 	p.mu.RLock()
-	strategy, managed, persistent := p.strategy, p.managed, p.storePath != ""
+	strategy, managed, persistent, storeErr := p.strategy, p.managed, p.storePath != "", p.storeErr
 	p.mu.RUnlock()
 	source := ".env"
 	if managed {
@@ -64,6 +65,7 @@ func (p *Pool) Overview(days int) Overview {
 	}
 	ov := Overview{
 		Strategy: strategy, Strategies: akun.Strategies, Roles: akun.Roles, Source: source, Persistent: persistent,
+		StoreError:      storeErr,
 		QuotaMinPercent: p.cfg.QuotaMinPercent, QuotaCheckSec: int(p.cfg.QuotaCheckInterval / time.Second),
 		MaxConcurrency: max(1, p.cfg.MaxConcurrency), TimeZone: p.usage.zone, GeneratedAt: now.UTC(), Days: days,
 		Accounts: make([]AccountDetail, 0, len(statuses)),

@@ -72,6 +72,7 @@ COPILOTD_ADDR=127.0.0.1:8791 ./bin/copilotd
 | `POST /v1/accounts` | Tambah akun `{token, role, label, actor}`; token diperiksa dulu di runtime sementara |
 | `PATCH /v1/accounts/{id}` · `DELETE /v1/accounts/{id}` | Ubah peran/label · keluarkan akun (akun aktif terakhir tidak bisa) |
 | `POST /v1/accounts/refresh` · `PUT /v1/accounts/strategy` | Baca ulang identitas & kuota sekarang · ganti strategi pembagian |
+| `GET /v1/config/models` · `PUT /v1/config/models` | Racikan model tiap tier: efektif, bawaan `.env`, isian admin · simpan `{override, actor}` (lihat di bawah) |
 
 `/models` dan `/stream` tanpa prefiks `/v1` tetap dilayani sebagai alias.
 
@@ -199,6 +200,21 @@ Kelola akun:
 Token yang diterima: PAT berbutir (`github_pat_…`) milik akun pribadi dengan izin akun **Copilot Requests**, token
 OAuth (`gho_…`), atau token pengguna GitHub App (`ghu_…`). PAT klasik (`ghp_…`) ditolak Copilot CLI. Tiap akun
 perlu lisensi Copilot sendiri; ikuti ketentuan GitHub dan organisasi pemberi seat.
+
+### Racikan model dari admin
+
+Model tiap tier (`MODEL`, `CHEAP_MODEL`, `HEAVY_MODEL`, `AGENT_MODEL`, `MODEL_FALLBACKS`) bisa ditimpa dari admin
+revisi.studio (halaman **Racikan model**, lewat core) tanpa restart. Isian admin disimpan di
+`$TURNITIN_COPILOT_STATE_DIR/racikan.json` (0600, cadangan tiap perubahan di `cadangan/racikan-*.json`).
+
+- `PUT /v1/config/models` mengganti **seluruh** isian: `{"override": {"heavy_model": "gpt-6-luna", "agent_model": "",
+  "fallbacks": ["gpt-6-luna"]}, "actor": "admin:…"}`. Field yang tidak dikirim atau `null` ikut `.env`; string
+  kosong berarti kosong (tier ikut model utama). `{"override": {}}` mengembalikan semuanya ke `.env`.
+- Nama model hanya diperiksa bentuknya di sini (huruf, angka, `.`, `_`, `:`, `-`; cadangan maks. 5, tanpa ganda).
+  Ketersediaan model di akun diperiksa core sebelum meneruskan.
+- Berkas rusak diabaikan dengan catatan galat (`error` di `GET /v1/config/models`) dan `.env` tetap dipakai. Simpan
+  baru menggantikannya. Tanpa `STATE_DIR`, `PUT` ditolak (409).
+- Permintaan yang sedang berjalan tetap memakai model yang sudah dipilih; `/v1/status` melaporkan model efektif.
 
 ### Deploy
 

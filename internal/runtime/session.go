@@ -13,6 +13,7 @@ import (
 	"github.com/github/copilot-sdk/go/rpc"
 
 	"github.com/devnolife/copilot-sdk-go/internal/config"
+	"github.com/devnolife/copilot-sdk-go/internal/racikan"
 )
 
 // noTools adalah nama tool yang tidak pernah ada di registry runtime.
@@ -130,6 +131,12 @@ type Service struct {
 
 	mu   sync.Mutex
 	stop chan struct{}
+
+	// racikan: model tiap tier yang diatur admin (racikan.json), menimpa .env.
+	racikanMu     sync.RWMutex
+	racikan       racikan.File
+	racikanStored bool
+	racikanErr    string
 }
 
 // Options mengganti bagian service untuk tes.
@@ -140,7 +147,9 @@ type Options struct {
 
 // NewService menyiapkan service beserta pool akunnya.
 func NewService(cfg config.Config) *Service {
-	return &Service{cfg: cfg, pool: NewPool(cfg)}
+	s := &Service{cfg: cfg, pool: NewPool(cfg)}
+	s.loadRacikan()
+	return s
 }
 
 // NewServiceWithOptions seperti NewService dengan kait pengganti.
@@ -230,23 +239,27 @@ func (s *Service) Models(ctx context.Context) ([]copilot.ModelInfo, error) {
 	return models, nil
 }
 
-// resolveModel memilih model: eksplisit → tier → default konfigurasi.
+// resolveModel memilih model: eksplisit → tier → default (racikan admin, lalu .env).
 func (s *Service) resolveModel(req Request) string {
 	if req.Model != "" {
 		return req.Model
 	}
-	return s.cfg.ModelFor(req.Tier)
+	return s.TierModels().For(req.Tier)
 }
 
 // modelChain adalah urutan model yang dicoba: pilihan utama lalu fallback.
 // Fallback hanya dipakai kalau pemanggil tidak memaksa model tertentu.
 func (s *Service) modelChain(req Request) []string {
-	primary := s.resolveModel(req)
+	models := s.TierModels()
+	primary := req.Model
+	if primary == "" {
+		primary = models.For(req.Tier)
+	}
 	chain := []string{primary}
 	if req.Model != "" || req.Managed {
 		return chain
 	}
-	for _, fb := range s.cfg.ModelFallbacks {
+	for _, fb := range models.Fallbacks {
 		if fb != primary {
 			chain = append(chain, fb)
 		}

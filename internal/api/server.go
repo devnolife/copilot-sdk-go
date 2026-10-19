@@ -47,6 +47,10 @@ func (s *Server) Handler() http.Handler {
 	mux.HandleFunc("PATCH /v1/accounts/{id}", s.auth(s.handleUpdateAccount))
 	mux.HandleFunc("DELETE /v1/accounts/{id}", s.auth(s.handleRemoveAccount))
 
+	// Racikan model tiap tier (admin revisi.studio lewat core), menimpa .env tanpa restart.
+	mux.HandleFunc("GET /v1/config/models", s.auth(s.handleRacikan))
+	mux.HandleFunc("PUT /v1/config/models", s.auth(s.handleSetRacikan))
+
 	// Alias tanpa versi (kompatibilitas klien lama).
 	mux.HandleFunc("GET /models", s.auth(s.handleModels))
 	mux.HandleFunc("POST /stream", s.auth(s.handleStream))
@@ -87,6 +91,7 @@ func (s *Server) handleHealth(w http.ResponseWriter, _ *http.Request) {
 // handleStatus adalah pemeriksaan murah: tidak menyalakan runtime.
 func (s *Server) handleStatus(w http.ResponseWriter, _ *http.Request) {
 	cfg := s.svc.Config()
+	models := s.svc.TierModels()
 	auth := "github"
 	if cfg.IsBYOK() {
 		auth = "byok"
@@ -98,8 +103,8 @@ func (s *Server) handleStatus(w http.ResponseWriter, _ *http.Request) {
 		"pool_strategy":           s.svc.PoolStrategy(),
 		"quota_min_percent":       cfg.QuotaMinPercent,
 		"quota_check_sec":         int(cfg.QuotaCheckInterval / time.Second),
-		"model":                   modelOrDefault(cfg.Model),
-		"agent_model":             modelOrDefault(cfg.ModelFor("agent")),
+		"model":                   modelOrDefault(models.Model),
+		"agent_model":             modelOrDefault(models.For("agent")),
 		"auth":                    auth,
 		"provider_base_url":       cfg.ProviderBaseURL,
 		"local_only":              cfg.IsLocalProvider(),

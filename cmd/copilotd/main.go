@@ -19,6 +19,8 @@
 //	DELETE /v1/accounts/{id}        Keluarkan akun dari pool
 //	POST   /v1/accounts/refresh     Baca ulang identitas & kuota sekarang
 //	PUT    /v1/accounts/strategy    Ganti strategi pembagian (proporsional/bergiliran/prioritas)
+//	GET    /v1/config/models        Racikan model tiap tier: efektif, bawaan .env, isian admin
+//	PUT    /v1/config/models        Simpan racikan model admin (racikan.json; tanpa restart)
 //
 // Service hanya bind ke loopback secara default dan mewajibkan header
 // X-API-Key bila COPILOTD_API_KEY di-set.

@@ -194,7 +194,7 @@ Kelola akun:
   copilotd jalan, akun langsung aktif lewat API; bila tidak, ditulis ke `akun.json`. `go run ./cmd/akun`
   menampilkan peran, login, status, sisa kuota, reset, dan pemakaian 7 hari.
 - **Pindah dari `.env`:** `go run ./cmd/akun migrasi` membuat `akun.json` dari `.env`, menyimpan cadangan `.env`
-  ke `~/backups/copilotd-env/`, lalu mengganti baris token di `.env` dengan komentar. Setelah itu restart
+  ke `~/revisi-studio/backups/copilotd-env/`, lalu mengganti baris token di `.env` dengan komentar. Setelah itu restart
   copilotd.
 
 Token yang diterima: PAT berbutir (`github_pat_…`) milik akun pribadi dengan izin akun **Copilot Requests**, token

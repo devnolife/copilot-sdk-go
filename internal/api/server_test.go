@@ -11,6 +11,9 @@ import (
 	"testing"
 	"time"
 
+	copilot "github.com/github/copilot-sdk/go"
+	"github.com/github/copilot-sdk/go/rpc"
+
 	"github.com/devnolife/copilot-sdk-go/internal/config"
 	"github.com/devnolife/copilot-sdk-go/internal/runtime"
 )
@@ -46,6 +49,44 @@ func decodeBody(t *testing.T, rec *httptest.ResponseRecorder) map[string]any {
 		t.Fatalf("body bukan JSON: %v — %q", err, rec.Body.String())
 	}
 	return out
+}
+
+func TestModelsReportsWhenListWasRead(t *testing.T) {
+	svc := runtime.NewServiceWithOptions(config.Config{MaxConcurrency: 1}, runtime.Options{
+		Spawn: func(context.Context, config.Config, string) (*copilot.Client, *rpc.ServerRPC, error) {
+			client := copilot.NewClient(&copilot.ClientOptions{
+				OnListModels: func(context.Context) ([]copilot.ModelInfo, error) {
+					return []copilot.ModelInfo{{ID: "gpt-6.2-sol", Name: "GPT-6.2 Sol"}}, nil
+				},
+			})
+			return client, &rpc.ServerRPC{}, nil
+		},
+	})
+	t.Cleanup(svc.Shutdown)
+	h := New(svc, "").Handler()
+
+	rec := do(t, h, http.MethodGet, "/v1/models", "", nil)
+	body := decodeBody(t, rec)
+	ids, _ := body["models"].([]any)
+	if rec.Code != http.StatusOK || len(ids) != 1 || ids[0] != "gpt-6.2-sol" {
+		t.Fatalf("daftar model = %d %v", rec.Code, body)
+	}
+	for _, key := range []string{"read_at", "runtime_started_at"} {
+		if _, err := time.Parse(time.RFC3339Nano, body[key].(string)); err != nil {
+			t.Errorf("%s = %v", key, body[key])
+		}
+	}
+	if _, ok := body["refreshed"]; ok {
+		t.Errorf("tanpa refresh tidak ada kolom refreshed: %v", body)
+	}
+
+	rec = do(t, h, http.MethodGet, "/v1/models?refresh=1", "", nil)
+	if body := decodeBody(t, rec); rec.Code != http.StatusOK || body["refreshed"] != true || body["refresh_error"] != nil {
+		t.Fatalf("refresh = %d %v", rec.Code, body)
+	}
+	if rec := do(t, h, http.MethodGet, "/v1/models?refresh=ya", "", nil); rec.Code != http.StatusBadRequest {
+		t.Fatalf("refresh=ya = %d, ingin 400", rec.Code)
+	}
 }
 
 func TestHealthNeedsNoAuth(t *testing.T) {

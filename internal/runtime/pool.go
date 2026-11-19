@@ -65,6 +65,16 @@ const (
 	identityTimeout = 10 * time.Second
 )
 
+// Penggantian runtime. recycleMinAge: runtime yang lebih muda dari ini tidak diganti atas permintaan admin (datanya
+// masih baru). recycleCheckEvery: jeda pemeriksaan umur runtime di latar. recycleRetryAfter: jeda sebelum akun yang
+// runtime penggantinya gagal start dicoba lagi. recycleTimeout: batas satu start runtime pengganti di latar.
+const (
+	recycleMinAge     = time.Minute
+	recycleCheckEvery = time.Minute
+	recycleRetryAfter = 15 * time.Minute
+	recycleTimeout    = 90 * time.Second
+)
+
 // busyWait: lama menunggu slot ketika semua akun yang pantas dipakai sedang penuh.
 const busyWait = 30 * time.Second
 
@@ -108,10 +118,22 @@ type account struct {
 	// berbeda antar-akun (seat dari organisasi berbeda).
 	noModel map[string]time.Time
 
+	// Umur runtime. startedAt: kapan runtime yang terpasang menyala; ia membaca kuota dan daftar model akun saat itu
+	// lalu menyimpannya selama hidup. modelsAt: kapan daftar model pertama dibaca dari runtime itu. draining: runtime
+	// lama yang sudah diganti tetapi masih melayani permintaan berjalan; dimatikan begitu akun menganggur.
+	// recycleRetryAt: paling cepat kapan penggantian otomatis dicoba lagi setelah gagal.
+	startedAt      time.Time
+	modelsAt       time.Time
+	draining       []*copilot.Client
+	recycleRetryAt time.Time
+
 	// swrr adalah bobot berjalan smooth weighted round-robin; dijaga Pool.mu.
 	swrr float64
 
 	slots chan struct{}
+
+	// stop mengganti cara mematikan runtime di tes (nil = Client.Stop).
+	stop func(*copilot.Client)
 }
 
 // Pool membagi permintaan ke akun-akun Copilot.
@@ -136,6 +158,7 @@ type Pool struct {
 	fetch    func(ctx context.Context, api *rpc.ServerRPC, token string) (*QuotaInfo, error)
 	identify func(ctx context.Context, api *rpc.ServerRPC) (*akun.Identity, error)
 	probe    func(ctx context.Context, cfg config.Config, token string) (AccountProbe, error)
+	spawn    func(ctx context.Context, cfg config.Config, token string) (*copilot.Client, *rpc.ServerRPC, error)
 	now      func() time.Time
 }
 
@@ -144,7 +167,7 @@ type Pool struct {
 func NewPool(cfg config.Config) *Pool {
 	p := &Pool{
 		cfg: cfg, strategy: cfg.PoolStrategy, storePath: akun.PathIn(cfg.StateDir), wake: make(chan struct{}),
-		fetch: fetchQuota, identify: readIdentity, probe: ProbeAccount, now: time.Now,
+		fetch: fetchQuota, identify: readIdentity, probe: ProbeAccount, spawn: startRuntime, now: time.Now,
 	}
 	var records []akun.Record
 	if p.storePath != "" {
@@ -288,7 +311,7 @@ func (l *Lease) Release() {
 
 // Failed menandai bahwa permintaan gagal. Kuota habis menaruh akun dalam cooldown panjang (dan kuotanya dibaca
 // ulang), rate limit dalam cooldown pendek, token ditolak dalam cooldown menengah; kesalahan koneksi membuang
-// client agar dibangun ulang.
+// client lease ini agar dibangun ulang.
 func (l *Lease) Failed(err error) {
 	if l == nil || err == nil {
 		return
@@ -304,7 +327,7 @@ func (l *Lease) Failed(err error) {
 	case isAuthError(err):
 		l.acc.markCooldown("auth", cooldownAfterAuth)
 	case isConnectionError(err):
-		l.acc.reset()
+		l.acc.drop(l.Client)
 	}
 }
 
@@ -346,15 +369,22 @@ func (p *Pool) AcquireModel(ctx context.Context, model string) (*Lease, error) {
 	if err != nil {
 		return nil, err
 	}
-	client, started, err := acc.ensure(ctx, p.cfg)
+	client, started, err := p.ensure(ctx, acc)
 	if err != nil {
 		return nil, p.failStart(ctx, acc, err)
 	}
 	if started {
-		p.refreshIdentity(acc)
+		p.afterStart(acc)
+	} else {
+		p.maybeRefresh(acc, false)
 	}
-	p.maybeRefresh(acc, started)
 	return &Lease{Client: client, pool: p, acc: acc, started: p.now(), model: model}, nil
+}
+
+// afterStart membaca identitas dan kuota akun di latar lewat runtime yang baru menyala.
+func (p *Pool) afterStart(a *account) {
+	p.refreshIdentity(a)
+	p.maybeRefresh(a, true)
 }
 
 // failStart melepas slot akun yang runtime-nya gagal start. Bila penyebabnya context pemanggil (dibatalkan atau
@@ -379,10 +409,19 @@ func (p *Pool) failStart(ctx context.Context, acc *account, err error) error {
 func (p *Pool) releaseSlot(a *account) {
 	<-a.slots
 	a.mu.Lock()
-	stop := a.removed && len(a.slots) == 0
+	idle := len(a.slots) == 0
+	stop := a.removed && idle
+	var old []*copilot.Client
+	if idle && !stop {
+		// Permintaan terakhir yang mungkin masih memakai runtime lama sudah selesai.
+		old, a.draining = a.draining, nil
+	}
 	a.mu.Unlock()
 	if stop {
 		go a.reset()
+	}
+	if len(old) > 0 {
+		go a.halt(old...)
 	}
 	p.notify()
 }
@@ -831,7 +870,8 @@ func sameIdentity(a, b akun.Identity) bool {
 }
 
 // Refresh membaca ulang identitas dan kuota sekarang juga (id kosong = semua akun). Runtime akun yang boleh dipakai
-// dinyalakan bila perlu; akun nonaktif bertoken hanya dibaca kuotanya lewat runtime akun lain.
+// dinyalakan bila perlu, dan runtime yang sudah lama hidup diganti dulu karena hanya bisa melaporkan kuota yang
+// dibacanya saat menyala; akun nonaktif bertoken hanya dibaca kuotanya lewat runtime akun lain.
 func (p *Pool) Refresh(ctx context.Context, id string) error {
 	accs := p.list()
 	if id != "" {
@@ -861,7 +901,11 @@ func (p *Pool) Refresh(ctx context.Context, id string) error {
 			}
 			continue
 		}
-		if _, _, err := a.ensure(ctx, p.cfg); err != nil {
+		if _, err := p.recycle(ctx, a, recycleMinAge); err != nil {
+			p.applyQuota(a, nil, fmt.Errorf("kuota belum diperbarui, runtime baru gagal start: %w", err))
+			continue
+		}
+		if _, _, err := p.ensure(ctx, a); err != nil {
 			p.applyQuota(a, nil, err)
 			continue
 		}
@@ -911,17 +955,19 @@ type AccountStatus struct {
 	TokenBasedBilling *bool      `json:"token_based_billing,omitempty"`
 	ResetAt           *time.Time `json:"reset_at,omitempty"`
 	Started           bool       `json:"started"`
-	InUse             int        `json:"in_use"`
-	Capacity          int        `json:"capacity"`
-	State             string     `json:"state"` // siap | sibuk | hampir_habis | cooldown | nonaktif
-	CooldownUntil     *time.Time `json:"cooldown_until,omitempty"`
-	LimitKind         string     `json:"limit_kind,omitempty"`
-	Quota             *QuotaInfo `json:"quota,omitempty"`
-	QuotaCheckedAt    *time.Time `json:"quota_checked_at,omitempty"`
-	QuotaError        string     `json:"quota_error,omitempty"`
-	LastUsedAt        *time.Time `json:"last_used_at,omitempty"`
-	LastError         string     `json:"last_error,omitempty"`
-	LastErrorAt       *time.Time `json:"last_error_at,omitempty"`
+	// RuntimeStartedAt: kapan runtime akun menyala; kuota yang dilaporkannya tidak lebih baru dari saat itu.
+	RuntimeStartedAt *time.Time `json:"runtime_started_at,omitempty"`
+	InUse            int        `json:"in_use"`
+	Capacity         int        `json:"capacity"`
+	State            string     `json:"state"` // siap | sibuk | hampir_habis | cooldown | nonaktif
+	CooldownUntil    *time.Time `json:"cooldown_until,omitempty"`
+	LimitKind        string     `json:"limit_kind,omitempty"`
+	Quota            *QuotaInfo `json:"quota,omitempty"`
+	QuotaCheckedAt   *time.Time `json:"quota_checked_at,omitempty"`
+	QuotaError       string     `json:"quota_error,omitempty"`
+	LastUsedAt       *time.Time `json:"last_used_at,omitempty"`
+	LastError        string     `json:"last_error,omitempty"`
+	LastErrorAt      *time.Time `json:"last_error_at,omitempty"`
 	// ModelsUnavailable: model yang baru ditolak akun ini, sehingga permintaan model itu diarahkan ke akun lain.
 	ModelsUnavailable []string   `json:"models_unavailable,omitempty"`
 	AddedAt           *time.Time `json:"added_at,omitempty"`
@@ -956,7 +1002,7 @@ func (p *Pool) statusOf(a *account, now time.Time) AccountStatus {
 		Login: a.identity.Login, Plan: a.identity.Plan, Started: a.client != nil, InUse: len(a.slots),
 		Capacity: cap(a.slots), State: "siap", QuotaError: a.quotaErr, LastError: a.lastErr, AddedBy: a.addedBy,
 		QuotaCheckedAt: timePtr(a.quotaAt), LastUsedAt: timePtr(a.lastUsed), LastErrorAt: timePtr(a.lastErrAt),
-		AddedAt: timePtr(a.addedAt),
+		AddedAt: timePtr(a.addedAt), RuntimeStartedAt: timePtr(a.startedAt),
 	}
 	if a.identity.ResetAt != nil {
 		st.ResetAt = timePtr(*a.identity.ResetAt)
@@ -1259,36 +1305,86 @@ func actorOrDash(actor string) string {
 	return actor
 }
 
+// reset melepas dan mematikan semua runtime akun, termasuk runtime lama yang menunggu permintaannya selesai.
 func (a *account) reset() {
 	a.mu.Lock()
-	client := a.client
-	a.client = nil
-	a.rpcAPI = nil
+	clients := append([]*copilot.Client{a.client}, a.draining...)
+	a.detachLocked()
+	a.draining = nil
 	a.mu.Unlock()
-	if client != nil {
-		_ = client.Stop()
+	a.halt(clients...)
+}
+
+// drop membuang client yang koneksinya rusak (nil = runtime yang terpasang). Runtime lain milik akun tidak ikut
+// dimatikan: runtime pengganti yang sudah terpasang, atau runtime lama yang masih melayani permintaan lain.
+func (a *account) drop(client *copilot.Client) {
+	a.mu.Lock()
+	if client != nil && a.client != client {
+		a.mu.Unlock()
+		return
+	}
+	client = a.client
+	a.detachLocked()
+	a.mu.Unlock()
+	a.halt(client)
+}
+
+func (a *account) detachLocked() {
+	a.client, a.rpcAPI = nil, nil
+	a.startedAt, a.modelsAt = time.Time{}, time.Time{}
+}
+
+// halt mematikan runtime yang sudah dilepas dari akun.
+func (a *account) halt(clients ...*copilot.Client) {
+	for _, c := range clients {
+		switch {
+		case c == nil:
+		case a.stop != nil:
+			a.stop(c)
+		default:
+			_ = c.Stop()
+		}
 	}
 }
 
-// ensure menyalakan runtime bila belum ada (started=true bila baru dinyalakan). Start memakan beberapa detik, jadi
-// client-nya dipakai ulang selama proses hidup; mu tidak ditahan selama start supaya status/pick tidak ikut macet.
-func (a *account) ensure(ctx context.Context, cfg config.Config) (*copilot.Client, bool, error) {
-	a.startMu.Lock()
-	defer a.startMu.Unlock()
+func (a *account) current() *copilot.Client {
 	a.mu.Lock()
-	client := a.client
-	a.mu.Unlock()
-	if client != nil {
+	defer a.mu.Unlock()
+	return a.client
+}
+
+// ensure menyalakan runtime bila belum ada (started=true bila baru dinyalakan). Start memakan beberapa detik, jadi
+// client-nya dipakai ulang selama runtime hidup; mu tidak ditahan selama start supaya status/pick tidak ikut macet,
+// dan permintaan tidak menunggu startMu selama sudah ada runtime terpasang (mis. saat penggantinya dinyalakan).
+func (p *Pool) ensure(ctx context.Context, a *account) (*copilot.Client, bool, error) {
+	if client := a.current(); client != nil {
 		return client, false, nil
 	}
+	a.startMu.Lock()
+	defer a.startMu.Unlock()
+	if client := a.current(); client != nil {
+		return client, false, nil
+	}
+	client, api, err := p.spawn(ctx, p.cfg, a.token)
+	if err != nil {
+		return nil, false, err
+	}
+	if err := a.attach(client, api, p.now()); err != nil {
+		a.halt(client)
+		return nil, false, err
+	}
+	return client, true, nil
+}
 
+// startRuntime menyalakan satu runtime Copilot untuk akun bertoken itu (token kosong = akun login tersimpan).
+func startRuntime(ctx context.Context, cfg config.Config, token string) (*copilot.Client, *rpc.ServerRPC, error) {
 	opts := &copilot.ClientOptions{
 		LogLevel:         cfg.LogLevel,
 		WorkingDirectory: cfg.WorkingDir,
 		BaseDirectory:    cfg.BaseDir,
 	}
-	if a.token != "" {
-		opts.GitHubToken = a.token
+	if token != "" {
+		opts.GitHubToken = token
 	} else {
 		opts.UseLoggedInUser = copilot.Bool(true)
 	}
@@ -1296,15 +1392,120 @@ func (a *account) ensure(ctx context.Context, cfg config.Config) (*copilot.Clien
 		opts.Connection = conn
 	}
 
-	client = copilot.NewClient(opts)
+	client := copilot.NewClient(opts)
 	if err := client.Start(ctx); err != nil {
-		return nil, false, fmt.Errorf("runtime Copilot gagal start: %s", redact(err.Error(), a.token))
+		return nil, nil, fmt.Errorf("runtime Copilot gagal start: %s", redact(err.Error(), token))
 	}
-	if err := a.attach(client, client.RPC); err != nil {
-		_ = client.Stop()
-		return nil, false, err
+	return client, client.RPC, nil
+}
+
+// recycle mengganti runtime akun dengan runtime baru supaya kuota dan daftar model dibaca ulang dari layanan
+// Copilot. Runtime baru dinyalakan dulu dan baru dipasang bila berhasil start, jadi kegagalan tidak mengganggu
+// layanan; runtime lama dimatikan setelah permintaan yang masih memakainya selesai. Mengembalikan false tanpa
+// berbuat apa-apa bila akun tidak punya runtime hidup atau runtime-nya lebih muda dari minAge.
+func (p *Pool) recycle(ctx context.Context, a *account, minAge time.Duration) (bool, error) {
+	a.startMu.Lock()
+	defer a.startMu.Unlock()
+	a.mu.Lock()
+	age := p.now().Sub(a.startedAt)
+	skip := a.client == nil || a.removed || age < minAge
+	a.mu.Unlock()
+	if skip {
+		return false, nil
 	}
-	return client, true, nil
+	client, api, err := p.spawn(ctx, p.cfg, a.token)
+	if err != nil {
+		return false, err
+	}
+	a.mu.Lock()
+	if a.removed {
+		a.mu.Unlock()
+		a.halt(client)
+		return false, errAccountRemoved
+	}
+	// a.client bisa sudah nil di sini (koneksi runtime lama putus selama start); runtime baru tetap dipasang.
+	old := a.client
+	a.client, a.rpcAPI = client, api
+	a.startedAt, a.modelsAt = p.now(), time.Time{}
+	a.noModel = nil
+	idle := len(a.slots) == 0
+	if old != nil && !idle {
+		a.draining = append(a.draining, old)
+	}
+	a.mu.Unlock()
+	if old != nil && idle {
+		go a.halt(old)
+	}
+	log.Printf("copilotd: runtime akun %s diganti runtime baru (runtime lama hidup %s)", a.logName(), age.Round(time.Second))
+	return true, nil
+}
+
+// RecycleRuntimes mengganti runtime semua akun yang boleh dipakai dan sudah hidup lebih dari recycleMinAge, lalu
+// membaca ulang identitas dan kuotanya di latar. Galat yang dikembalikan menyebut akun yang runtime penggantinya
+// gagal start; runtime lama akun itu tetap dipakai.
+func (p *Pool) RecycleRuntimes(ctx context.Context) error {
+	var errs []error
+	for _, a := range p.list() {
+		a.mu.Lock()
+		disabled := a.role == akun.RoleNonaktif
+		a.mu.Unlock()
+		if disabled {
+			continue
+		}
+		done, err := p.recycle(ctx, a, recycleMinAge)
+		switch {
+		case err != nil:
+			errs = append(errs, fmt.Errorf("akun %s: %w", a.logName(), err))
+		case done:
+			p.afterStart(a)
+		}
+	}
+	return errors.Join(errs...)
+}
+
+// recycleAged mengganti runtime yang umurnya melewati RuntimeMaxAge. Akun nonaktif dilewati; akun yang runtime
+// penggantinya gagal start baru dicoba lagi setelah recycleRetryAfter.
+func (p *Pool) recycleAged() {
+	maxAge := p.cfg.RuntimeMaxAge
+	if maxAge <= 0 {
+		return
+	}
+	for _, a := range p.list() {
+		a.mu.Lock()
+		due := a.role != akun.RoleNonaktif && !p.now().Before(a.recycleRetryAt)
+		a.mu.Unlock()
+		if !due {
+			continue
+		}
+		ctx, cancel := context.WithTimeout(context.Background(), recycleTimeout)
+		done, err := p.recycle(ctx, a, maxAge)
+		cancel()
+		switch {
+		case err != nil:
+			a.mu.Lock()
+			a.recycleRetryAt = p.now().Add(recycleRetryAfter)
+			a.mu.Unlock()
+			log.Printf("copilotd: runtime pengganti akun %s gagal start — %v; runtime lama tetap dipakai, dicoba lagi %s lagi",
+				a.logName(), err, recycleRetryAfter)
+		case done:
+			p.afterStart(a)
+		}
+	}
+}
+
+// noteModels mencatat bahwa daftar model baru dibaca lewat client itu dan mengembalikan kapan daftar tersebut
+// pertama dibaca serta kapan runtime-nya menyala. SDK menyimpan daftar model selama client hidup, jadi pembacaan
+// berikutnya lewat client yang sama mengembalikan daftar yang sama.
+func (a *account) noteModels(client *copilot.Client, now time.Time) (readAt, startedAt time.Time) {
+	a.mu.Lock()
+	defer a.mu.Unlock()
+	if a.client != client {
+		return now, time.Time{}
+	}
+	if a.modelsAt.IsZero() {
+		a.modelsAt = now
+	}
+	return a.modelsAt, a.startedAt
 }
 
 // errAccountRemoved: akun dikeluarkan dari pool selagi runtime-nya dinyalakan.
@@ -1312,13 +1513,14 @@ var errAccountRemoved = errors.New("akun sudah dikeluarkan dari pool")
 
 // attach memasang runtime yang baru start, kecuali akun sudah dihapus: Remove hanya mematikan runtime yang ada saat
 // itu, jadi runtime yang selesai start sesudahnya harus ditolak di sini (token akun terhapus tidak boleh dipakai).
-func (a *account) attach(client *copilot.Client, api *rpc.ServerRPC) error {
+func (a *account) attach(client *copilot.Client, api *rpc.ServerRPC, at time.Time) error {
 	a.mu.Lock()
 	defer a.mu.Unlock()
 	if a.removed {
 		return errAccountRemoved
 	}
 	a.client, a.rpcAPI = client, api
+	a.startedAt, a.modelsAt = at, time.Time{}
 	return nil
 }
 

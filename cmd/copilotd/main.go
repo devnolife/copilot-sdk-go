@@ -9,7 +9,7 @@
 //
 //	GET    /health                  Cek hidup (tanpa auth, untuk probe/systemd)
 //	GET    /v1/status               Status murah: akun, model, mode auth
-//	GET    /v1/models               Daftar model yang bisa dipakai akun ini
+//	GET    /v1/models               Daftar model yang bisa dipakai akun ini (?refresh=1 = baca ulang lewat runtime baru)
 //	POST   /v1/generate             Satu giliran, balasan teks utuh (dukung json_mode)
 //	POST   /v1/stream               Satu giliran, balasan NDJSON streaming
 //	POST   /v1/agent                Sesi agentik; tool dieksekusi lewat callback HTTP
@@ -17,7 +17,7 @@
 //	POST   /v1/accounts             Tambah akun (token diperiksa dulu di runtime sementara)
 //	PATCH  /v1/accounts/{id}        Ubah peran (utama/cadangan/nonaktif) atau label akun
 //	DELETE /v1/accounts/{id}        Keluarkan akun dari pool
-//	POST   /v1/accounts/refresh     Baca ulang identitas & kuota sekarang
+//	POST   /v1/accounts/refresh     Baca ulang identitas & kuota sekarang lewat runtime baru
 //	PUT    /v1/accounts/strategy    Ganti strategi pembagian (proporsional/bergiliran/prioritas)
 //	GET    /v1/config/models        Racikan model tiap tier: efektif, bawaan .env, isian admin
 //	PUT    /v1/config/models        Simpan racikan model admin (racikan.json; tanpa restart)

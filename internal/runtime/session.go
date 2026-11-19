@@ -143,6 +143,8 @@ type Service struct {
 type Options struct {
 	// Probe memeriksa token akun baru (bawaan ProbeAccount, yang menyalakan runtime sementara).
 	Probe func(ctx context.Context, cfg config.Config, token string) (AccountProbe, error)
+	// Spawn menyalakan runtime satu akun (bawaan: runtime Copilot sungguhan).
+	Spawn func(ctx context.Context, cfg config.Config, token string) (*copilot.Client, *rpc.ServerRPC, error)
 }
 
 // NewService menyiapkan service beserta pool akunnya.
@@ -157,6 +159,9 @@ func NewServiceWithOptions(cfg config.Config, opts Options) *Service {
 	s := NewService(cfg)
 	if opts.Probe != nil {
 		s.pool.probe = opts.Probe
+	}
+	if opts.Spawn != nil {
+		s.pool.spawn = opts.Spawn
 	}
 	return s
 }
@@ -223,20 +228,40 @@ func (s *Service) Shutdown() {
 	s.pool.Shutdown()
 }
 
-// Models mengembalikan ID model yang bisa dipakai akun ini.
-func (s *Service) Models(ctx context.Context) ([]copilot.ModelInfo, error) {
+// ModelList adalah daftar model satu akun beserta umur datanya.
+type ModelList struct {
+	Models []copilot.ModelInfo
+	// ReadAt: kapan daftar ini dibaca dari runtime; RuntimeStartedAt: kapan runtime itu menyala. Daftar disimpan
+	// selama runtime hidup, jadi model yang ditambah atau dicabut sesudahnya belum terlihat.
+	ReadAt           time.Time
+	RuntimeStartedAt time.Time
+	// RefreshError: penyegaran diminta tetapi runtime baru gagal start; daftar berasal dari runtime lama.
+	RefreshError string
+}
+
+// Models mengembalikan model yang bisa dipakai akun ini. refresh mengganti dulu runtime yang sudah lama hidup
+// supaya daftar dibaca ulang dari layanan Copilot.
+func (s *Service) Models(ctx context.Context, refresh bool) (ModelList, error) {
+	var out ModelList
+	if refresh {
+		if err := s.pool.RecycleRuntimes(ctx); err != nil {
+			out.RefreshError = err.Error()
+		}
+	}
 	lease, err := s.pool.Acquire(ctx)
 	if err != nil {
-		return nil, err
+		return out, err
 	}
 	defer lease.Release()
 
 	models, err := lease.Client.ListModels(ctx)
 	if err != nil {
 		lease.Failed(err)
-		return nil, fmt.Errorf("gagal mengambil daftar model: %w", err)
+		return out, fmt.Errorf("gagal mengambil daftar model: %w", err)
 	}
-	return models, nil
+	out.Models = models
+	out.ReadAt, out.RuntimeStartedAt = lease.acc.noteModels(lease.Client, s.pool.now())
+	return out, nil
 }
 
 // resolveModel memilih model: eksplisit → tier → default (racikan admin, lalu .env).

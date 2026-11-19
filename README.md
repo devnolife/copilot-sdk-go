@@ -64,14 +64,14 @@ COPILOTD_ADDR=127.0.0.1:8791 ./bin/copilotd
 | --- | --- |
 | `GET /health` | Cek hidup, tanpa auth (untuk probe/systemd) |
 | `GET /v1/status` | Status murah: model, mode auth, strategi pool, dan keadaan tiap akun di `account_pool` (siap/sibuk/hampir habis/cooldown/nonaktif, sisa kuota; tanpa token, tanpa menyalakan runtime) |
-| `GET /v1/models` | `{"models":[...], "detail":[{id,name,multiplier}]}` |
+| `GET /v1/models` | `{"models":[...], "detail":[{id,name,multiplier}], "read_at", "runtime_started_at"}`. Runtime menyimpan daftar model selama hidup; `?refresh=1` mengganti dulu runtime yang sudah hidup lebih dari 1 menit lalu membaca daftar baru (`refreshed`, dan `refresh_error` bila runtime baru gagal start) |
 | `POST /v1/generate` | Satu giliran, balasan teks utuh (`json_mode` didukung) |
 | `POST /v1/stream` | Satu giliran, NDJSON `delta`/`reasoning`/`tool`/`done`/`error` |
 | `POST /v1/agent` | Sesi agentik; tool dieksekusi pemanggil lewat callback HTTP |
 | `GET /v1/accounts?days=30` | Pool akun untuk admin: peran, status, kuota, tanggal reset, perkiraan habis, pemakaian per hari |
 | `POST /v1/accounts` | Tambah akun `{token, role, label, actor}`; token diperiksa dulu di runtime sementara |
 | `PATCH /v1/accounts/{id}` · `DELETE /v1/accounts/{id}` | Ubah peran/label · keluarkan akun (akun aktif terakhir tidak bisa) |
-| `POST /v1/accounts/refresh` · `PUT /v1/accounts/strategy` | Baca ulang identitas & kuota sekarang · ganti strategi pembagian |
+| `POST /v1/accounts/refresh` · `PUT /v1/accounts/strategy` | Baca ulang identitas & kuota sekarang lewat runtime baru · ganti strategi pembagian |
 | `GET /v1/config/models` · `PUT /v1/config/models` | Racikan model tiap tier: efektif, bawaan `.env`, isian admin · simpan `{override, actor}` (lihat di bawah) |
 
 `/models` dan `/stream` tanpa prefiks `/v1` tetap dilayani sebagai alias.
@@ -137,6 +137,7 @@ berkas `.env` bisa dipakai bersama.
 | `TURNITIN_COPILOT_TIMEZONE` | `Asia/Makassar` | Batas hari catatan pemakaian harian |
 | `TURNITIN_COPILOT_QUOTA_MIN_PERCENT` | `5` | Akun dengan sisa kuota premium ≤ nilai ini hanya dipakai bila tidak ada akun sehat; `0` = mati |
 | `TURNITIN_COPILOT_QUOTA_CHECK_SEC` | `600` | Interval baca ulang kuota (tanpa menyalakan runtime baru); `0` = tidak dibaca |
+| `TURNITIN_COPILOT_RUNTIME_MAX_AGE_SEC` | `0` | Runtime yang hidup lebih lama dari ini diganti runtime baru, supaya kuota dan daftar model terbaca ulang (lihat "Umur runtime"); `0` = tidak pernah diganti otomatis |
 | `TURNITIN_COPILOT_MODEL` | runtime default | Model utama: dipakai permintaan tanpa nama model, termasuk tier utama mode Otomatis core. Alias Intelligent di core diatur terpisah (`COPILOT_MODEL` core) |
 | `TURNITIN_COPILOT_CHEAP_MODEL` | model utama | Tier `cheap` tanpa nama model. Core mengirim nama model hemat sendiri (`COPILOT_CHEAP_MODEL` core); samakan nilainya |
 | `TURNITIN_COPILOT_HEAVY_MODEL` | model utama | Tier `heavy` tanpa nama model: langkah menulis berkas IDE Tugas core |
@@ -170,6 +171,13 @@ tidak tertimpa.
   (`GetQuota{GitHubToken}`). Akun dengan sisa kuota premium ≤ `QUOTA_MIN_PERCENT` hanya dipakai bila tidak ada
   akun sehat. Ini penting untuk akun yang mengizinkan kelebihan pemakaian: setelah kuotanya habis, akun seperti
   itu tetap jalan sebagai pemakaian berbayar tanpa galat, sehingga hanya ambang ini yang mencegahnya.
+- **Umur runtime.** Runtime membaca kuota dan daftar model akunnya saat menyala lalu menyimpannya selama hidup:
+  `GetQuota` untuk akun milik runtime itu mengembalikan angka yang sama sampai runtime diganti, dan model yang
+  baru ditambah atau dicabut dari akun tidak terlihat. `runtime_started_at` di `/v1/accounts` dan `/v1/models`
+  menunjukkan setua apa data itu. Runtime diganti (runtime baru dinyalakan dulu, dipasang hanya bila berhasil
+  start; runtime lama dimatikan setelah permintaan yang memakainya selesai) pada tiga kejadian: umurnya melewati
+  `RUNTIME_MAX_AGE_SEC`, `POST /v1/accounts/refresh`, atau `GET /v1/models?refresh=1`. Bila runtime baru gagal
+  start, runtime lama tetap melayani; penggantian otomatis dicoba lagi 15 menit kemudian.
 - **Tanggal reset.** Diambil dari `Account.GetCurrentAuth` (`quota_reset_date_utc`), bukan dari `resetDate`
   snapshot GetQuota (isinya cap waktu snapshot).
 - **Saat limit.**
@@ -249,7 +257,8 @@ go test -cover ./internal/...         # cakupan per paket
 Suite berjalan tanpa Copilot CLI: pool dan service bersifat lazy, jadi test
 hanya menyentuh jalur validasi, pemilihan akun/cooldown, penyusunan config
 sesi, dan callback tool (lewat `httptest`). Jalur yang benar-benar men-spawn
-runtime (`Stream`, `Models`) sengaja tidak diuji di sini. CI (GitHub Actions)
+runtime (`Stream`) sengaja tidak diuji di sini; `Models` dan penggantian
+runtime diuji dengan runtime palsu (`Options.Spawn`). CI (GitHub Actions)
 menjalankan gofmt, vet, build, dan test pada setiap push/PR.
 
 ## Cara membuat Copilot melakukan pencarian web

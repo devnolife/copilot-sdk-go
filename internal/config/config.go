@@ -25,6 +25,10 @@ type Config struct {
 	// (0 = mati). Kuota tiap akun yang runtime-nya hidup dicek ulang tiap QuotaCheckInterval (0 = tidak dicek).
 	QuotaMinPercent    float64
 	QuotaCheckInterval time.Duration
+	// RuntimeMaxAge: runtime yang hidup lebih lama dari ini diganti runtime baru (0 = tidak pernah). Runtime
+	// membaca kuota dan daftar model akun saat menyala lalu menyimpannya selama hidup, jadi tanpa penggantian
+	// data itu tidak pernah diperbarui.
+	RuntimeMaxAge time.Duration
 
 	// StateDir menyimpan akun.json (daftar akun, dikelola admin) dan pemakaian.json; kosong = tanpa berkas.
 	StateDir string
@@ -84,6 +88,7 @@ func Load() Config {
 
 		QuotaMinPercent:    envFloat("TURNITIN_COPILOT_QUOTA_MIN_PERCENT", 5),
 		QuotaCheckInterval: time.Duration(envInt("TURNITIN_COPILOT_QUOTA_CHECK_SEC", 600)) * time.Second,
+		RuntimeMaxAge:      time.Duration(envInt("TURNITIN_COPILOT_RUNTIME_MAX_AGE_SEC", 0)) * time.Second,
 
 		StateDir:     envOr("TURNITIN_COPILOT_STATE_DIR", defaultStateDir()),
 		PoolStrategy: strings.ToLower(envOr("TURNITIN_COPILOT_POOL_STRATEGY", "proporsional")),

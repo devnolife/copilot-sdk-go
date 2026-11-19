@@ -103,6 +103,7 @@ func (s *Server) handleStatus(w http.ResponseWriter, _ *http.Request) {
 		"pool_strategy":           s.svc.PoolStrategy(),
 		"quota_min_percent":       cfg.QuotaMinPercent,
 		"quota_check_sec":         int(cfg.QuotaCheckInterval / time.Second),
+		"runtime_max_age_sec":     int(cfg.RuntimeMaxAge / time.Second),
 		"model":                   modelOrDefault(models.Model),
 		"agent_model":             modelOrDefault(models.For("agent")),
 		"auth":                    auth,
@@ -136,15 +137,23 @@ func promptTokens(m copilot.ModelInfo) int64 {
 	return 0
 }
 
+// handleModels: GET /v1/models — model yang bisa dipakai akun. ?refresh=1 mengganti dulu runtime yang sudah lama
+// hidup supaya daftar dibaca ulang dari layanan Copilot (beberapa detik).
 func (s *Server) handleModels(w http.ResponseWriter, r *http.Request) {
-	ctx, cancel := contextWithTimeout(r, 90*time.Second)
+	refresh, ok := queryFlag(r, "refresh")
+	if !ok {
+		writeJSON(w, http.StatusBadRequest, errorBody{Error: "refresh harus 0 atau 1"})
+		return
+	}
+	ctx, cancel := contextWithTimeout(r, modelsTimeout)
 	defer cancel()
 
-	models, err := s.svc.Models(ctx)
+	list, err := s.svc.Models(ctx, refresh)
 	if err != nil {
 		writeJSON(w, http.StatusBadGateway, errorBody{Error: err.Error()})
 		return
 	}
+	models := list.Models
 
 	type modelOut struct {
 		ID                     string   `json:"id"`
@@ -181,9 +190,34 @@ func (s *Server) handleModels(w http.ResponseWriter, r *http.Request) {
 		}
 		detail = append(detail, out)
 	}
-	writeJSON(w, http.StatusOK, map[string]any{
+	payload := map[string]any{
 		"models":  ids,
 		"detail":  detail,
 		"default": s.svc.Config().Model,
-	})
+		"read_at": list.ReadAt.UTC(),
+	}
+	if !list.RuntimeStartedAt.IsZero() {
+		payload["runtime_started_at"] = list.RuntimeStartedAt.UTC()
+	}
+	if refresh {
+		payload["refreshed"] = list.RefreshError == ""
+		if list.RefreshError != "" {
+			payload["refresh_error"] = list.RefreshError
+		}
+	}
+	writeJSON(w, http.StatusOK, payload)
+}
+
+// modelsTimeout mencakup start runtime (akun dingin atau penyegaran) sebelum daftar dibaca.
+const modelsTimeout = 90 * time.Second
+
+// queryFlag membaca parameter boolean 0/1 (kosong = false); ok=false bila nilainya bukan itu.
+func queryFlag(r *http.Request, name string) (value, ok bool) {
+	switch r.URL.Query().Get(name) {
+	case "", "0", "false":
+		return false, true
+	case "1", "true":
+		return true, true
+	}
+	return false, false
 }

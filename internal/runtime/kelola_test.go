@@ -245,7 +245,7 @@ func TestAttachRejectsRuntimeOfRemovedAccount(t *testing.T) {
 	acc.mu.Lock()
 	acc.removed = true
 	acc.mu.Unlock()
-	if err := acc.attach(nil, nil); !errors.Is(err, errAccountRemoved) {
+	if err := acc.attach(nil, nil, time.Now()); !errors.Is(err, errAccountRemoved) {
 		t.Fatalf("attach akun terhapus = %v", err)
 	}
 	acc.slots <- struct{}{}
@@ -253,7 +253,7 @@ func TestAttachRejectsRuntimeOfRemovedAccount(t *testing.T) {
 		acc.inCooldown(time.Now()) || len(acc.slots) != 0 {
 		t.Fatalf("akun terhapus bukan galat start: %v", err)
 	}
-	if err := p.accounts[0].attach(nil, nil); err != nil {
+	if err := p.accounts[0].attach(nil, nil, time.Now()); err != nil {
 		t.Fatalf("akun aktif: %v", err)
 	}
 }

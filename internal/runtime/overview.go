@@ -18,6 +18,7 @@ type Overview struct {
 	StoreError      string           `json:"store_error,omitempty"` // akun.json tidak terbaca: perubahan ditolak
 	QuotaMinPercent float64          `json:"quota_min_percent"`
 	QuotaCheckSec   int              `json:"quota_check_sec"`
+	RuntimeMaxSec   int              `json:"runtime_max_age_sec"` // umur runtime sebelum diganti; 0 = tidak diganti otomatis
 	MaxConcurrency  int              `json:"max_concurrency"`
 	TimeZone        string           `json:"time_zone"`
 	GeneratedAt     time.Time        `json:"generated_at"`
@@ -67,6 +68,7 @@ func (p *Pool) Overview(days int) Overview {
 		Strategy: strategy, Strategies: akun.Strategies, Roles: akun.Roles, Source: source, Persistent: persistent,
 		StoreError:      storeErr,
 		QuotaMinPercent: p.cfg.QuotaMinPercent, QuotaCheckSec: int(p.cfg.QuotaCheckInterval / time.Second),
+		RuntimeMaxSec:  int(p.cfg.RuntimeMaxAge / time.Second),
 		MaxConcurrency: max(1, p.cfg.MaxConcurrency), TimeZone: p.usage.zone, GeneratedAt: now.UTC(), Days: days,
 		Accounts: make([]AccountDetail, 0, len(statuses)),
 	}
@@ -131,16 +133,22 @@ func (p *Pool) Overview(days int) Overview {
 	return ov
 }
 
-// run menjalankan pekerjaan latar pool sampai stop ditutup: menulis catatan pemakaian tiap menit dan membaca
-// ulang kuota akun yang datanya usang tiap QuotaCheckInterval (tanpa menyalakan runtime baru).
+// run menjalankan pekerjaan latar pool sampai stop ditutup: menulis catatan pemakaian tiap menit, membaca ulang
+// kuota akun yang datanya usang tiap QuotaCheckInterval (tanpa menyalakan runtime baru), dan mengganti runtime
+// yang hidup lebih lama dari RuntimeMaxAge.
 func (p *Pool) run(stop <-chan struct{}) {
 	flush := time.NewTicker(usageFlushEvery)
 	defer flush.Stop()
-	var quota <-chan time.Time
+	var quota, recycle <-chan time.Time
 	if p.cfg.QuotaCheckInterval > 0 {
 		ticker := time.NewTicker(p.cfg.QuotaCheckInterval)
 		defer ticker.Stop()
 		quota = ticker.C
+	}
+	if p.cfg.RuntimeMaxAge > 0 {
+		ticker := time.NewTicker(recycleCheckEvery)
+		defer ticker.Stop()
+		recycle = ticker.C
 	}
 	for {
 		select {
@@ -152,6 +160,8 @@ func (p *Pool) run(stop <-chan struct{}) {
 			}
 		case <-quota:
 			p.refreshIdle()
+		case <-recycle:
+			p.recycleAged()
 		}
 	}
 }

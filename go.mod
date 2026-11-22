@@ -2,6 +2,8 @@ module github.com/devnolife/copilot-sdk-go
 
 go 1.24
 
+toolchain go1.26.11
+
 require (
 	github.com/coder/websocket v1.8.15 // indirect
 	github.com/ebitengine/purego v0.10.1 // indirect

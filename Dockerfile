@@ -15,7 +15,7 @@
 #   -v "$HOME/.copilot:/home/app/.copilot:ro"
 
 # ── Tahap build ────────────────────────────────────────────────────
-FROM golang:1.24-bookworm AS build
+FROM golang:1.26-bookworm AS build
 
 WORKDIR /src
 
